@@ -1,0 +1,9 @@
+{
+  "SmtpEmailSettings": {
+    "Email": "",
+    "Password": ""
+  },
+  "SendToSettings": {
+    "Email": ""
+  }
+}
