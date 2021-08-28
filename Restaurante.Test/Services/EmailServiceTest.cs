@@ -22,8 +22,7 @@ namespace Restaurante.Test.Services
         public async Task ShouldSendEmail()
         {
             //Given a valid email
-            var settings = EmailSettingsMock.GetEmailTestSettings();
-            var message = new Message(settings.SendTo, "Test", "teste 12346");
+            var message = new Message(string.Empty, "Test", "teste 12346");
 
             //When sending email
             var res = await _emailService.SendAsync(message);
