@@ -12,6 +12,12 @@ namespace Restaurante.Test.Usuarios.Mocks
             .CreateNew()
             .WithFactory(() => new Veiculo("Kawasaki", "Suzuki", 2010))
             .Build();
+
+        public static Entregador GetDefaulEntregador() =>
+            Builder<Entregador>
+            .CreateNew()
+            .WithFactory(() => new Entregador("Daniel", "daniel@gmail.com", "123456", GetDefaultVehicle()))
+            .Build();
     }
 
     public class EntregadoresInvalidos : IEnumerable<object[]>
