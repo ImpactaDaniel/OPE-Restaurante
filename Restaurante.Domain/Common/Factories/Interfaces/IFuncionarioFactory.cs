@@ -3,9 +3,8 @@ using Restaurante.Domain.Users.Funcionarios.Models;
 
 namespace Restaurante.Domain.Common.Factories.Interfaces
 {
-    public interface IFuncionarioFactory<TFuncionario> : IFactory<TFuncionario>, IUserFactory<TFuncionario>
-        where TFuncionario : Funcionario
+    public interface IFuncionarioFactory: IFactory<Funcionario>, IUserFactory<Funcionario>
     {
-        IFuncionarioFactory<TFuncionario> WithType(TiposFuncionario type);
+        IFuncionarioFactory WithType(TiposFuncionario type);
     }
 }

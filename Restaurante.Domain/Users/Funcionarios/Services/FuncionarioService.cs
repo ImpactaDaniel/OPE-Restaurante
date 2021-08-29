@@ -2,8 +2,10 @@
 using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Domain.Users.Enums;
 using Restaurante.Domain.Users.Funcionarios.Models;
+using Restaurante.Domain.Users.Funcionarios.Repositories;
 using Restaurante.Domain.Users.Funcionarios.Services.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,8 +14,8 @@ namespace Restaurante.Domain.Users.Funcionarios.Services
     internal class FuncionarioService<TFuncionario> : IFuncionarioService<TFuncionario>
         where TFuncionario : Funcionario
     {
-        private readonly INotifier _notifier;
-        private readonly Repositories.IFuncionarioDomainRepository<TFuncionario> _repository;
+        protected readonly INotifier _notifier;
+        protected readonly IFuncionarioDomainRepository<TFuncionario> _repository;
 
         public FuncionarioService(INotifier notifier, Repositories.IFuncionarioDomainRepository<TFuncionario> repository)
         {
@@ -36,7 +38,7 @@ namespace Restaurante.Domain.Users.Funcionarios.Services
 
                 if (user.Type != TiposFuncionario.Gerente)
                 {
-                    _notifier.AddNotification(NotificationHelper.DoesntHavePermission(nameof(Funcionario), "cirar novo funcionário!"));
+                    _notifier.AddNotification(NotificationHelper.DoesntHavePermission(nameof(Funcionario), "criar novo funcionário!"));
                     return false;
                 }
                 funcionario.CreatedDate = DateTime.Now;
@@ -99,6 +101,9 @@ namespace Restaurante.Domain.Users.Funcionarios.Services
                 return null;
             }
         }
+
+        public Task<IList<TFuncionario>> GetAll(CancellationToken cancellationToken = default) =>
+            _repository.GetAll(cancellationToken);
 
         public async Task<TFuncionario> Login(string email, string password, CancellationToken cancellationToken = default)
         {

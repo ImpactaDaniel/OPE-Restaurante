@@ -13,13 +13,13 @@ namespace Restaurante.Test.Application
 {
     public class CreateFuncionarioRequestHandlerTest
     {
-        private readonly IFuncionarioFactory<Funcionario> _factory;
+        private readonly IFuncionarioFactory _factory;
         private readonly IFuncionarioService<Funcionario> _service;
         private readonly INotifier _notifier;
 
         public CreateFuncionarioRequestHandlerTest()
         {
-            _factory = Substitute.For<IFuncionarioFactory<Funcionario>>();
+            _factory = Substitute.For<IFuncionarioFactory>();
             _factory.Build().ReturnsForAnyArgs(FuncionarioMock.GetDefault());
 
             _service = Substitute.For<IFuncionarioService<Funcionario>>();

@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Restaurante.Domain.Users.Funcionarios.Models;
 using Restaurante.Domain.Users.Funcionarios.Repositories;
+using System.Collections.Generic;
 
 namespace Restaurante.Infra.Users.Funcionarios
 {
@@ -42,6 +43,10 @@ namespace Restaurante.Infra.Users.Funcionarios
 
                 return entity;
         }
+
+        public async Task<IList<Funcionario>> GetAll(CancellationToken cancellationToken = default) =>
+            await All()
+                .ToListAsync(cancellationToken);
 
         public Task<Funcionario> Login(string email, string password, CancellationToken cancellationToken = default)
         {

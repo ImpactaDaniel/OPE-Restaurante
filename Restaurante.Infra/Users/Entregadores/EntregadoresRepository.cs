@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Restaurante.Domain.Users.Entregadores.Repositories;
 using Restaurante.Domain.Users.Entregadores.Models;
 using Restaurante.Domain.Users.Funcionarios.Models;
+using System.Collections.Generic;
 
 namespace Restaurante.Infra.Users.Entregadores
 {
@@ -46,6 +47,11 @@ namespace Restaurante.Infra.Users.Entregadores
                 All()
                 .FirstAsync(e => e.Id == id, cancellationToken);
             return entity;
+        }
+
+        public Task<IList<Entregador>> GetAll(CancellationToken cancellationToken = default)
+        {
+            throw new System.NotImplementedException();
         }
 
         public Task<Veiculo> GetVehicle(int id, CancellationToken cancellationToken = default)

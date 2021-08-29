@@ -1,6 +1,12 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Restaurante.Domain.Common.Repositories.Interfaces;
 using Restaurante.Domain.Common.Services.Interfaces;
+using Restaurante.Infra.Common;
+using Restaurante.Infra.Common.Persistence;
+using Restaurante.Infra.Common.Persistence.Interfaces;
+using Restaurante.Infra.Common.Services;
 using Restaurante.Infra.Common.Settings;
 using System.Runtime.CompilerServices;
 
@@ -10,7 +16,11 @@ namespace Restaurante.Infra
     public static class InfraConfiguration
     {
         public static IServiceCollection AddInfra(this IServiceCollection services, IConfiguration configuration) =>
-            services.AddMessageServices(configuration);
+            services
+                .AddNotifier()
+                .AddContext(configuration)
+                .AddRepositories()
+                .AddMessageServices(configuration);
 
         internal static IServiceCollection AddMessageServices(this IServiceCollection services, IConfiguration configuration) =>
             services
@@ -23,5 +33,28 @@ namespace Restaurante.Infra
                                     .AssignableTo<IMessageSenderService>())
                                     .AsImplementedInterfaces()
                                     .WithTransientLifetime());
+
+        internal static IServiceCollection AddRepositories(this IServiceCollection services) =>
+            services
+                .Scan(scan => scan
+                    .FromCallingAssembly()
+                    .AddClasses(classes => classes
+                                    .AssignableTo(typeof(IDomainRepository<>)))
+                                    .AsImplementedInterfaces()
+                                    .WithTransientLifetime());
+
+        internal static IServiceCollection AddContext(this IServiceCollection services, IConfiguration configuration) =>
+            services
+                .AddDbContext<RestauranteDbContext>(options => options
+                                                        .UseSqlServer(
+                                                                configuration.GetConnectionString("Default"),
+                                                                sqlServer => sqlServer
+                                                                    .MigrationsAssembly(typeof(RestauranteDbContext).Assembly.FullName)))
+                .AddTransient<IRestauranteDbContext, RestauranteDbContext>(provider => provider.GetService<RestauranteDbContext>())
+                .AddTransient<IInitializer, DatabaseInitializer>();
+
+        internal static IServiceCollection AddNotifier(this IServiceCollection services) =>
+            services
+                .AddScoped<INotifier, Notifier>();
     }
 }

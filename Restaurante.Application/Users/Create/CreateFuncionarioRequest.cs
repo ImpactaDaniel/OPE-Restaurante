@@ -23,11 +23,11 @@ namespace Restaurante.Application.Users.Create
 
         internal class CreateFuncionarioRequestHandler : IRequestHandler<CreateFuncionarioRequest, Response<bool>>
         {
-            private readonly IFuncionarioFactory<Funcionario> _factory;
+            private readonly IFuncionarioFactory _factory;
             private readonly IFuncionarioService<Funcionario> _service;
             private readonly INotifier _notifier;
 
-            public CreateFuncionarioRequestHandler(IFuncionarioFactory<Funcionario> factory,
+            public CreateFuncionarioRequestHandler(IFuncionarioFactory factory,
                                                    IFuncionarioService<Funcionario> service,
                                                    INotifier notifier)
             {
