@@ -25,6 +25,7 @@ namespace Restaurante.Web.Controllers
         public async Task<IActionResult> CreateNew([FromBody]CreateFuncionarioRequest request, CancellationToken cancellationToken = default)
         {
             var resp = await _mediatr.Send(request, cancellationToken);
+            return View();
         }
     }
 }
