@@ -5,7 +5,7 @@ using Restaurante.Domain.Users.Funcionarios;
 using Restaurante.Domain.Users.Repositories.Interfaces;
 using Restaurante.Infra.Common.Persistence;
 using Restaurante.Infra.Common.Persistence.Interfaces;
-using Restaurante.Infra.Users.Entregadores;
+using Restaurante.Infra.Users.Funcionarios;
 using Restaurante.Test.Usuarios.Mocks;
 using System;
 using System.Threading.Tasks;

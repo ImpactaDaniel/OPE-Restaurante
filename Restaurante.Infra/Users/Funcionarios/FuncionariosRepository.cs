@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Restaurante.Domain.Users.Enums;
 
-namespace Restaurante.Infra.Users.Entregadores
+namespace Restaurante.Infra.Users.Funcionarios
 {
     internal class FuncionariosRepository :
         DataRepository<IRestauranteDbContext, Funcionario>,
