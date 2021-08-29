@@ -2,7 +2,7 @@
 using Restaurante.Domain.Users.Enums;
 using System;
 
-namespace Restaurante.Domain.Users.Funcionarios
+namespace Restaurante.Domain.Users.Funcionarios.Models
 {
     public class Funcionario : Entity<int>
     {
@@ -10,6 +10,9 @@ namespace Restaurante.Domain.Users.Funcionarios
         public string Email { get; private set; }
         public string Password { get; private set; }
         public TiposFuncionario Type { get; private set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime? UpdatedDate { get; private set; }
+
 
         protected Funcionario()
         {

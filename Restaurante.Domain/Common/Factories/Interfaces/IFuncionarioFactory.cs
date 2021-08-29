@@ -1,5 +1,5 @@
 ﻿using Restaurante.Domain.Users.Enums;
-using Restaurante.Domain.Users.Funcionarios;
+using Restaurante.Domain.Users.Funcionarios.Models;
 
 namespace Restaurante.Domain.Common.Factories.Interfaces
 {

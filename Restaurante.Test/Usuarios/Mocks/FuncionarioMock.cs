@@ -1,6 +1,6 @@
-﻿using Restaurante.Domain.Users.Funcionarios;
-using FizzWare.NBuilder;
+﻿using FizzWare.NBuilder;
 using Restaurante.Domain.Users.Enums;
+using Restaurante.Domain.Users.Funcionarios.Models;
 
 namespace Restaurante.Test.Usuarios.Mocks
 {

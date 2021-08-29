@@ -1,8 +1,8 @@
-﻿using Restaurante.Domain.Common.Models;
-using Restaurante.Infra.Common.Enums;
+﻿using Restaurante.Domain.Common.Enums;
+using Restaurante.Domain.Common.Models;
 using System;
 
-namespace Restaurante.Infra.Common.Helper
+namespace Restaurante.Domain.Common.Helper
 {
     public class NotificationHelper
     {
@@ -20,5 +20,8 @@ namespace Restaurante.Infra.Common.Helper
 
         public static Notification DoesntHavePermission(string nameUser, string toDo) =>
             new Notification((int)NotificationKeys.DoesntHavePermission, $"{nameUser} não tem permissão para {toDo}");
+
+        public static Notification InvalidEmailOrPassword() =>
+            new Notification((int)NotificationKeys.InvalidEmailOrPassword, "E-mail ou senha inválidos!");
     }
 }

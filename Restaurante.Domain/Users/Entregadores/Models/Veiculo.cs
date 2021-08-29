@@ -1,6 +1,6 @@
 ﻿using Restaurante.Domain.Common.Models;
 
-namespace Restaurante.Domain.Users.Entregadores
+namespace Restaurante.Domain.Users.Entregadores.Models
 {
     public class Veiculo : Entity<int>
     {

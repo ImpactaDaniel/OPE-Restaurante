@@ -1,4 +1,4 @@
-﻿namespace Restaurante.Infra.Common.Enums
+﻿namespace Restaurante.Domain.Common.Enums
 {
     public enum NotificationKeys
     {
@@ -6,6 +6,7 @@
         InvalidEmail,
         InvalidPassword,
         DoesntHavePermission,
+        InvalidEmailOrPassword,
         Error
     }
 }

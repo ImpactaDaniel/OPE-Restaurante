@@ -1,6 +1,6 @@
 ﻿using Restaurante.Domain.Common.Factories.Interfaces;
 using Restaurante.Domain.Users.Enums;
-using Restaurante.Domain.Users.Funcionarios;
+using Restaurante.Domain.Users.Funcionarios.Models;
 using System;
 
 namespace Restaurante.Domain.Common.Factories

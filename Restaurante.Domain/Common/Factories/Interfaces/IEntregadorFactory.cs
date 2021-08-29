@@ -1,4 +1,4 @@
-﻿using Restaurante.Domain.Users.Entregadores;
+﻿using Restaurante.Domain.Users.Entregadores.Models;
 
 namespace Restaurante.Domain.Common.Factories.Interfaces
 {

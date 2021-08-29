@@ -1,5 +1,5 @@
 ﻿using FizzWare.NBuilder;
-using Restaurante.Domain.Users.Entregadores;
+using Restaurante.Domain.Users.Entregadores.Models;
 using System.Collections;
 using System.Collections.Generic;
 

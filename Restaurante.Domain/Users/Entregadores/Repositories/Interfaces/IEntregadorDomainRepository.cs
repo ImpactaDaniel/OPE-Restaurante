@@ -1,8 +1,9 @@
-﻿using Restaurante.Domain.Users.Entregadores;
+﻿using Restaurante.Domain.Users.Entregadores.Models;
+using Restaurante.Domain.Users.Funcionarios.Repositories;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Restaurante.Domain.Users.Repositories.Interfaces
+namespace Restaurante.Domain.Users.Entregadores.Repositories
 {
     public interface IEntregadorDomainRepository : IFuncionarioDomainRepository<Entregador>
     {

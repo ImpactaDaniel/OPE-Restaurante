@@ -1,5 +1,5 @@
 ﻿using Restaurante.Domain.Common.Factories.Interfaces;
-using Restaurante.Domain.Users.Entregadores;
+using Restaurante.Domain.Users.Entregadores.Models;
 using System;
 
 namespace Restaurante.Domain.Common.Factories

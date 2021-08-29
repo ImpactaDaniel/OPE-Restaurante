@@ -1,6 +1,6 @@
 ﻿using Restaurante.Application.Common;
 using Restaurante.Domain.Users.Enums;
-using Restaurante.Domain.Users.Funcionarios;
+using Restaurante.Domain.Users.Funcionarios.Models;
 
 namespace Restaurante.Application.Users.Common
 {

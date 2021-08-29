@@ -2,8 +2,8 @@
 using Restaurante.Application.Users.Create;
 using Restaurante.Domain.Common.Factories.Interfaces;
 using Restaurante.Domain.Common.Services.Interfaces;
-using Restaurante.Domain.Users.Funcionarios;
-using Restaurante.Domain.Users.Repositories.Interfaces;
+using Restaurante.Domain.Users.Funcionarios.Models;
+using Restaurante.Domain.Users.Funcionarios.Services.Interfaces;
 using Restaurante.Test.Usuarios.Mocks;
 using System.Threading.Tasks;
 using Xunit;
@@ -14,7 +14,7 @@ namespace Restaurante.Test.Application
     public class CreateFuncionarioRequestHandlerTest
     {
         private readonly IFuncionarioFactory<Funcionario> _factory;
-        private readonly IFuncionarioDomainRepository<Funcionario> _repository;
+        private readonly IFuncionarioService<Funcionario> _service;
         private readonly INotifier _notifier;
 
         public CreateFuncionarioRequestHandlerTest()
@@ -22,7 +22,7 @@ namespace Restaurante.Test.Application
             _factory = Substitute.For<IFuncionarioFactory<Funcionario>>();
             _factory.Build().ReturnsForAnyArgs(FuncionarioMock.GetDefault());
 
-            _repository = Substitute.For<IFuncionarioDomainRepository<Funcionario>>();
+            _service = Substitute.For<IFuncionarioService<Funcionario>>();
 
             _notifier = Substitute.For<INotifier>();
         }
@@ -31,9 +31,9 @@ namespace Restaurante.Test.Application
         public async Task ShouldCreateNewFuncionario()
         {
             //Arrange
-            var handler = new CreateFuncionarioRequestHandler(_factory, _repository, _notifier);
+            var handler = new CreateFuncionarioRequestHandler(_factory, _service, _notifier);
             var request = new CreateFuncionarioRequest(FuncionarioMock.GetDefault());
-            _repository.CreateFuncionario(default, default).ReturnsForAnyArgs(FuncionarioMock.GetDefault());
+            _service.CreateFuncionario(default, default).ReturnsForAnyArgs(true);
 
             _notifier.HasNotifications().ReturnsForAnyArgs(false);
 
@@ -41,7 +41,7 @@ namespace Restaurante.Test.Application
             var response = await handler.Handle(request, new System.Threading.CancellationToken());
 
             //Assert
-            Assert.NotNull(response.Result);
+            Assert.True(response.Result);
             Assert.True(response.Success);
             _notifier.ReceivedWithAnyArgs().HasNotifications();
             _notifier.DidNotReceiveWithAnyArgs().AddNotification(default);
@@ -51,10 +51,10 @@ namespace Restaurante.Test.Application
         public async Task ShouldNotCreateNewFuncionario()
         {
             //Arrange
-            var handler = new CreateFuncionarioRequestHandler(_factory, _repository, _notifier);
+            var handler = new CreateFuncionarioRequestHandler(_factory, _service, _notifier);
             var request = new CreateFuncionarioRequest(FuncionarioMock.GetDefault());
 
-            _repository.CreateFuncionario(default, default).ReturnsForAnyArgs(default(Funcionario));
+            _service.CreateFuncionario(default, default).ReturnsForAnyArgs(false);
 
             _notifier.HasNotifications().ReturnsForAnyArgs(true);
 
@@ -62,7 +62,7 @@ namespace Restaurante.Test.Application
             var response = await handler.Handle(request, new System.Threading.CancellationToken());
 
             //Assert
-            Assert.Null(response.Result);
+            Assert.False(response.Result);
             Assert.False(response.Success);
             _notifier.ReceivedWithAnyArgs().HasNotifications();
         }

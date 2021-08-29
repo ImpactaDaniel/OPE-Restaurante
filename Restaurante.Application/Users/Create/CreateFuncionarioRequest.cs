@@ -2,41 +2,41 @@
 using Restaurante.Application.Common;
 using Restaurante.Application.Users.Common;
 using Restaurante.Domain.Common.Factories.Interfaces;
+using Restaurante.Domain.Common.Helper;
 using Restaurante.Domain.Common.Services.Interfaces;
-using Restaurante.Domain.Users.Funcionarios;
-using Restaurante.Domain.Users.Repositories.Interfaces;
-using Restaurante.Infra.Common.Helper;
+using Restaurante.Domain.Users.Funcionarios.Models;
+using Restaurante.Domain.Users.Funcionarios.Services.Interfaces;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Restaurante.Application.Users.Create
 {
-    public class CreateFuncionarioRequest : FuncionarioRequest<CreateFuncionarioRequest>, IRequest<Response<Funcionario>>
+    public class CreateFuncionarioRequest : FuncionarioRequest<CreateFuncionarioRequest>, IRequest<Response<bool>>
     {
         public Funcionario CurrentUser { get; set; }
         public CreateFuncionarioRequest(Funcionario funcionario) : base(funcionario)
         {
-        }
+        } 
 
         #region Handler        
 
-        internal class CreateFuncionarioRequestHandler : IRequestHandler<CreateFuncionarioRequest, Response<Funcionario>>
+        internal class CreateFuncionarioRequestHandler : IRequestHandler<CreateFuncionarioRequest, Response<bool>>
         {
             private readonly IFuncionarioFactory<Funcionario> _factory;
-            private readonly IFuncionarioDomainRepository<Funcionario> _repository;
+            private readonly IFuncionarioService<Funcionario> _service;
             private readonly INotifier _notifier;
 
             public CreateFuncionarioRequestHandler(IFuncionarioFactory<Funcionario> factory,
-                                                   IFuncionarioDomainRepository<Funcionario> repository,
+                                                   IFuncionarioService<Funcionario> service,
                                                    INotifier notifier)
             {
                 _factory = factory;
-                _repository = repository;
+                _service = service;
                 _notifier = notifier;
             }
 
-            public async Task<Response<Funcionario>> Handle(CreateFuncionarioRequest request, CancellationToken cancellationToken)
+            public async Task<Response<bool>> Handle(CreateFuncionarioRequest request, CancellationToken cancellationToken)
             {
                 try
                 {
@@ -49,14 +49,14 @@ namespace Restaurante.Application.Users.Create
                     var funcionario = _factory
                         .Build();
 
-                    var func = await _repository.CreateFuncionario(funcionario, request.CurrentUser, cancellationToken);
-                    return new Response<Funcionario>(!_notifier.HasNotifications(), func);
+                    var func = await _service.CreateFuncionario(funcionario, request.CurrentUser, cancellationToken);
+                    return new Response<bool>(!_notifier.HasNotifications(), func);
 
                 }
                 catch (Exception e)
                 {
                     _notifier.AddNotification(NotificationHelper.FromException(e));
-                    return new Response<Funcionario>(false, null);
+                    return new Response<bool>(false, false);
                 }
 
             }

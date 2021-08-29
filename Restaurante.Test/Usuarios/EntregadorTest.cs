@@ -1,6 +1,7 @@
 ﻿using Restaurante.Domain.Common.Factories;
 using Restaurante.Domain.Common.Factories.Interfaces;
 using Restaurante.Domain.Users.Entregadores;
+using Restaurante.Domain.Users.Entregadores.Models;
 using Restaurante.Test.Usuarios.Mocks;
 using System;
 using Xunit;

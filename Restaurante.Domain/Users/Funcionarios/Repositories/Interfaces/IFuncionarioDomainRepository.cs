@@ -1,9 +1,9 @@
 ﻿using Restaurante.Domain.Common.Repositories.Interfaces;
-using Restaurante.Domain.Users.Funcionarios;
+using Restaurante.Domain.Users.Funcionarios.Models;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Restaurante.Domain.Users.Repositories.Interfaces
+namespace Restaurante.Domain.Users.Funcionarios.Repositories
 {
     public interface IFuncionarioDomainRepository<TFuncionario> : IDomainRepository<TFuncionario>
         where TFuncionario : Funcionario
