@@ -1,5 +1,5 @@
 ﻿using FizzWare.NBuilder;
-using Restaurante.Domain.Users.Entregadores;
+using Restaurante.Domain.Users.Entregadores.Models;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -11,6 +11,12 @@ namespace Restaurante.Test.Usuarios.Mocks
             Builder<Veiculo>
             .CreateNew()
             .WithFactory(() => new Veiculo("Kawasaki", "Suzuki", 2010))
+            .Build();
+
+        public static Entregador GetDefaulEntregador() =>
+            Builder<Entregador>
+            .CreateNew()
+            .WithFactory(() => new Entregador("Daniel", "daniel@gmail.com", "123456", GetDefaultVehicle()))
             .Build();
     }
 

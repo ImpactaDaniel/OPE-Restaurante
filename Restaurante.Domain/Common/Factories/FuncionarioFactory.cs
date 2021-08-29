@@ -1,11 +1,11 @@
 ﻿using Restaurante.Domain.Common.Factories.Interfaces;
 using Restaurante.Domain.Users.Enums;
-using Restaurante.Domain.Users.Funcionarios;
+using Restaurante.Domain.Users.Funcionarios.Models;
 using System;
 
 namespace Restaurante.Domain.Common.Factories
 {
-    internal class FuncionarioFactory : UserFactory<Funcionario>, IFuncionarioFactory<Funcionario>
+    internal class FuncionarioFactory : UserFactory<Funcionario>, IFuncionarioFactory
     {
         protected TiposFuncionario _type;
         public Funcionario Build()
@@ -14,7 +14,7 @@ namespace Restaurante.Domain.Common.Factories
                 throw new ArgumentException("Nome, e-mail e senha precisam estar preenchidos!");
             return new Funcionario(_name, _email, _password, _type);
         }
-        public virtual IFuncionarioFactory<Funcionario> WithType(TiposFuncionario type)
+        public virtual IFuncionarioFactory WithType(TiposFuncionario type)
         {
             _type = type == TiposFuncionario.Entregador ? throw new ArgumentException("Esse funcionário não pode ser do tipo entregador!") : type;
             return this;

@@ -1,7 +1,7 @@
 ﻿using Restaurante.Domain.Users.Enums;
-using Restaurante.Domain.Users.Funcionarios;
+using Restaurante.Domain.Users.Funcionarios.Models;
 
-namespace Restaurante.Domain.Users.Entregadores
+namespace Restaurante.Domain.Users.Entregadores.Models
 {
     public class Entregador : Funcionario
     {
