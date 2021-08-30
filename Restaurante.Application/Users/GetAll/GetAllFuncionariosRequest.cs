@@ -21,7 +21,7 @@ namespace Restaurante.Application.Users.GetAll
 
             public async Task<Response<IList<Funcionario>>> Handle(GetAllFuncionariosRequest request, CancellationToken cancellationToken)
             {
-                return new Response<IList<Funcionario>>(true, await _service.GetAll());
+                return new Response<IList<Funcionario>>(true, await _service.GetAll(cancellationToken));
             }
         }
     }

@@ -11,13 +11,13 @@ using Restaurante.Infra.Common.Settings;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("Restaurante.Test")]
+[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
 namespace Restaurante.Infra
 {
     public static class InfraConfiguration
     {
         public static IServiceCollection AddInfra(this IServiceCollection services, IConfiguration configuration) =>
             services
-                .AddNotifier()
                 .AddContext(configuration)
                 .AddRepositories()
                 .AddMessageServices(configuration);
@@ -52,9 +52,5 @@ namespace Restaurante.Infra
                                                                     .MigrationsAssembly(typeof(RestauranteDbContext).Assembly.FullName)))
                 .AddTransient<IRestauranteDbContext, RestauranteDbContext>(provider => provider.GetService<RestauranteDbContext>())
                 .AddTransient<IInitializer, DatabaseInitializer>();
-
-        internal static IServiceCollection AddNotifier(this IServiceCollection services) =>
-            services
-                .AddScoped<INotifier, Notifier>();
     }
 }

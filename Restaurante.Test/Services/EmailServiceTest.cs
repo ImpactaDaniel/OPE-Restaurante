@@ -1,9 +1,6 @@
 ﻿using NSubstitute;
 using Restaurante.Domain.Common.Models;
 using Restaurante.Domain.Common.Services.Interfaces;
-using Restaurante.Infra.Common.Services;
-using Restaurante.Infra.Common.Settings;
-using Restaurante.Test.Services.Mock;
 using System.Threading.Tasks;
 using Xunit;
 

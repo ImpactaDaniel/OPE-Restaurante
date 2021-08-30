@@ -1,4 +1,5 @@
-﻿using NSubstitute;
+﻿using Microsoft.Extensions.Logging;
+using NSubstitute;
 using Restaurante.Application.Users.Create;
 using Restaurante.Domain.Common.Factories.Interfaces;
 using Restaurante.Domain.Common.Services.Interfaces;
@@ -16,6 +17,7 @@ namespace Restaurante.Test.Application
         private readonly IFuncionarioFactory _factory;
         private readonly IFuncionarioService<Funcionario> _service;
         private readonly INotifier _notifier;
+        private readonly ILogger<CreateFuncionarioRequestHandler> _logger;
 
         public CreateFuncionarioRequestHandlerTest()
         {
@@ -24,6 +26,8 @@ namespace Restaurante.Test.Application
 
             _service = Substitute.For<IFuncionarioService<Funcionario>>();
 
+            _logger = Substitute.For<ILogger<CreateFuncionarioRequestHandler>>();
+
             _notifier = Substitute.For<INotifier>();
         }
 
@@ -31,8 +35,15 @@ namespace Restaurante.Test.Application
         public async Task ShouldCreateNewFuncionario()
         {
             //Arrange
-            var handler = new CreateFuncionarioRequestHandler(_factory, _service, _notifier);
-            var request = new CreateFuncionarioRequest(FuncionarioMock.GetDefault());
+            var handler = new CreateFuncionarioRequestHandler(_factory, _service, _notifier, _logger);
+            var funcionarioDefault = FuncionarioMock.GetDefault();
+            var request = new CreateFuncionarioRequest
+            {
+                Name = funcionarioDefault.Name,
+                Email = funcionarioDefault.Email,
+                Password = funcionarioDefault.Password,
+                Type = funcionarioDefault.Type
+            };
             _service.CreateFuncionario(default, default).ReturnsForAnyArgs(true);
 
             _notifier.HasNotifications().ReturnsForAnyArgs(false);
@@ -51,10 +62,18 @@ namespace Restaurante.Test.Application
         public async Task ShouldNotCreateNewFuncionario()
         {
             //Arrange
-            var handler = new CreateFuncionarioRequestHandler(_factory, _service, _notifier);
-            var request = new CreateFuncionarioRequest(FuncionarioMock.GetDefault());
+            var handler = new CreateFuncionarioRequestHandler(_factory, _service, _notifier, _logger);
+            var funcionarioDefault = FuncionarioMock.GetDefault();
 
-            _service.CreateFuncionario(default, default).ReturnsForAnyArgs(false);
+            var request = new CreateFuncionarioRequest
+            {
+                Name = funcionarioDefault.Name,
+                Email = funcionarioDefault.Email,
+                Password = funcionarioDefault.Password,
+                Type = funcionarioDefault.Type
+            };
+
+            _service.CreateFuncionario(Arg.Any<Funcionario>(), default).ReturnsForAnyArgs(false);
 
             _notifier.HasNotifications().ReturnsForAnyArgs(true);
 

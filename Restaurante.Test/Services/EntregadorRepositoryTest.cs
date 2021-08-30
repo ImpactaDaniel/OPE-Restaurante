@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NSubstitute;
-using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Domain.Users.Entregadores.Repositories;
 using Restaurante.Infra.Common.Persistence;
 using Restaurante.Infra.Common.Persistence.Interfaces;

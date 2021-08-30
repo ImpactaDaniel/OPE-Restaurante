@@ -19,9 +19,10 @@ namespace Restaurante.Infra.Common.Services
         {
             try
             {
-                using var emailMsg = new MailMessage();
-
-                emailMsg.From = new MailAddress(_smtpEmailSettings.Email);
+                using var emailMsg = new MailMessage
+                {
+                    From = new MailAddress(_smtpEmailSettings.Email)
+                };
                 emailMsg.To.Add(message.To);
                 emailMsg.Subject = message.Subject;
                 emailMsg.Body = message.Body;

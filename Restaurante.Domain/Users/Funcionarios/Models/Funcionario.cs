@@ -1,5 +1,6 @@
 ﻿using Restaurante.Domain.Common.Models;
 using Restaurante.Domain.Users.Enums;
+using Restaurante.Domain.Users.Exceptions;
 using System;
 
 namespace Restaurante.Domain.Users.Funcionarios.Models
@@ -45,7 +46,7 @@ namespace Restaurante.Domain.Users.Funcionarios.Models
         public Funcionario UpdateType(TiposFuncionario type)
         {
             if (type == TiposFuncionario.Entregador)
-                throw new ArgumentException("Esse funcionário não pode ser entregador!");
+                throw new UserException("Esse funcionário não pode ser entregador!");
             Type = type;
             return this;
         }

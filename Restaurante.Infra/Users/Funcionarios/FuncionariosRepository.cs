@@ -48,9 +48,15 @@ namespace Restaurante.Infra.Users.Funcionarios
             await All()
                 .ToListAsync(cancellationToken);
 
-        public Task<Funcionario> Login(string email, string password, CancellationToken cancellationToken = default)
+        public async Task<Funcionario> Login(string email, string password, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            var user = await All()
+                .FirstOrDefaultAsync(u => 
+                    u.Email == email && 
+                    u.Password == password, 
+                    cancellationToken);
+
+            return user;
         }
     }
 }
