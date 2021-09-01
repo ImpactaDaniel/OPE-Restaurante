@@ -1,8 +1,8 @@
 ﻿using Restaurante.Domain.Common.Enums;
 using Restaurante.Domain.Common.Models;
-using System;
+using Restaurante.Domain.Users.Exceptions;
 
-namespace Restaurante.Domain.Common.Helper
+namespace Restaurante.Application.Common.Helper
 {
     public class NotificationHelper
     {
@@ -15,7 +15,7 @@ namespace Restaurante.Domain.Common.Helper
         public static Notification InvalidPassword() =>
             new Notification((int)NotificationKeys.InvalidPassword, "Senha inválida!");
 
-        public static Notification FromException(Exception e) =>
+        public static Notification FromException(UserException e) =>
             new Notification((int)NotificationKeys.Error, e.Message);
 
         public static Notification DoesntHavePermission(string nameUser, string toDo) =>

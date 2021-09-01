@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Restaurante.Application;
 using Restaurante.Domain;
 using Restaurante.Infra;
+using Microsoft.Extensions.Logging;
 
 namespace Restaurante.Web
 {
@@ -26,6 +27,8 @@ namespace Restaurante.Web
                 .AddInfra(Configuration)
                 .AddDomain()
                 .AddApplication();
+
+            services.AddLogging(configure => configure.AddFile("Logs/Restaurante-{Date}.txt"));
 
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory

@@ -3,7 +3,7 @@ using Restaurante.Domain.Common.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Restaurante.Infra.Common.Services
+namespace Restaurante.Application.Common.Services
 {
     public class Notifier : INotifier
     {

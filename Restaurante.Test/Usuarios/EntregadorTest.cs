@@ -1,9 +1,8 @@
 ﻿using Restaurante.Domain.Common.Factories;
 using Restaurante.Domain.Common.Factories.Interfaces;
-using Restaurante.Domain.Users.Entregadores;
 using Restaurante.Domain.Users.Entregadores.Models;
+using Restaurante.Domain.Users.Exceptions;
 using Restaurante.Test.Usuarios.Mocks;
-using System;
 using Xunit;
 namespace Restaurante.Test.Usuarios
 {
@@ -36,7 +35,7 @@ namespace Restaurante.Test.Usuarios
         //Arrange
         [Theory]
         [ClassData(typeof(EntregadoresInvalidos))]
-        public void DeveRetornarArgumentExceptionQuandoInformacoesInvalidas(string nome,
+        public void DeveRetornarUserExceptionQuandoInformacoesInvalidas(string nome,
                                                                             string email,
                                                                             string password,
                                                                             Veiculo veiculo,
@@ -44,7 +43,7 @@ namespace Restaurante.Test.Usuarios
         {
 
             //Assert
-            var ex = Assert.Throws<ArgumentException>(() =>
+            var ex = Assert.Throws<UserException>(() =>
                 _factory
                 .WithVehicle(veiculo)
                 .WithName(nome)
