@@ -13,11 +13,11 @@ export class CadastroFuncionarioComponent implements OnInit {
   form: FormGroup;
   async cadastrarFuncionario() {
     this.funcionario = new Funcionario();
-    this.funcionario.nome = this.form.get('nome').value;
-    this.funcionario.sobrenome = this.form.get('sobrenome').value;
+    this.funcionario.name = this.form.get('nome').value;
+    this.funcionario.lastName = this.form.get('sobrenome').value;
     this.funcionario.email = this.form.get('email').value;
-    this.funcionario.senha = this.form.get('senha').value;
-    this.funcionario.endereco = this.form.get('endereco').value;
+    this.funcionario.password = this.form.get('senha').value;
+    this.funcionario.address = this.form.get('endereco').value;
     let retorno = await this.chamarCadastroFuncionario(this.funcionario).toPromise();
     console.log(retorno)
   }
@@ -40,9 +40,9 @@ export class CadastroFuncionarioComponent implements OnInit {
 }
 
 export class Funcionario {
-  nome: string;
-  sobrenome: string;
+  name: string;
+  lastName: string;
   email: string;
-  senha: string;
-  endereco: string;
+  password: string;
+  address: string;
 }
