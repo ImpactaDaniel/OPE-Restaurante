@@ -12,6 +12,7 @@ namespace Restaurante.Infra.Common.Persistence
         }
 
         public DbSet<Funcionario> Funcionarios { get; set; }
+        public DbSet<Bank> Banks { get; set; }
 
         public DbSet<Entregador> Entregadores { get; set; }
     }
