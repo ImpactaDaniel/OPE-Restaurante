@@ -1,47 +1,17 @@
-﻿using Restaurante.Domain.Common.Models;
+﻿using Restaurante.Domain.Users.Common.Models;
 using Restaurante.Domain.Users.Enums;
 using Restaurante.Domain.Users.Exceptions;
-using System;
 
 namespace Restaurante.Domain.Users.Funcionarios.Models
 {
-    public class Funcionario : Entity<int>
+    public class Funcionario : User
     {
-        public string Name { get; private set; }
-        public string Email { get; private set; }
-        public string Password { get; private set; }
-        public TiposFuncionario Type { get; private set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime? UpdatedDate { get; private set; }
-
-
         protected Funcionario()
         {
         }
-
-        public Funcionario(string name, string email, string password, TiposFuncionario type)
+        public Funcionario(string name, string email, string password, TiposFuncionario type) :
+            base(name, email, password, type)
         {
-            ValidateNullString(name, "Nome");
-            ValidateNullString(email, "E-mail");
-            Name = name;
-            Email = email;
-            Password = password;
-            Type = type;
-        }
-
-        public Funcionario UpdateName(string name)
-        {
-            ValidateNullString(name, "Nome");
-            if (name != Name)
-                Name = name;
-            return this;
-        }
-        public Funcionario UpdateEmail(string email)
-        {
-            ValidateNullString(email, "E-mail");
-            if (email != Email)
-                Email = email;
-            return this;
         }
         public Funcionario UpdateType(TiposFuncionario type)
         {

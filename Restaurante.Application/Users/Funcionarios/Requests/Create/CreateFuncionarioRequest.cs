@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Restaurante.Application.Common;
 using Restaurante.Application.Common.Helper;
-using Restaurante.Application.Users.Common;
+using Restaurante.Application.Users.Common.Models;
 using Restaurante.Domain.Common.Factories.Interfaces;
 using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Domain.Users.Exceptions;
@@ -12,7 +12,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Restaurante.Application.Users.Create
+namespace Restaurante.Application.Users.Funcionarios.Requests.Create
 {
     public class CreateFuncionarioRequest : FuncionarioRequest<CreateFuncionarioRequest>, IRequest<Response<bool>>
     {

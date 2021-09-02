@@ -10,14 +10,17 @@ export class FetchDataComponent implements OnInit {
   public forecasts: WeatherForecast[];
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, private funcionarioService: FuncionarioService) {
-   
+
   }
   ngOnInit(): void {
     console.log("Teste");
     this.funcionarioService.createUser().subscribe(c => {
       console.log(c);
+      this.funcionarioService.loginUser().subscribe(a => {
+        console.log(a);
+      })
     });
-    }
+  }
 }
 
 interface WeatherForecast {
