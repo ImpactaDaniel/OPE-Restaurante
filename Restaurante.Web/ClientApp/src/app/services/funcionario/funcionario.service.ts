@@ -22,4 +22,24 @@ export class FuncionarioService {
       password: "1234156"
     });
   }
+
+  getAll() {
+    return this.httpClient.get<APIResponse<Funcionario[]>>(this.url + 'Funcionarios/GetAll');
+  }
+}
+
+export class APIResponse<T> {
+  response: T;
+  success: boolean;
+  notifications: Notification[];
+}
+
+export class Notification {
+  code: number;
+  message: string;
+}
+
+export class Funcionario {
+  name: string;
+  sobrenome: string;
 }
