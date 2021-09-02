@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CadastroFuncionarioComponent } from './cadastro-restaurante/cadastro-funcionario.component';
+import { LoginFuncionario } from './login-restaurante/cadastro-funcionario.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { CadastroFuncionarioComponent } from './cadastro-restaurante/cadastro-fu
     NavMenuComponent,
     HomeComponent,
     CadastroFuncionarioComponent,
+    LoginFuncionario
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -24,6 +26,7 @@ import { CadastroFuncionarioComponent } from './cadastro-restaurante/cadastro-fu
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'funcionario', component: CadastroFuncionarioComponent, pathMatch: 'full' },
+      { path: 'funcionario/login', component: LoginFuncionario, pathMatch: 'full' },
     ])
   ],
   providers: [],

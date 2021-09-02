@@ -22,7 +22,7 @@ namespace Restaurante.Web.Controllers
             return GetResponse(resp.Result);
         }
 
-        [HttpPost, Authorize(Roles = "Gerente")]
+        [HttpPost]
         public async Task<IActionResult> CreateNew([FromBody]CreateFuncionarioRequest request, CancellationToken cancellationToken = default)
         {
             var resp = await _mediator.Send(request, cancellationToken);

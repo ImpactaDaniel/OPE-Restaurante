@@ -2,8 +2,11 @@
 {
     public class TokenConfiguration
     {
-        public string Secret { get; private set; }
-        public int ValidTime { get; private set; }
+        public string Secret { get; set; }
+        public int ValidTime { get; set; }
+        public TokenConfiguration()
+        {
+        }
         public TokenConfiguration(string secret, int validTime)
         {
             Secret = secret;
