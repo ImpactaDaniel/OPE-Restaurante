@@ -1,6 +1,8 @@
-﻿using Restaurante.Domain.Common.Helper;
+﻿using Microsoft.Extensions.Logging;
+using Restaurante.Application.Common.Helper;
 using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Domain.Users.Enums;
+using Restaurante.Domain.Users.Exceptions;
 using Restaurante.Domain.Users.Funcionarios.Models;
 using Restaurante.Domain.Users.Funcionarios.Repositories;
 using Restaurante.Domain.Users.Funcionarios.Services.Interfaces;
@@ -9,26 +11,28 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Restaurante.Domain.Users.Funcionarios.Services
+namespace Restaurante.Application.Users.Funcionarios.Services
 {
     internal class FuncionarioService<TFuncionario> : IFuncionarioService<TFuncionario>
         where TFuncionario : Funcionario
     {
         protected readonly INotifier _notifier;
         protected readonly IFuncionarioDomainRepository<TFuncionario> _repository;
+        protected readonly ILogger<FuncionarioService<TFuncionario>> _logger;
 
-        public FuncionarioService(INotifier notifier, Repositories.IFuncionarioDomainRepository<TFuncionario> repository)
+        public FuncionarioService(INotifier notifier, IFuncionarioDomainRepository<TFuncionario> repository, ILogger<FuncionarioService<TFuncionario>> logger)
         {
             _notifier = notifier;
             _repository = repository;
+            _logger = logger;
         }
 
-        public async Task<bool> CreateFuncionario(TFuncionario funcionario, Funcionario usuario, CancellationToken cancellationToken = default)
+        public async Task<bool> CreateFuncionario(TFuncionario funcionario, int currentUserId, CancellationToken cancellationToken = default)
         {
             try
             {
                 var user = await _repository
-                    .Get(usuario.Id, cancellationToken);
+                    .Get(currentUserId, cancellationToken);
 
                 if (user is null)
                 {
@@ -42,23 +46,28 @@ namespace Restaurante.Domain.Users.Funcionarios.Services
                     return false;
                 }
                 funcionario.CreatedDate = DateTime.Now;
-                await _repository.CreateFuncionario(funcionario, user, cancellationToken);
+                await _repository.CreateFuncionario(funcionario, user, cancellationToken);                
                 return true;
 
             }
-            catch (Exception e)
+            catch (UserException e)
             {
                 _notifier.AddNotification(NotificationHelper.FromException(e));
                 return false;
             }
+            catch(Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                throw new Exception("Houve um erro ao tentar criar o funcionário!", e);
+            }
         }
 
-        public async Task<bool> Delete(int id, Funcionario usuario, CancellationToken cancellationToken = default)
+        public async Task<bool> Delete(int id, int currentUserId, CancellationToken cancellationToken = default)
         {
             try
             {
                 var user = await _repository
-                       .Get(usuario.Id, cancellationToken);
+                       .Get(currentUserId, cancellationToken);
 
                 if (user is null)
                 {
@@ -74,10 +83,15 @@ namespace Restaurante.Domain.Users.Funcionarios.Services
                 await _repository.Delete(id, cancellationToken);
                 return true;
             }
-            catch (Exception e)
+            catch (UserException e)
             {
                 _notifier.AddNotification(NotificationHelper.FromException(e));
                 return false;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                throw new Exception("Houve um erro ao tentar deletar o funcionário!", e);
             }
         }
 
@@ -95,10 +109,15 @@ namespace Restaurante.Domain.Users.Funcionarios.Services
                 }
                 return func;
             }
-            catch (Exception e)
+            catch (UserException e)
             {
                 _notifier.AddNotification(NotificationHelper.FromException(e));
                 return null;
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                throw new Exception("Houve um erro ao tentar buscar o funcionário!", e);
             }
         }
 
@@ -110,7 +129,7 @@ namespace Restaurante.Domain.Users.Funcionarios.Services
             try
             {
                 var user = await _repository
-                    .Login(email, password);
+                    .Login(email, password, cancellationToken);
 
                 if(user is null)
                 {
@@ -120,10 +139,15 @@ namespace Restaurante.Domain.Users.Funcionarios.Services
 
                 return user;
             }
-            catch(Exception e)
+            catch (UserException e)
             {
                 _notifier.AddNotification(NotificationHelper.FromException(e));
                 return null;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                throw new Exception("Houve um erro ao tentar buscar funcionários!", e);
             }
         }
     }

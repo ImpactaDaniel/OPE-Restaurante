@@ -1,9 +1,11 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Logging;
 using Restaurante.Application.Common;
+using Restaurante.Application.Common.Helper;
 using Restaurante.Application.Users.Common;
 using Restaurante.Domain.Common.Factories.Interfaces;
-using Restaurante.Domain.Common.Helper;
 using Restaurante.Domain.Common.Services.Interfaces;
+using Restaurante.Domain.Users.Exceptions;
 using Restaurante.Domain.Users.Funcionarios.Models;
 using Restaurante.Domain.Users.Funcionarios.Services.Interfaces;
 using System;
@@ -14,10 +16,7 @@ namespace Restaurante.Application.Users.Create
 {
     public class CreateFuncionarioRequest : FuncionarioRequest<CreateFuncionarioRequest>, IRequest<Response<bool>>
     {
-        public Funcionario CurrentUser { get; set; }
-        public CreateFuncionarioRequest(Funcionario funcionario) : base(funcionario)
-        {
-        } 
+        public int CurrentUser { get; set; }
 
         #region Handler        
 
@@ -26,14 +25,16 @@ namespace Restaurante.Application.Users.Create
             private readonly IFuncionarioFactory _factory;
             private readonly IFuncionarioService<Funcionario> _service;
             private readonly INotifier _notifier;
-
+            private readonly ILogger<CreateFuncionarioRequestHandler> _logger;
             public CreateFuncionarioRequestHandler(IFuncionarioFactory factory,
                                                    IFuncionarioService<Funcionario> service,
-                                                   INotifier notifier)
+                                                   INotifier notifier,
+                                                   ILogger<CreateFuncionarioRequestHandler>  logger)
             {
                 _factory = factory;
                 _service = service;
                 _notifier = notifier;
+                _logger = logger;
             }
 
             public async Task<Response<bool>> Handle(CreateFuncionarioRequest request, CancellationToken cancellationToken)
@@ -53,10 +54,15 @@ namespace Restaurante.Application.Users.Create
                     return new Response<bool>(!_notifier.HasNotifications(), func);
 
                 }
-                catch (Exception e)
+                catch (UserException e)
                 {
                     _notifier.AddNotification(NotificationHelper.FromException(e));
                     return new Response<bool>(false, false);
+                }
+                catch(Exception e)
+                {
+                    _logger.LogError(e, e.Message);
+                    throw new Exception("Houve um erro ao tentar criar o funcionário!", e);
                 }
 
             }

@@ -1,5 +1,6 @@
 ﻿using Restaurante.Domain.Common.Factories.Interfaces;
 using Restaurante.Domain.Users.Enums;
+using Restaurante.Domain.Users.Exceptions;
 using Restaurante.Domain.Users.Funcionarios.Models;
 using System;
 
@@ -11,12 +12,12 @@ namespace Restaurante.Domain.Common.Factories
         public Funcionario Build()
         {
             if (string.IsNullOrEmpty(_email) || string.IsNullOrEmpty(_password) || string.IsNullOrEmpty(_name))
-                throw new ArgumentException("Nome, e-mail e senha precisam estar preenchidos!");
+                throw new UserException("Nome, e-mail e senha precisam estar preenchidos!");
             return new Funcionario(_name, _email, _password, _type);
         }
         public virtual IFuncionarioFactory WithType(TiposFuncionario type)
         {
-            _type = type == TiposFuncionario.Entregador ? throw new ArgumentException("Esse funcionário não pode ser do tipo entregador!") : type;
+            _type = type == TiposFuncionario.Entregador ? throw new UserException("Esse funcionário não pode ser do tipo entregador!") : type;
             return this;
         }
     }

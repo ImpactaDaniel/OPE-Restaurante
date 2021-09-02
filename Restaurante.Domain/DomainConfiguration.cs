@@ -10,8 +10,7 @@ namespace Restaurante.Domain
     {
         public static IServiceCollection AddDomain(this IServiceCollection services) =>
             services
-                .AddFactories()
-                .AddServices();
+                .AddFactories();
 
         internal static IServiceCollection AddFactories(this IServiceCollection services) =>
             services
@@ -20,15 +19,6 @@ namespace Restaurante.Domain
                     .AddClasses(classes => classes
                                     .AssignableTo(typeof(IFactory<>)))
                                     .AsMatchingInterface()
-                                    .WithTransientLifetime());
-
-        internal static IServiceCollection AddServices(this IServiceCollection services) =>
-            services
-                .Scan(scan => scan
-                    .FromCallingAssembly()
-                    .AddClasses(classes => classes
-                                    .AssignableTo(typeof(IEntityService<>)))
-                                    .AsMatchingInterface()
-                                    .WithTransientLifetime());
+                                    .WithTransientLifetime());        
     }
 }
