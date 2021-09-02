@@ -8,5 +8,6 @@ namespace Restaurante.Infra.Common.Persistence.Interfaces
     {
         DbSet<Funcionario> Funcionarios { get; }
         DbSet<Entregador> Entregadores { get; }
+        DbSet<Bank> Banks { get; }
     }
 }

@@ -6,7 +6,6 @@ using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Infra.Common;
 using Restaurante.Infra.Common.Persistence;
 using Restaurante.Infra.Common.Persistence.Interfaces;
-using Restaurante.Infra.Common.Services;
 using Restaurante.Infra.Common.Settings;
 using System.Runtime.CompilerServices;
 
@@ -46,7 +45,7 @@ namespace Restaurante.Infra
         internal static IServiceCollection AddContext(this IServiceCollection services, IConfiguration configuration) =>
             services
                 .AddDbContext<RestauranteDbContext>(options => options
-                                                        .UseSqlServer(
+                                                        .UseSqlite(
                                                                 configuration.GetConnectionString("Default"),
                                                                 sqlServer => sqlServer
                                                                     .MigrationsAssembly(typeof(RestauranteDbContext).Assembly.FullName)))

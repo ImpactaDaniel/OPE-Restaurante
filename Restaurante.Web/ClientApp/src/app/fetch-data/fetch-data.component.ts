@@ -12,12 +12,15 @@ export class FetchDataComponent implements OnInit {
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, private funcionarioService: FuncionarioService) {
    
   }
-  ngOnInit(): void {
+  async ngOnInit(){
     console.log("Teste");
-    this.funcionarioService.createUser().subscribe(c => {
-      console.log(c);
-    });
-    }
+    var responseCreate = await this.funcionarioService.createUser().toPromise();
+
+    var funcionarios = await this.funcionarioService.getAll().toPromise();
+
+    console.log(responseCreate, " create");
+    console.log(funcionarios, " funcionarios");
+  }
 }
 
 interface WeatherForecast {
