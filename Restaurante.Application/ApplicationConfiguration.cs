@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Restaurante.Domain.Users.Common.Services.Interfaces;
 using Restaurante.Application.Users.Common.Services;
+using Restaurante.Domain.Common.Data.Mappers.Interfaces;
+using Restaurante.Domain.Common.Models.Integration;
+using Restaurante.Application.Users.Entregadores.Services;
 
 [assembly: InternalsVisibleTo("Restaurante.Test")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
@@ -23,6 +26,7 @@ namespace Restaurante.Application
                 .AddMediatR(Assembly.GetExecutingAssembly())
                 .AddNotifier()
                 .AddServices()
+                .AddIntegrationServices(configuration)
                 .AddTokenService(configuration);
 
         internal static IServiceCollection AddServices(this IServiceCollection services) =>
@@ -36,6 +40,23 @@ namespace Restaurante.Application
 
         internal static IServiceCollection AddNotifier(this IServiceCollection services) =>
             services.AddScoped<INotifier, Notifier>();
+
+        internal static IServiceCollection AddIntegrationServices(this IServiceCollection services, IConfiguration configuration) =>
+            services
+                .AddSingleton(
+                                configuration
+                                    .GetSection(nameof(IntegrationConfiguration))
+                                    .Get<IntegrationConfiguration>())
+                .AddTransient<IEntregadorIntegrationService, EntregadorIntegrationService>();
+
+        internal static IServiceCollection AddMappers(this IServiceCollection services) =>
+             services
+                .Scan(scan => scan
+                    .FromCallingAssembly()
+                    .AddClasses(classes => classes
+                                    .AssignableTo(typeof(IMapper<,>)))
+                                    .AsMatchingInterface()
+                                    .WithTransientLifetime());
 
         internal static IServiceCollection AddTokenService(this IServiceCollection services, IConfiguration configuration)
         {
