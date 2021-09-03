@@ -1,7 +1,7 @@
 ﻿using Restaurante.Application.Common;
 using Restaurante.Domain.Users.Enums;
 
-namespace Restaurante.Application.Users.Common
+namespace Restaurante.Application.Users.Common.Models
 {
     public abstract class FuncionarioRequest<TRequest> : EntityRequest<int>
         where TRequest : EntityRequest<int>

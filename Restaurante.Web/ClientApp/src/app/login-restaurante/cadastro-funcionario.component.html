@@ -1,0 +1,20 @@
+<div>
+  <form (submit)="cadastrarFuncionario()" [formGroup]="form">
+    <div class="form-group">
+      <input type="email" formControlName="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="E-mail">
+    </div>
+    <div class="form-group">
+      <input type="password" formControlName="senha" name="senha" class="form-control" id="exampleInputPassword1" placeholder="Senha">
+    </div>
+    <div class="form-group">
+      <input type="text" formControlName="nome" name="nome" class="form-control" id="exampleInputName1" placeholder="Nome">
+    </div>
+    <div class="form-group">
+      <input type="text" formControlName="sobrenome" name="sobrenome" class="form-control" id="exampleInputNickname1" placeholder="Sobrenome">
+    </div>
+    <div class="form-group">
+      <input type="text" formControlName="endereco" name="endereco" class="form-control" id="exampleInputAddress1" placeholder="Endereço">
+    </div>
+    <button id="btn_logar" type="submit" class="btn btn-primary">Criar</button>
+  </form>
+</div>

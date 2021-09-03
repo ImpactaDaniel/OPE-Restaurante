@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using NSubstitute;
-using Restaurante.Application.Users.Create;
+using Restaurante.Application.Users.Funcionarios.Requests.Create;
 using Restaurante.Domain.Common.Factories.Interfaces;
 using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Domain.Users.Funcionarios.Models;
@@ -8,7 +8,7 @@ using Restaurante.Domain.Users.Funcionarios.Services.Interfaces;
 using Restaurante.Test.Usuarios.Mocks;
 using System.Threading.Tasks;
 using Xunit;
-using static Restaurante.Application.Users.Create.CreateFuncionarioRequest;
+using static Restaurante.Application.Users.Funcionarios.Requests.Create.CreateFuncionarioRequest;
 
 namespace Restaurante.Test.Application
 {

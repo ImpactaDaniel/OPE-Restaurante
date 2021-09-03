@@ -12,7 +12,14 @@ export class FuncionarioService {
     return this.httpClient.post(this.url + 'Funcionarios/CreateNew', {
       name: "Daniel",
       email: "daniel@gmail.com",
-      password: "12345"
+      password: "123456"
+    });
+  }
+
+  loginUser() {
+    return this.httpClient.post(this.url + 'Funcionarios/Authenticate', {
+      email: "daniel@gmail.com",
+      password: "1234156"
     });
   }
 
