@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Restaurante.Application.Common;
 using Restaurante.Application.Common.Helper;
+using Restaurante.Application.Common.Models;
 using Restaurante.Application.Users.Common.Models;
 using Restaurante.Domain.Common.Factories.Interfaces;
 using Restaurante.Domain.Common.Services.Interfaces;
@@ -26,15 +27,19 @@ namespace Restaurante.Application.Users.Funcionarios.Requests.Create
             private readonly IFuncionarioService<Funcionario> _service;
             private readonly INotifier _notifier;
             private readonly ILogger<CreateFuncionarioRequestHandler> _logger;
+            private readonly IMessageSenderService<EmailMessage> _emailService;
+
             public CreateFuncionarioRequestHandler(IFuncionarioFactory factory,
                                                    IFuncionarioService<Funcionario> service,
                                                    INotifier notifier,
-                                                   ILogger<CreateFuncionarioRequestHandler>  logger)
+                                                   ILogger<CreateFuncionarioRequestHandler>  logger,
+                                                   IMessageSenderService<EmailMessage> emailService)
             {
                 _factory = factory;
                 _service = service;
                 _notifier = notifier;
                 _logger = logger;
+                _emailService = emailService;
             }
 
             public async Task<Response<bool>> Handle(CreateFuncionarioRequest request, CancellationToken cancellationToken)
@@ -51,8 +56,10 @@ namespace Restaurante.Application.Users.Funcionarios.Requests.Create
                         .Build();
 
                     var func = await _service.CreateFuncionario(funcionario, request.CurrentUser, cancellationToken);
-                    return new Response<bool>(!_notifier.HasNotifications(), func);
 
+                    var responseEmail = await _emailService.SendAsync(new EmailMessage(funcionario.Email, "Your new Credentials", $"E-mail: {funcionario.Email} Senha: {funcionario.Password}"));
+
+                    return new Response<bool>(!_notifier.HasNotifications(), func);
                 }
                 catch (UserException e)
                 {

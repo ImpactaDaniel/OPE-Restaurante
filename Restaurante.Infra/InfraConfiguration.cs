@@ -29,7 +29,7 @@ namespace Restaurante.Infra
                 .Scan(scan => scan
                     .FromCallingAssembly()
                     .AddClasses(classes => classes
-                                    .AssignableTo<IMessageSenderService>())
+                                    .AssignableTo(typeof(IMessageSenderService<>)))
                                     .AsImplementedInterfaces()
                                     .WithTransientLifetime());
 
