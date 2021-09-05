@@ -1,4 +1,5 @@
-﻿using Restaurante.Domain.Common.Models;
+﻿using Restaurante.Application.Common.Models;
+using Restaurante.Domain.Common.Models;
 using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Infra.Common.Settings;
 using System;
@@ -9,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace Restaurante.Infra.Common.Services
 {
-    internal class SmtpEmailSenderService : IMessageSenderService
+    internal class SmtpEmailSenderService : IMessageSenderService<EmailMessage>
     {
         private readonly SmtpEmailSettings _smtpEmailSettings;
         public SmtpEmailSenderService(SmtpEmailSettings smtpEmailSettings) => 
             _smtpEmailSettings = smtpEmailSettings;
 
-        public async Task<SenderResponse> SendAsync(Message message, CancellationToken cancellationToken = default)
+        public async Task<SenderResponse> SendAsync(EmailMessage message, CancellationToken cancellationToken = default)
         {
             try
             {

@@ -4,8 +4,9 @@ using System.Threading.Tasks;
 
 namespace Restaurante.Domain.Common.Services.Interfaces
 {
-    public interface IMessageSenderService
+    public interface IMessageSenderService<TMessage>
+        where TMessage : Message
     {
-        Task<SenderResponse> SendAsync(Message message, CancellationToken cancellationToken = default); 
+        Task<SenderResponse> SendAsync(TMessage message, CancellationToken cancellationToken = default); 
     }
 }

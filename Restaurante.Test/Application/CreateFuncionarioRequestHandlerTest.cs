@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using NSubstitute;
+using Restaurante.Application.Common.Models;
 using Restaurante.Application.Users.Funcionarios.Requests.Create;
 using Restaurante.Domain.Common.Factories.Interfaces;
 using Restaurante.Domain.Common.Services.Interfaces;
@@ -16,6 +17,7 @@ namespace Restaurante.Test.Application
     {
         private readonly IFuncionarioFactory _factory;
         private readonly IFuncionarioService<Funcionario> _service;
+        private readonly IMessageSenderService<EmailMessage> _emailService;
         private readonly INotifier _notifier;
         private readonly ILogger<CreateFuncionarioRequestHandler> _logger;
 
@@ -26,6 +28,8 @@ namespace Restaurante.Test.Application
 
             _service = Substitute.For<IFuncionarioService<Funcionario>>();
 
+            _emailService = Substitute.For<IMessageSenderService<EmailMessage>>();
+
             _logger = Substitute.For<ILogger<CreateFuncionarioRequestHandler>>();
 
             _notifier = Substitute.For<INotifier>();
@@ -35,7 +39,7 @@ namespace Restaurante.Test.Application
         public async Task ShouldCreateNewFuncionario()
         {
             //Arrange
-            var handler = new CreateFuncionarioRequestHandler(_factory, _service, _notifier, _logger);
+            var handler = new CreateFuncionarioRequestHandler(_factory, _service, _notifier, _logger, _emailService);
             var funcionarioDefault = FuncionarioMock.GetDefault();
             var request = new CreateFuncionarioRequest
             {
@@ -55,6 +59,7 @@ namespace Restaurante.Test.Application
             Assert.True(response.Result);
             Assert.True(response.Success);
             _notifier.ReceivedWithAnyArgs().HasNotifications();
+            await _emailService.ReceivedWithAnyArgs().SendAsync(Arg.Any<EmailMessage>());
             _notifier.DidNotReceiveWithAnyArgs().AddNotification(default);
         }
 
@@ -62,7 +67,7 @@ namespace Restaurante.Test.Application
         public async Task ShouldNotCreateNewFuncionario()
         {
             //Arrange
-            var handler = new CreateFuncionarioRequestHandler(_factory, _service, _notifier, _logger);
+            var handler = new CreateFuncionarioRequestHandler(_factory, _service, _notifier, _logger, _emailService);
             var funcionarioDefault = FuncionarioMock.GetDefault();
 
             var request = new CreateFuncionarioRequest
