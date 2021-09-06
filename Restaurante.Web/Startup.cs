@@ -26,7 +26,7 @@ namespace Restaurante.Web
             services
                 .AddInfra(Configuration)
                 .AddDomain()
-                .AddApplication();
+                .AddApplication(Configuration);
 
             services.AddLogging(configure => configure.AddFile("Logs/Restaurante-{Date}.txt"));
 
@@ -58,6 +58,9 @@ namespace Restaurante.Web
             }
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app
                 .UseHttpsRedirection()

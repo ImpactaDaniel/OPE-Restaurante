@@ -1,6 +1,6 @@
 ﻿namespace Restaurante.Domain.Common.Models
 {
-    public class Message
+    public abstract class Message
     {
         public string To { get; }
         public string Subject { get; }

@@ -1,7 +1,9 @@
 ﻿using Restaurante.Domain.Common.Factories.Interfaces;
 using Restaurante.Domain.Users.Entregadores.Models;
 using Restaurante.Domain.Users.Exceptions;
+using Restaurante.Domain.Users.Funcionarios.Models;
 using System;
+using System.Collections.Generic;
 
 namespace Restaurante.Domain.Common.Factories
 {
@@ -14,7 +16,7 @@ namespace Restaurante.Domain.Common.Factories
                 throw new UserException("Entregador precisa ter um veículo!");
             if (string.IsNullOrEmpty(_email) || string.IsNullOrEmpty(_password) || string.IsNullOrEmpty(_name))
                 throw new UserException("Nome, e-mail e senha precisam estar preenchidos!");
-            return new Entregador(_name, _email, _password, _veiculo);
+            return new Entregador(_name, _email, _password, _veiculo, new Account(new Bank(""), "", "", 0), new List<Phone>(), new Address("", "", "", ""));
         }
 
         public IEntregadorFactory WithVehicle(Veiculo veiculo)

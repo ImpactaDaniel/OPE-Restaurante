@@ -9,8 +9,8 @@ using Restaurante.Infra.Common.Persistence;
 namespace Restaurante.Infra.Migrations
 {
     [DbContext(typeof(RestauranteDbContext))]
-    [Migration("20210902001041_AddingBank")]
-    partial class AddingBank
+    [Migration("20210902154635_removingEntregadores")]
+    partial class removingEntregadores
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -18,33 +18,22 @@ namespace Restaurante.Infra.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.9");
 
-            modelBuilder.Entity("Restaurante.Domain.Users.Entregadores.Models.Veiculo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Brand")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Model")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Veiculo");
-                });
-
             modelBuilder.Entity("Restaurante.Domain.Users.Funcionarios.Models.Account", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("AccountNumber")
+                        .HasColumnType("TEXT");
+
                     b.Property<int?>("BankId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Branch")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Digit")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -59,6 +48,18 @@ namespace Restaurante.Infra.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("CEP")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("District")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Number")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Street")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -76,7 +77,7 @@ namespace Restaurante.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Banks");
+                    b.ToTable("Bank");
                 });
 
             modelBuilder.Entity("Restaurante.Domain.Users.Funcionarios.Models.Funcionario", b =>
@@ -91,32 +92,16 @@ namespace Restaurante.Infra.Migrations
                     b.Property<int?>("AddressId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("CPF")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Email")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("LastName")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Password")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("RG")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Type")
@@ -132,8 +117,6 @@ namespace Restaurante.Infra.Migrations
                     b.HasIndex("AddressId");
 
                     b.ToTable("Funcionarios");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Funcionario");
                 });
 
             modelBuilder.Entity("Restaurante.Domain.Users.Funcionarios.Models.Phone", b =>
@@ -142,26 +125,20 @@ namespace Restaurante.Infra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("DDD")
+                        .HasColumnType("TEXT");
+
                     b.Property<int?>("FuncionarioId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.HasIndex("FuncionarioId");
 
                     b.ToTable("Phone");
-                });
-
-            modelBuilder.Entity("Restaurante.Domain.Users.Entregadores.Models.Entregador", b =>
-                {
-                    b.HasBaseType("Restaurante.Domain.Users.Funcionarios.Models.Funcionario");
-
-                    b.Property<int?>("MotoId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasIndex("MotoId");
-
-                    b.HasDiscriminator().HasValue("Entregador");
                 });
 
             modelBuilder.Entity("Restaurante.Domain.Users.Funcionarios.Models.Account", b =>
@@ -191,22 +168,13 @@ namespace Restaurante.Infra.Migrations
             modelBuilder.Entity("Restaurante.Domain.Users.Funcionarios.Models.Phone", b =>
                 {
                     b.HasOne("Restaurante.Domain.Users.Funcionarios.Models.Funcionario", null)
-                        .WithMany("Telefones")
+                        .WithMany("Phones")
                         .HasForeignKey("FuncionarioId");
-                });
-
-            modelBuilder.Entity("Restaurante.Domain.Users.Entregadores.Models.Entregador", b =>
-                {
-                    b.HasOne("Restaurante.Domain.Users.Entregadores.Models.Veiculo", "Moto")
-                        .WithMany()
-                        .HasForeignKey("MotoId");
-
-                    b.Navigation("Moto");
                 });
 
             modelBuilder.Entity("Restaurante.Domain.Users.Funcionarios.Models.Funcionario", b =>
                 {
-                    b.Navigation("Telefones");
+                    b.Navigation("Phones");
                 });
 #pragma warning restore 612, 618
         }

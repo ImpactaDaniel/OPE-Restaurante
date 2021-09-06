@@ -47,7 +47,7 @@ namespace Restaurante.Application.Users.Funcionarios.Services
                     return false;
                 }
                 funcionario.CreatedDate = DateTime.Now;
-                await _repository.CreateFuncionario(funcionario, user, cancellationToken);                
+                await _repository.CreateFuncionario(funcionario, user, cancellationToken);
                 return true;
 
             }
@@ -56,7 +56,7 @@ namespace Restaurante.Application.Users.Funcionarios.Services
                 _notifier.AddNotification(NotificationHelper.FromException(e));
                 return false;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _logger.LogError(e, e.Message);
                 throw new Exception("Houve um erro ao tentar criar o funcionário!", e);
@@ -96,14 +96,14 @@ namespace Restaurante.Application.Users.Funcionarios.Services
             }
         }
 
-        public  async Task<TFuncionario> Get(int id, CancellationToken cancellationToken = default)
+        public async Task<TFuncionario> Get(int id, CancellationToken cancellationToken = default)
         {
             try
             {
                 var func = await _repository
                     .Get(id, cancellationToken);
 
-                if(func is null)
+                if (func is null)
                 {
                     _notifier.AddNotification(NotificationHelper.EntityNotFound(nameof(Funcionario)));
                     return null;
@@ -115,7 +115,7 @@ namespace Restaurante.Application.Users.Funcionarios.Services
                 _notifier.AddNotification(NotificationHelper.FromException(e));
                 return null;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _logger.LogError(e, e.Message);
                 throw new Exception("Houve um erro ao tentar buscar o funcionário!", e);
@@ -132,7 +132,7 @@ namespace Restaurante.Application.Users.Funcionarios.Services
                 var user = await _repository
                     .Login(email, password, cancellationToken);
 
-                if(user is null)
+                if (user is null)
                 {
                     _notifier.AddNotification(NotificationHelper.InvalidEmailOrPassword());
                     return null;

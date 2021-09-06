@@ -1,4 +1,5 @@
 ﻿using NSubstitute;
+using Restaurante.Application.Common.Models;
 using Restaurante.Domain.Common.Models;
 using Restaurante.Domain.Common.Services.Interfaces;
 using System.Threading.Tasks;
@@ -8,10 +9,10 @@ namespace Restaurante.Test.Services
 {
     public class EmailServiceTest
     {
-        IMessageSenderService _emailService;
+        IMessageSenderService<EmailMessage> _emailService;
         public EmailServiceTest()
         {
-            _emailService = Substitute.For<IMessageSenderService>();
+            _emailService = Substitute.For<IMessageSenderService<EmailMessage>>();
             _emailService.SendAsync(default).ReturnsForAnyArgs(new SenderResponse(true, string.Empty));
         }
 
@@ -19,7 +20,7 @@ namespace Restaurante.Test.Services
         public async Task ShouldSendEmail()
         {
             //Given a valid email
-            var message = new Message(string.Empty, "Test", "teste 12346");
+            var message = new EmailMessage(string.Empty, "Test", "teste 12346");
 
             //When sending email
             var res = await _emailService.SendAsync(message);
