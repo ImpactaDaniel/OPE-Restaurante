@@ -38,7 +38,6 @@ export class CadastroFuncionarioComponent implements OnInit {
   }
 
 }
-
 export class Funcionario {
   name: string;
   lastName: string;

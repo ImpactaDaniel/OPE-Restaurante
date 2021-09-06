@@ -13,7 +13,7 @@ namespace Restaurante.Infra.Common.Persistence
 
         public void Initialize()
         {
-            _db.Database.EnsureCreated();
+            _db.Database.EnsureCreated();            
             _db.Database.Migrate();            
         }
     }
