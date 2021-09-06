@@ -1,0 +1,54 @@
+<div class="container-fluid">
+  <div class="row login_page">
+    <div class="col box_logo d-flex justify-content-center align-items-center">
+      <div class="d-flex flex-column">
+        <img id='img_logo' src='assets/logo.png'>
+        <div class="text_logo">
+          <div class="col">
+            <div class="row justify-content-center">Restaurante</div>
+            <div class="row justify-content-center">Mata Burro</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col justify-content-center">
+      <div class="flex-row flex-lg-column">
+        <div class="text_login">
+          <!--<div class="row justify-content-center">
+            Mata Burro
+          </div>
+          <div class="row">
+            Um restaurante de comida típicamente brasileira.
+          </div>
+          <div class="row">
+            Onde você vai experimentar os melhores pratos nordestinos.
+          </div>
+          <div class="row">
+            Bom Apetite!
+          </div>
+          <br/>-->
+          <div class="row">
+            <form (submit)="cadastrarFuncionario()" [formGroup]="form">
+              <div class="form-group col-5">
+                <input type="text" formControlName="nome" name="nome" class="form-control" id="exampleInputName1" placeholder="Nome">
+              </div>
+              <div class="form-group col-5">
+                <input type="text" formControlName="sobrenome" name="sobrenome" class="form-control" id="exampleInputNickname1" placeholder="Sobrenome">
+              </div>
+              <div class="form-group col-5">
+                <input type="email" formControlName="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="E-mail">
+              </div>
+              <div class="form-group col-5">
+                <input type="password" formControlName="senha" name="senha" class="form-control" id="exampleInputPassword1" placeholder="Senha">
+              </div>
+              <div class="form-group col-5">
+                <input type="text" formControlName="endereco" name="endereco" class="form-control" id="exampleInputAddress1" placeholder="Endereço">
+              </div>
+              <button id="btn_logar" type="submit" class="btn btn-primary float-right">Criar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

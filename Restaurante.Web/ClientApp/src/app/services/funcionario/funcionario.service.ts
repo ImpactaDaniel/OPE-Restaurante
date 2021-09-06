@@ -1,45 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { APIResponse } from '../../models/common/apiResponse';
+import { Employee } from '../../models/funcionario/funcionario';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FuncionarioService {
+
+export class EmployeeService {
 
   constructor(@Inject('BASE_URL') private url: string, private httpClient: HttpClient) { }
 
-  createUser() {
-    return this.httpClient.post(this.url + 'Funcionarios/CreateNew', {
-      name: "Daniel",
-      email: "daniel@gmail.com",
-      password: "123456"
-    });
+  createEmployee(employee: Employee): Observable<APIResponse<boolean>> {
+    return this.httpClient.post<APIResponse<boolean>>(this.url + 'Funcionarios/CreateNew', employee)
   }
-
-  loginUser() {
-    return this.httpClient.post(this.url + 'Funcionarios/Authenticate', {
-      email: "daniel@gmail.com",
-      password: "1234156"
-    });
-  }
-
-  getAll() {
-    return this.httpClient.get<APIResponse<Funcionario[]>>(this.url + 'Funcionarios/GetAll');
-  }
-}
-
-export class APIResponse<T> {
-  response: T;
-  success: boolean;
-  notifications: Notification[];
-}
-
-export class Notification {
-  code: number;
-  message: string;
-}
-
-export class Funcionario {
-  name: string;
-  sobrenome: string;
 }
