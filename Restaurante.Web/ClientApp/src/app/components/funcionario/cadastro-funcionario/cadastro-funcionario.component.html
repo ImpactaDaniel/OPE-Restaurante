@@ -1,53 +1,57 @@
 <div class="container-fluid">
-  <div class="row login_page">
-    <div class="col box_logo d-flex justify-content-center align-items-center">
-      <div class="d-flex flex-column">
-        <img id='img_logo' src='assets/logo.png'>
-        <div class="text_logo">
-          <div class="col">
-            <div class="row justify-content-center">Restaurante</div>
-            <div class="row justify-content-center">Mata Burro</div>
-          </div>
+  <div class="row col-sm login_page">
+    <div class="col row-md-6 box_logo d-flex justify-content-center align-items-center">
+      <div class="row-4 justify-content-center col-sm-auto">
+        <img id='img_logo' src='logo.PNG'>
+      </div>
+      <div class="row-2 text_logo col-sm-8">
+        <div class="col">
+          <div class="row justify-content-center">Restaurante</div>
+          <div class="row justify-content-center">Mata Burro</div>
         </div>
       </div>
     </div>
-    <div class="col justify-content-center">
-      <div class="flex-row flex-lg-column">
-        <div class="text_login">
-          <!--<div class="row justify-content-center">
-            Mata Burro
-          </div>
-          <div class="row">
-            Um restaurante de comida típicamente brasileira.
-          </div>
-          <div class="row">
-            Onde você vai experimentar os melhores pratos nordestinos.
-          </div>
-          <div class="row">
-            Bom Apetite!
-          </div>
-          <br/>-->
-          <div class="row">
-            <form (submit)="cadastrarFuncionario()" [formGroup]="form">
-              <div class="form-group col-5">
-                <input type="text" formControlName="nome" name="nome" class="form-control" id="exampleInputName1" placeholder="Nome">
-              </div>
-              <div class="form-group col-5">
-                <input type="text" formControlName="sobrenome" name="sobrenome" class="form-control" id="exampleInputNickname1" placeholder="Sobrenome">
-              </div>
-              <div class="form-group col-5">
-                <input type="email" formControlName="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="E-mail">
-              </div>
-              <div class="form-group col-5">
-                <input type="password" formControlName="senha" name="senha" class="form-control" id="exampleInputPassword1" placeholder="Senha">
-              </div>
-              <div class="form-group col-5">
-                <input type="text" formControlName="endereco" name="endereco" class="form-control" id="exampleInputAddress1" placeholder="Endereço">
-              </div>
-              <button id="btn_logar" type="submit" class="btn btn-primary float-right">Criar</button>
-            </form>
-          </div>
+
+    <div class="col-5 row-md-auto box_login justify-content-center">
+      <div class="row col-sm-auto justify-content-center">
+        <div class="row justify-content-center text_login">
+          Preencha os dados abaixo.
         </div>
+        <form>
+          <div class="row">
+            <div class="col">
+              <input type="text" formControlName="nome" name="nome" class="form-control campos-form" id="exampleInputName1"
+                     placeholder="Nome">
+              <input type="text" formControlName="sobrenome" name="sobrenome" class="form-control campos-form" id="exampleInputNickname1"
+                     placeholder="Sobrenome">
+              <input type="email" formControlName="email" name="email" class="form-control campos-form" id="exampleInputEmail1"
+                     aria-describedby="emailHelp" placeholder="E-mail">
+              <input type="password" formControlName="senha" name="senha" class="form-control campos-form" id="exampleInputPassword1"
+                     placeholder="Senha">
+              <input type="text" formControlName="endereco" name="endereco" class="form-control campos-form" id="exampleInputAddress1"
+                     placeholder="Logradouro">
+              <input type="text" formControlName="endereco" name="endereco" class="form-control campos-form" id="exampleInputAddress1"
+                     placeholder="Número">
+            </div>
+            <div class="col">
+              <input type="text" formControlName="endereco" name="endereco" class="form-control campos-form" id="exampleInputAddress1"
+                     placeholder="Bairro">
+              <input type="text" formControlName="endereco" name="endereco" class="form-control campos-form" id="exampleInputAddress1"
+                     placeholder="CEP">
+              <input type="text" formControlName="endereco" name="endereco" class="form-control campos-form" id="exampleInputAddress1"
+                     placeholder="Cidade">
+              <input type="text" formControlName="endereco" name="endereco" class="form-control campos-form" id="exampleInputAddress1"
+                     placeholder="Estado">
+              <div class="row">
+                <input type="text" formControlName="Phones" name="endereco" class="form-control campos-form" id="exampleInputAddress1"
+                       placeholder="DDD" style="width: 80px;">
+                <input type="text" formControlName="Phones" name="endereco" class="form-control campos-form" id="exampleInputAddress1"
+                       placeholder="Telefone" style="max-width: 130px;">
+              </div>
+            </div>
+          </div>
+          <button id="btn_logar" type="submit" class="btn btn-primary button-form">Criar</button>
+        </form>
       </div>
     </div>
   </div>
