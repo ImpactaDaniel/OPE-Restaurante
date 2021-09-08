@@ -3,30 +3,30 @@ using NSubstitute;
 using Restaurante.Application.Users.Funcionarios.Requests.Create;
 using Restaurante.Domain.Common.Factories.Interfaces;
 using Restaurante.Domain.Common.Services.Interfaces;
-using Restaurante.Domain.Users.Funcionarios.Models;
+using Restaurante.Domain.Users.Employees.Models;
 using Restaurante.Domain.Users.Funcionarios.Services.Interfaces;
 using Restaurante.Test.Usuarios.Mocks;
 using System.Threading.Tasks;
 using Xunit;
-using static Restaurante.Application.Users.Funcionarios.Requests.Create.CreateFuncionarioRequest;
+using static Restaurante.Application.Users.Funcionarios.Requests.Create.CreateEmployeeRequest;
 
 namespace Restaurante.Test.Application
 {
     public class CreateFuncionarioRequestHandlerTest
     {
-        private readonly IFuncionarioFactory _factory;
-        private readonly IFuncionarioService<Funcionario> _service;
+        private readonly IEmployeeFactory _factory;
+        private readonly IEmployeesService<Employee> _service;
         private readonly INotifier _notifier;
-        private readonly ILogger<CreateFuncionarioRequestHandler> _logger;
+        private readonly ILogger<CreateEmployeeRequesttHandler> _logger;
 
         public CreateFuncionarioRequestHandlerTest()
         {
-            _factory = Substitute.For<IFuncionarioFactory>();
+            _factory = Substitute.For<IEmployeeFactory>();
             _factory.Build().ReturnsForAnyArgs(FuncionarioMock.GetDefault());
 
-            _service = Substitute.For<IFuncionarioService<Funcionario>>();
+            _service = Substitute.For<IEmployeesService<Employee>>();
 
-            _logger = Substitute.For<ILogger<CreateFuncionarioRequestHandler>>();
+            _logger = Substitute.For<ILogger<CreateEmployeeRequesttHandler>>();
 
             _notifier = Substitute.For<INotifier>();
         }
@@ -35,16 +35,16 @@ namespace Restaurante.Test.Application
         public async Task ShouldCreateNewFuncionario()
         {
             //Arrange
-            var handler = new CreateFuncionarioRequestHandler(_factory, _service, _notifier, _logger);
+            var handler = new CreateEmployeeRequesttHandler(_factory, _service, _notifier, _logger);
             var funcionarioDefault = FuncionarioMock.GetDefault();
-            var request = new CreateFuncionarioRequest
+            var request = new CreateEmployeeRequest
             {
                 Name = funcionarioDefault.Name,
                 Email = funcionarioDefault.Email,
                 Password = funcionarioDefault.Password,
                 Type = funcionarioDefault.Type
             };
-            _service.CreateFuncionario(default, default).ReturnsForAnyArgs(true);
+            _service.CreateEmployee(default, default).ReturnsForAnyArgs(true);
 
             _notifier.HasNotifications().ReturnsForAnyArgs(false);
 
@@ -62,10 +62,10 @@ namespace Restaurante.Test.Application
         public async Task ShouldNotCreateNewFuncionario()
         {
             //Arrange
-            var handler = new CreateFuncionarioRequestHandler(_factory, _service, _notifier, _logger);
+            var handler = new CreateEmployeeRequesttHandler(_factory, _service, _notifier, _logger);
             var funcionarioDefault = FuncionarioMock.GetDefault();
 
-            var request = new CreateFuncionarioRequest
+            var request = new CreateEmployeeRequest
             {
                 Name = funcionarioDefault.Name,
                 Email = funcionarioDefault.Email,
@@ -73,7 +73,7 @@ namespace Restaurante.Test.Application
                 Type = funcionarioDefault.Type
             };
 
-            _service.CreateFuncionario(Arg.Any<Funcionario>(), default).ReturnsForAnyArgs(false);
+            _service.CreateEmployee(Arg.Any<Employee>(), default).ReturnsForAnyArgs(false);
 
             _notifier.HasNotifications().ReturnsForAnyArgs(true);
 

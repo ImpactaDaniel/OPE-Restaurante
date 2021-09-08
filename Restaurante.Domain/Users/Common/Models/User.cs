@@ -11,11 +11,11 @@ namespace Restaurante.Domain.Users.Common.Models
         public string Password { get; protected set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; protected set; }
-        public TiposFuncionario Type { get; protected set; }
+        public EmployeesType Type { get; protected set; }
         protected User()
         {
         }
-        public User(string name, string email, string password, TiposFuncionario type)
+        public User(string name, string email, string password, EmployeesType type)
         {
             ValidateNullString(name, "Nome");
             ValidateNullString(email, "E-mail");

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Restaurante.Domain.Users.Funcionarios.Models;
-using Restaurante.Domain.Users.Funcionarios.Repositories;
+using Restaurante.Domain.Users.Employees.Models;
+using Restaurante.Domain.Users.Employees.Repositories;
 using Restaurante.Infra.Common.Persistence;
 using Restaurante.Infra.Common.Persistence.Interfaces;
 using Restaurante.Infra.Users.Funcionarios;
@@ -12,7 +12,7 @@ namespace Restaurante.Test.Services
 {
     public class FuncionarioRepositoryTest
     {
-        private readonly IFuncionarioDomainRepository<Funcionario> _repository;
+        private readonly IEmployeeDomainRepository<Employee> _repository;
         private readonly IRestauranteDbContext _context;
 
         public FuncionarioRepositoryTest()
@@ -31,11 +31,11 @@ namespace Restaurante.Test.Services
             //Arrange
             var funcionario = FuncionarioMock.GetDefault();
             var usuario = FuncionarioMock.GetDefaultGerente();
-            _context.Funcionarios.Add(usuario);
+            _context.Employees.Add(usuario);
             await _context.SaveChangesAsync();
 
             //Act
-            var ent = await _repository.CreateFuncionario(funcionario, usuario);
+            var ent = await _repository.CreateEmployee(funcionario, usuario);
 
             //Assert
             Assert.NotNull(ent);

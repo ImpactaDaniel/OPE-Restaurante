@@ -30,7 +30,7 @@ namespace Restaurante.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Authenticate([FromBody]LoginModel loginModel, CancellationToken cancellationToken = default)
         {
-            var response = await _mediator.Send(new LoginFuncionarioRequest() { Email = loginModel.Email, Password = loginModel.Password }, cancellationToken);
+            var response = await _mediator.Send(new AutenticateEmployeeRequest() { Email = loginModel.Email, Password = loginModel.Password }, cancellationToken);
             return GetResponse(response);
         }
     }

@@ -3,23 +3,23 @@ using Restaurante.Infra.Common.Persistence;
 using Restaurante.Infra.Common.Persistence.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
-using Restaurante.Domain.Users.Funcionarios.Models;
-using Restaurante.Domain.Users.Funcionarios.Repositories;
 using System.Collections.Generic;
+using Restaurante.Domain.Users.Employees.Repositories;
+using Restaurante.Domain.Users.Employees.Models;
 
 namespace Restaurante.Infra.Users.Funcionarios
 {
     internal class FuncionariosRepository :
-        DataRepository<IRestauranteDbContext, Funcionario>,
-        IFuncionarioDomainRepository<Funcionario>
+        DataRepository<IRestauranteDbContext, Employee>,
+        IEmployeeDomainRepository<Employee>
     {
         public FuncionariosRepository(IRestauranteDbContext db) : base(db)
         {
         }
 
-        public async Task<Funcionario> CreateFuncionario(Funcionario funcionario, Funcionario usuario, CancellationToken cancellationToken = default)
+        public async Task<Employee> CreateEmployee(Employee funcionario, Employee usuario, CancellationToken cancellationToken = default)
         {
-            await Data.Funcionarios.AddAsync(funcionario, cancellationToken);
+            await Data.Employees.AddAsync(funcionario, cancellationToken);
             await Data.SaveChangesAsync(cancellationToken);
             return funcionario;
         }
@@ -30,12 +30,12 @@ namespace Restaurante.Infra.Users.Funcionarios
                 All()
                 .FirstAsync(e => e.Id == id, cancellationToken);
 
-            Data.Funcionarios.Remove(entity);
+            Data.Employees.Remove(entity);
             await Data.SaveChangesAsync(cancellationToken);
             return true;
         }
 
-        public async Task<Funcionario> Get(int id, CancellationToken cancellationToken = default)
+        public async Task<Employee> Get(int id, CancellationToken cancellationToken = default)
         {
                 var entity = await
                     All()
@@ -44,11 +44,11 @@ namespace Restaurante.Infra.Users.Funcionarios
                 return entity;
         }
 
-        public async Task<IList<Funcionario>> GetAll(CancellationToken cancellationToken = default) =>
+        public async Task<IList<Employee>> GetAll(CancellationToken cancellationToken = default) =>
             await All()
                 .ToListAsync(cancellationToken);
 
-        public async Task<Funcionario> Login(string email, string password, CancellationToken cancellationToken = default)
+        public async Task<Employee> Login(string email, string password, CancellationToken cancellationToken = default)
         {
             var user = await All()
                 .FirstOrDefaultAsync(u => 

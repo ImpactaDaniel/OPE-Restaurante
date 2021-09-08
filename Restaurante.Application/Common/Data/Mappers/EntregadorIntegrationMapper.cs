@@ -4,9 +4,9 @@ using Restaurante.Domain.Users.Entregadores.Models;
 
 namespace Restaurante.Application.Common.Data.Mappers
 {
-    public class EntregadorIntegrationMapper : IMapper<Entregador, EntregadorIntegration>
+    public class EntregadorIntegrationMapper : IMapper<Deliver, EntregadorIntegration>
     {
-        public EntregadorIntegration Map(Entregador source, EntregadorIntegration dest = null) =>
+        public EntregadorIntegration Map(Deliver source, EntregadorIntegration dest = null) =>
             new EntregadorIntegration();
     }
 }

@@ -2,8 +2,8 @@
 using NSubstitute;
 using Restaurante.Application.Users.Funcionarios.Services;
 using Restaurante.Domain.Common.Services.Interfaces;
-using Restaurante.Domain.Users.Funcionarios.Models;
-using Restaurante.Domain.Users.Funcionarios.Repositories;
+using Restaurante.Domain.Users.Employees.Models;
+using Restaurante.Domain.Users.Employees.Repositories;
 using Restaurante.Test.Usuarios.Mocks;
 using System;
 using System.Threading.Tasks;
@@ -14,25 +14,25 @@ namespace Restaurante.Test.Services
     public class FuncionarioServiceTest
     {
         private readonly INotifier _notifier;
-        private IFuncionarioDomainRepository<Funcionario> _repository;
-        private readonly ILogger<FuncionarioService<Funcionario>> _logger;
+        private IEmployeeDomainRepository<Employee> _repository;
+        private readonly ILogger<EmployeeService<Employee>> _logger;
 
         public FuncionarioServiceTest()
         {
             _notifier = Substitute.For<INotifier>();
-            _repository = Substitute.For<IFuncionarioDomainRepository<Funcionario>>();
-            _logger = Substitute.For<ILogger<FuncionarioService<Funcionario>>>();
+            _repository = Substitute.For<IEmployeeDomainRepository<Employee>>();
+            _logger = Substitute.For<ILogger<EmployeeService<Employee>>>();
         }
 
         [Fact]
         public async Task ShouldCreateNewFuncionario()
         {
             //Arrange
-            var service = new FuncionarioService<Funcionario>(_notifier, _repository, _logger);
+            var service = new EmployeeService<Employee>(_notifier, _repository, _logger);
             _repository.Get(default).ReturnsForAnyArgs(FuncionarioMock.GetDefaultGerente());
 
             //Act
-            var response = await service.CreateFuncionario(FuncionarioMock.GetDefault(), FuncionarioMock.GetDefaultGerente().Id);
+            var response = await service.CreateEmployee(FuncionarioMock.GetDefault(), FuncionarioMock.GetDefaultGerente().Id);
 
             //Assert
             _notifier.DidNotReceiveWithAnyArgs().AddNotification(default);
@@ -44,7 +44,7 @@ namespace Restaurante.Test.Services
         public async Task ShouldNotCreateNewFuncionario()
         {
             //Arrange
-            var service = new FuncionarioService<Funcionario>(_notifier, _repository, _logger);
+            var service = new EmployeeService<Employee>(_notifier, _repository, _logger);
 
             _repository.When(repository =>
             {
@@ -55,7 +55,7 @@ namespace Restaurante.Test.Services
 
             //Act
             var ex = await Assert.ThrowsAsync<Exception>(async () =>
-                await service.CreateFuncionario(FuncionarioMock.GetDefault(), FuncionarioMock.GetDefault().Id)
+                await service.CreateEmployee(FuncionarioMock.GetDefault(), FuncionarioMock.GetDefault().Id)
             );
 
             //Assert
@@ -66,11 +66,11 @@ namespace Restaurante.Test.Services
         public async Task ShouldNotCreateWhenUserIsNull()
         {
             //Arrange
-            var service = new FuncionarioService<Funcionario>(_notifier, _repository, _logger);
-            _repository.Get(default).ReturnsForAnyArgs(Task.FromResult<Funcionario>(null));
+            var service = new EmployeeService<Employee>(_notifier, _repository, _logger);
+            _repository.Get(default).ReturnsForAnyArgs(Task.FromResult<Employee>(null));
 
             //Act
-            var response = await service.CreateFuncionario(FuncionarioMock.GetDefault(), FuncionarioMock.GetDefaultGerente().Id);
+            var response = await service.CreateEmployee(FuncionarioMock.GetDefault(), FuncionarioMock.GetDefaultGerente().Id);
 
             //Assert
             _notifier.ReceivedWithAnyArgs().AddNotification(default);

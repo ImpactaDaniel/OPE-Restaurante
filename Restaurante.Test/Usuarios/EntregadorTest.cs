@@ -8,10 +8,10 @@ namespace Restaurante.Test.Usuarios
 {
     public class EntregadorTest
     {
-        IEntregadorFactory _factory;
+        IDeliverFactory _factory;
         public EntregadorTest()
         {
-            _factory = new EntregadorFactory();
+            _factory = new DeliverFactory();
         }
 
         [Fact]
@@ -38,7 +38,7 @@ namespace Restaurante.Test.Usuarios
         public void DeveRetornarUserExceptionQuandoInformacoesInvalidas(string nome,
                                                                             string email,
                                                                             string password,
-                                                                            Veiculo veiculo,
+                                                                            Vehicle veiculo,
                                                                             string mensagemEsperada)
         {
 
