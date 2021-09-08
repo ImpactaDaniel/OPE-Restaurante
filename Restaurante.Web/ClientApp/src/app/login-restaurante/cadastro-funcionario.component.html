@@ -1,20 +1,42 @@
-<div>
-  <form (submit)="cadastrarFuncionario()" [formGroup]="form">
-    <div class="form-group">
-      <input type="email" formControlName="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="E-mail">
+<div class="container-fluid">
+  <div class="row col-sm login_page">
+    <div class="col row-md-6 box_logo d-flex justify-content-center align-items-center">
+      <div class="row-4 justify-content-center col-sm-auto">
+        <img id='img_logo' src='../../assets/images/logo.PNG'>
+      </div>
+      <div class="row-2 text_logo col-sm-8">
+        <div class="col">
+          <div class="row justify-content-center">Restaurante</div>
+          <div class="row justify-content-center">Mata Burro</div>
+        </div>
+      </div>
+
     </div>
-    <div class="form-group">
-      <input type="password" formControlName="senha" name="senha" class="form-control" id="exampleInputPassword1" placeholder="Senha">
+    <div class="col-5 row-md-auto box_login d-flex justify-content-center">
+      <div class="row col-sm-auto justify-content-center">
+        <div class="text_login">
+          <div class="row justify-content-center">
+            Mata-Burro
+          </div>
+          <div class="row justify-content-center">
+            Um restaurante de comida típicamente brasileira.
+          </div>
+          <div class="row justify-content-center">
+            Onde você vai experimentar os melhores pratos nordestinos.
+          </div>
+          <div class="row justify-content-center">
+            Bom Apetite!
+          </div>
+        </div>
+        <div class="box_btn_login">
+          <div class="row justify-content-center">
+            <button [routerLink]="['/login-input']" id='btn_login' type="button" class="btn btn-primary">Login</button>
+          </div>
+          <div class="row justify-content-center">
+            <button id='btn_cadastro' type="button" class="btn btn-primary">Cadastro</button>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <input type="text" formControlName="nome" name="nome" class="form-control" id="exampleInputName1" placeholder="Nome">
-    </div>
-    <div class="form-group">
-      <input type="text" formControlName="sobrenome" name="sobrenome" class="form-control" id="exampleInputNickname1" placeholder="Sobrenome">
-    </div>
-    <div class="form-group">
-      <input type="text" formControlName="endereco" name="endereco" class="form-control" id="exampleInputAddress1" placeholder="Endereço">
-    </div>
-    <button id="btn_logar" type="submit" class="btn btn-primary">Criar</button>
-  </form>
+  </div>
 </div>
