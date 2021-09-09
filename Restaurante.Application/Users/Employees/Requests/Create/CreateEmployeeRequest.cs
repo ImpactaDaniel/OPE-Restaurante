@@ -26,13 +26,13 @@ namespace Restaurante.Application.Users.Employees.Requests.Create
             private readonly IEmployeeFactory _factory;
             private readonly IEmployeesService<Employee> _service;
             private readonly INotifier _notifier;
-            private readonly ILogger<CreateFuncionarioRequestHandler> _logger;
+            private readonly ILogger<CreateEmployeeRequestHandler> _logger;
             private readonly IMessageSenderService<EmailMessage> _emailService;
 
-            public CreateFuncionarioRequestHandler(IFuncionarioFactory factory,
-                                                   IFuncionarioService<Funcionario> service,
+            public CreateEmployeeRequestHandler(IEmployeeFactory factory,
+                                                   IEmployeesService<Employee> service,
                                                    INotifier notifier,
-                                                   ILogger<CreateFuncionarioRequestHandler>  logger,
+                                                   ILogger<CreateEmployeeRequestHandler>  logger,
                                                    IMessageSenderService<EmailMessage> emailService)
             {
                 _factory = factory;
@@ -55,9 +55,9 @@ namespace Restaurante.Application.Users.Employees.Requests.Create
                     var employee = _factory
                         .Build();
 
-                    var func = await _service.CreateFuncionario(funcionario, request.CurrentUser, cancellationToken);
+                    var func = await _service.CreateEmployee(employee, request.CurrentUser, cancellationToken);
 
-                    var responseEmail = await _emailService.SendAsync(new EmailMessage(funcionario.Email, "Your new Credentials", $"E-mail: {funcionario.Email} Senha: {funcionario.Password}"));
+                    var responseEmail = await _emailService.SendAsync(new EmailMessage(employee.Email, "Your new Credentials", $"E-mail: {employee.Email} Senha: {employee.Password}"));
 
                     return new Response<bool>(!_notifier.HasNotifications(), func);
                 }

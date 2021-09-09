@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using NSubstitute;
+using Restaurante.Application.Common.Models;
 using Restaurante.Application.Users.Employees.Requests.Create;
 using Restaurante.Domain.Common.Factories.Interfaces;
 using Restaurante.Domain.Common.Services.Interfaces;
@@ -16,8 +17,6 @@ namespace Restaurante.Test.Application
     {
         private readonly IEmployeeFactory _factory;
         private readonly IEmployeesService<Employee> _service;
-        private readonly IFuncionarioFactory _factory;
-        private readonly IFuncionarioService<Funcionario> _service;
         private readonly IMessageSenderService<EmailMessage> _emailService;
         private readonly INotifier _notifier;
         private readonly ILogger<CreateEmployeeRequestHandler> _logger;
@@ -31,7 +30,7 @@ namespace Restaurante.Test.Application
 
             _emailService = Substitute.For<IMessageSenderService<EmailMessage>>();
 
-            _logger = Substitute.For<ILogger<CreateFuncionarioRequestHandler>>();
+            _logger = Substitute.For<ILogger<CreateEmployeeRequestHandler>>();
 
             _notifier = Substitute.For<INotifier>();
         }
@@ -40,7 +39,7 @@ namespace Restaurante.Test.Application
         public async Task ShouldCreateNewFuncionario()
         {
             //Arrange
-            var handler = new CreateEmployeeRequestHandler(_factory, _service, _notifier, _logger);
+            var handler = new CreateEmployeeRequestHandler(_factory, _service, _notifier, _logger, _emailService);
             var funcionarioDefault = EmployeeMock.GetDefault();
             var request = new CreateEmployeeRequest
             {
@@ -68,7 +67,7 @@ namespace Restaurante.Test.Application
         public async Task ShouldNotCreateNewFuncionario()
         {
             //Arrange
-            var handler = new CreateEmployeeRequestHandler(_factory, _service, _notifier, _logger);
+            var handler = new CreateEmployeeRequestHandler(_factory, _service, _notifier, _logger, _emailService);
             var funcionarioDefault = EmployeeMock.GetDefault();
 
             var request = new CreateEmployeeRequest
