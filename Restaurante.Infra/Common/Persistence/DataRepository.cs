@@ -1,8 +1,10 @@
-﻿using Restaurante.Domain.Common.Models.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using Restaurante.Domain.Common.Models.Interfaces;
 using Restaurante.Domain.Common.Repositories.Interfaces;
 using Restaurante.Infra.Common.Persistence.Interfaces;
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,9 +20,9 @@ namespace Restaurante.Infra.Common.Persistence
         }
         protected TDbContext Data { get; }
         protected IQueryable<TEntity> All() => Data.Set<TEntity>();
-        public TEntity Get(Func<TEntity, bool> condicao)
+        public async Task<TEntity> Get(Expression<Func<TEntity, bool>> condicao, CancellationToken cancellationToken = default)
         {
-            var entity = All().First(condicao);
+            var entity = await All().FirstOrDefaultAsync(condicao, cancellationToken);
             return entity;
         }
 

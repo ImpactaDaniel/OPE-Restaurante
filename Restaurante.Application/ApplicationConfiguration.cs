@@ -26,6 +26,7 @@ namespace Restaurante.Application
                 .AddMediatR(Assembly.GetExecutingAssembly())
                 .AddNotifier()
                 .AddServices()
+                .AddMappers()
                 .AddIntegrationServices(configuration)
                 .AddTokenService(configuration);
 
@@ -36,6 +37,7 @@ namespace Restaurante.Application
                     .AddClasses(classes => classes
                                     .AssignableTo(typeof(IEntityService<>)))
                                     .AsMatchingInterface()
+                                    .AsImplementedInterfaces()
                                     .WithTransientLifetime());
 
         internal static IServiceCollection AddNotifier(this IServiceCollection services) =>
@@ -56,6 +58,7 @@ namespace Restaurante.Application
                     .AddClasses(classes => classes
                                     .AssignableTo(typeof(IMapper<,>)))
                                     .AsMatchingInterface()
+                                    .AsImplementedInterfaces()
                                     .WithTransientLifetime());
 
         internal static IServiceCollection AddTokenService(this IServiceCollection services, IConfiguration configuration)

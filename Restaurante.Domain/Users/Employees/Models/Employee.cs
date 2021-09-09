@@ -29,5 +29,13 @@ namespace Restaurante.Domain.Users.Employees.Models
             Type = type;
             return this;
         }
+
+        public Employee UpdateAccount(Account account)
+        {
+            if (Account != account)
+                Account = account;
+            return this;
+        }
+
     }
 }

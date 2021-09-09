@@ -28,7 +28,7 @@ namespace Restaurante.Infra.Users.Employees
         {
             var entity = await
                 All()
-                .FirstAsync(e => e.Id == id, cancellationToken);
+                .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
 
             Data.Employees.Remove(entity);
             await Data.SaveChangesAsync(cancellationToken);
@@ -39,13 +39,23 @@ namespace Restaurante.Infra.Users.Employees
         {
                 var entity = await
                     All()
-                    .FirstAsync(e => e.Id == id, cancellationToken);
+                        .AsNoTrackingWithIdentityResolution()
+                    .Include(e => e.Account)
+                    .ThenInclude(a => a.Bank)
+                    .Include(e => e.Address)
+                    .Include(e => e.Phones)
+                    .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
 
                 return entity;
         }
 
         public async Task<IList<Employee>> GetAll(CancellationToken cancellationToken = default) =>
             await All()
+                .AsNoTrackingWithIdentityResolution()
+                .Include(e => e.Account)
+                    .ThenInclude(a => a.Bank)
+                .Include(e => e.Address)
+                .Include(e => e.Phones)
                 .ToListAsync(cancellationToken);
 
         public async Task<Employee> Login(string email, string password, CancellationToken cancellationToken = default)

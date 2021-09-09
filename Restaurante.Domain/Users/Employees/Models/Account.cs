@@ -1,4 +1,5 @@
 ﻿using Restaurante.Domain.Common.Models;
+using Restaurante.Domain.Users.Exceptions;
 using System;
 
 namespace Restaurante.Domain.Users.Employees.Models
@@ -18,10 +19,41 @@ namespace Restaurante.Domain.Users.Employees.Models
                        string accountNumber,
                        int digit)
         {
-            Bank = bank ?? throw new ArgumentNullException(nameof(bank));
-            Branch = branch ?? throw new ArgumentNullException(nameof(branch));
-            AccountNumber = accountNumber ?? throw new ArgumentNullException(nameof(accountNumber));
+            Bank = bank ?? throw new UserException(nameof(bank));
+            Branch = string.IsNullOrEmpty(branch) ? throw new UserException(nameof(branch)) : branch;
+            AccountNumber = string.IsNullOrEmpty(accountNumber) ? throw new UserException(nameof(accountNumber)) : accountNumber;
             Digit = digit;
+        }
+
+        public Account UpdateBank(Bank bank)
+        {
+            bank = bank ?? throw new UserException(nameof(bank));
+            if (Bank.Id != bank?.Id)
+                Bank = bank;
+            return this;
+        }
+
+        public Account UpdateBranch(string branch)
+        {
+            ValidateNullString(branch, "Agência");
+            if (Branch != branch)
+                Branch = branch;
+            return this;
+        }
+
+        public Account UpdateAccountNumber(string accountNumber)
+        {
+            ValidateNullString(accountNumber, "Número da conta");
+            if (AccountNumber != accountNumber)
+                AccountNumber = accountNumber;
+            return this;
+        }
+
+        public Account UpdateDigit(int digit)
+        {
+            if (Digit != digit)
+                Digit = digit;
+            return this;
         }
     }
 }

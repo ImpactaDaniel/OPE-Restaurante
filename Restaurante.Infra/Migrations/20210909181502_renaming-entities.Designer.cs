@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restaurante.Infra.Common.Persistence;
 
 namespace Restaurante.Infra.Migrations
 {
     [DbContext(typeof(RestauranteDbContext))]
-    partial class RestauranteDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210909181502_renaming-entities")]
+    partial class renamingentities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,7 +40,7 @@ namespace Restaurante.Infra.Migrations
 
                     b.HasIndex("BankId");
 
-                    b.ToTable("Accounts");
+                    b.ToTable("Account");
                 });
 
             modelBuilder.Entity("Restaurante.Domain.Users.Employees.Models.Address", b =>
@@ -61,7 +63,7 @@ namespace Restaurante.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Addresses");
+                    b.ToTable("Address");
                 });
 
             modelBuilder.Entity("Restaurante.Domain.Users.Employees.Models.Bank", b =>
@@ -136,7 +138,7 @@ namespace Restaurante.Infra.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("Phones");
+                    b.ToTable("Phone");
                 });
 
             modelBuilder.Entity("Restaurante.Domain.Users.Employees.Models.Account", b =>
