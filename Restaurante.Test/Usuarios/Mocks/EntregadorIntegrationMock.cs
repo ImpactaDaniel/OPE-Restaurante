@@ -5,8 +5,8 @@ namespace Restaurante.Test.Usuarios.Mocks
 {
     public static class EntregadorIntegrationMock
     {
-        public static EntregadorIntegration GetDefault() =>
-            Builder<EntregadorIntegration>
+        public static DeliveryPersonIntegration GetDefault() =>
+            Builder<DeliveryPersonIntegration>
             .CreateNew()
             .Build();
     }

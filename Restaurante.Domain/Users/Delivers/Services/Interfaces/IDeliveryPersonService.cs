@@ -3,7 +3,7 @@ using Restaurante.Domain.Users.Funcionarios.Services.Interfaces;
 
 namespace Restaurante.Domain.Users.Entregadores.Services.Interfaces
 {
-    public interface IDeliversService : IEmployeesService<Deliver>
+    public interface IDeliveryPersonService : IEmployeesService<DeliveryPerson>
     {
     }
 }

@@ -7,13 +7,13 @@ using System.Collections.Generic;
 using Restaurante.Domain.Users.Employees.Repositories;
 using Restaurante.Domain.Users.Employees.Models;
 
-namespace Restaurante.Infra.Users.Funcionarios
+namespace Restaurante.Infra.Users.Employees
 {
-    internal class FuncionariosRepository :
+    internal class EmployeesRepository :
         DataRepository<IRestauranteDbContext, Employee>,
         IEmployeeDomainRepository<Employee>
     {
-        public FuncionariosRepository(IRestauranteDbContext db) : base(db)
+        public EmployeesRepository(IRestauranteDbContext db) : base(db)
         {
         }
 

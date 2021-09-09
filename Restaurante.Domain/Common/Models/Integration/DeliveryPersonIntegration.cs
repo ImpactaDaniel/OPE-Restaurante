@@ -2,7 +2,7 @@
 
 namespace Restaurante.Domain.Common.Models.Integration
 {
-    public class EntregadorIntegration
+    public class DeliveryPersonIntegration
     {
         public UserData User { get; set; }
         public PersonalData Personal { get; set; }

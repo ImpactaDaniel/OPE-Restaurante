@@ -10,15 +10,15 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Restaurante.Application.Users.Entregadores.Services
+namespace Restaurante.Application.Users.Deliveries.Services
 {
-    public class EntregadorIntegrationService : IEntregadorIntegrationService
+    public class DeliveriesIntegrationService : IEntregadorIntegrationService
     {
         private readonly INotifier _notifier;
-        private readonly ILogger<EntregadorIntegrationService> _logger;
-        public EntregadorIntegrationService(IntegrationConfiguration integrationConfiguration,
+        private readonly ILogger<DeliveriesIntegrationService> _logger;
+        public DeliveriesIntegrationService(IntegrationConfiguration integrationConfiguration,
                                             INotifier notifier,
-                                            ILogger<EntregadorIntegrationService> logger)
+                                            ILogger<DeliveriesIntegrationService> logger)
         {
             IntegrationConfiguration = integrationConfiguration;
             _notifier = notifier;
@@ -27,7 +27,7 @@ namespace Restaurante.Application.Users.Entregadores.Services
 
         public IntegrationConfiguration IntegrationConfiguration { get; }
 
-        public async Task<IntegrationResponse> CreateNewEntregador(EntregadorIntegration entregador, CancellationToken cancellationToken = default)
+        public async Task<IntegrationResponse> CreateNewEntregador(DeliveryPersonIntegration entregador, CancellationToken cancellationToken = default)
         {
             var webRequest = (HttpWebRequest)WebRequest.Create(IntegrationConfiguration.Url);
 
@@ -63,7 +63,7 @@ namespace Restaurante.Application.Users.Entregadores.Services
             return integrationResponse;
         }
 
-        public Task<IList<EntregadorIntegration>> GetAvailables(CancellationToken cancellationToken = default)
+        public Task<IList<DeliveryPersonIntegration>> GetAvailables(CancellationToken cancellationToken = default)
         {
             throw new System.NotImplementedException();
         }

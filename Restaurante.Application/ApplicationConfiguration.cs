@@ -13,7 +13,7 @@ using Restaurante.Domain.Users.Common.Services.Interfaces;
 using Restaurante.Application.Users.Common.Services;
 using Restaurante.Domain.Common.Data.Mappers.Interfaces;
 using Restaurante.Domain.Common.Models.Integration;
-using Restaurante.Application.Users.Entregadores.Services;
+using Restaurante.Application.Users.Deliveries.Services;
 
 [assembly: InternalsVisibleTo("Restaurante.Test")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
@@ -47,7 +47,7 @@ namespace Restaurante.Application
                                 configuration
                                     .GetSection(nameof(IntegrationConfiguration))
                                     .Get<IntegrationConfiguration>())
-                .AddTransient<IEntregadorIntegrationService, EntregadorIntegrationService>();
+                .AddTransient<IEntregadorIntegrationService, DeliveriesIntegrationService>();
 
         internal static IServiceCollection AddMappers(this IServiceCollection services) =>
              services

@@ -3,7 +3,7 @@ using Restaurante.Domain.Users.Employees.Models;
 using Restaurante.Domain.Users.Employees.Repositories;
 using Restaurante.Infra.Common.Persistence;
 using Restaurante.Infra.Common.Persistence.Interfaces;
-using Restaurante.Infra.Users.Funcionarios;
+using Restaurante.Infra.Users.Employees;
 using Restaurante.Test.Usuarios.Mocks;
 using System;
 using System.Threading.Tasks;
@@ -22,15 +22,15 @@ namespace Restaurante.Test.Services
                 .Options;
             _context = new RestauranteDbContext(options);
 
-            _repository = new FuncionariosRepository(_context);
+            _repository = new EmployeesRepository(_context);
         }
 
         [Fact]
         public async Task ShouldCreateNewEntregador()
         {
             //Arrange
-            var funcionario = FuncionarioMock.GetDefault();
-            var usuario = FuncionarioMock.GetDefaultGerente();
+            var funcionario = EmployeeMock.GetDefault();
+            var usuario = EmployeeMock.GetDefaultManager();
             _context.Employees.Add(usuario);
             await _context.SaveChangesAsync();
 

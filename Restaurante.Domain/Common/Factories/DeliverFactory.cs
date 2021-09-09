@@ -6,16 +6,16 @@ using System.Collections.Generic;
 
 namespace Restaurante.Domain.Common.Factories
 {
-    internal class DeliverFactory : UserFactory<Deliver>, IDeliverFactory
+    internal class DeliverFactory : UserFactory<DeliveryPerson>, IDeliverFactory
     {
         private Vehicle _veiculo;
-        public Deliver Build()
+        public DeliveryPerson Build()
         {
             if (_veiculo is null)
                 throw new UserException("Entregador precisa ter um veículo!");
             if (string.IsNullOrEmpty(_email) || string.IsNullOrEmpty(_password) || string.IsNullOrEmpty(_name))
                 throw new UserException("Nome, e-mail e senha precisam estar preenchidos!");
-            return new Deliver(_name, _email, _password, _veiculo, new Account(new Bank(""), "", "", 0), new List<Phone>(), new Address("", "", "", ""));
+            return new DeliveryPerson(_name, _email, _password, _veiculo, new Account(new Bank(""), "", "", 0), new List<Phone>(), new Address("", "", "", ""));
         }
 
         public IDeliverFactory WithVehicle(Vehicle veiculo)

@@ -1,8 +1,7 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Restaurante.Application.Users.Funcionarios.Requests.Create;
-using Restaurante.Application.Users.Funcionarios.Requests.GetAll;
+using Restaurante.Application.Users.Employees.Requests.Create;
+using Restaurante.Application.Users.Employees.Requests.GetAll;
 using Restaurante.Domain.Common.Services.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;

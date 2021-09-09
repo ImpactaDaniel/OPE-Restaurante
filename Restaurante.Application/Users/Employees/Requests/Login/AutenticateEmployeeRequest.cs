@@ -8,7 +8,7 @@ using Restaurante.Domain.Users.Funcionarios.Services.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Restaurante.Application.Users.Funcionarios.Requests.Login
+namespace Restaurante.Application.Users.Employees.Requests.Login
 {
     public class AutenticateEmployeeRequest : EmployeeRequest<AutenticateEmployeeRequest>, IRequest<Response<TokenResponse>>
     {

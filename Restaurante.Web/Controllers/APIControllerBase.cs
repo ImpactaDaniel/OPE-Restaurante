@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Restaurante.Application.Users.Funcionarios.Requests.Login;
+using Restaurante.Application.Users.Employees.Requests.Login;
 using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Infra.Common;
 using Restaurante.Web.Models;

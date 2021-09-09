@@ -14,21 +14,21 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Restaurante.Application.Users.Delivers.Services
+namespace Restaurante.Application.Users.Deliveries.Services
 {
-    internal class DeliverService : IDeliversService
+    internal class DeliveryPersonService : IDeliveryPersonService
     {
         private readonly INotifier _notifier;
-        private readonly ILogger<DeliverService> _logger;
+        private readonly ILogger<DeliveryPersonService> _logger;
         private readonly IEmployeeDomainRepository<Employee> _funcionarioRepository;
         private readonly IEntregadorIntegrationService _entregadorIntegrationService;
-        private readonly IMapper<Deliver, EntregadorIntegration> _mapper;
+        private readonly IMapper<DeliveryPerson, DeliveryPersonIntegration> _mapper;
 
-        public DeliverService(INotifier notifier,
-                                 ILogger<DeliverService> logger,
+        public DeliveryPersonService(INotifier notifier,
+                                 ILogger<DeliveryPersonService> logger,
                                  IEmployeeDomainRepository<Employee> employeeDomainRepository,
                                  IEntregadorIntegrationService entregadorIntegrationService,
-                                 IMapper<Deliver, EntregadorIntegration> mapper)
+                                 IMapper<DeliveryPerson, DeliveryPersonIntegration> mapper)
         {
             _notifier = notifier;
             _logger = logger;
@@ -37,7 +37,7 @@ namespace Restaurante.Application.Users.Delivers.Services
             _mapper = mapper;
         }
 
-        public async Task<bool> CreateEmployee(Deliver funcionario, int currentUserId, CancellationToken cancellationToken = default)
+        public async Task<bool> CreateEmployee(DeliveryPerson funcionario, int currentUserId, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -80,17 +80,17 @@ namespace Restaurante.Application.Users.Delivers.Services
             throw new System.NotImplementedException();
         }
 
-        public Task<Deliver> Get(int id, CancellationToken cancellationToken = default)
+        public Task<DeliveryPerson> Get(int id, CancellationToken cancellationToken = default)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<IList<Deliver>> GetAll(CancellationToken cancellationToken = default)
+        public Task<IList<DeliveryPerson>> GetAll(CancellationToken cancellationToken = default)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<Deliver> Login(string email, string password, CancellationToken cancellationToken = default)
+        public Task<DeliveryPerson> Login(string email, string password, CancellationToken cancellationToken = default)
         {
             throw new System.NotImplementedException();
         }

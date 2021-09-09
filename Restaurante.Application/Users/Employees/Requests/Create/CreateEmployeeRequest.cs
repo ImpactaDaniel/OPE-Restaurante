@@ -12,24 +12,24 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Restaurante.Application.Users.Funcionarios.Requests.Create
+namespace Restaurante.Application.Users.Employees.Requests.Create
 {
     public class CreateEmployeeRequest : EmployeeRequest<CreateEmployeeRequest>, IRequest<Response<bool>>
     {
         public int CurrentUser { get; set; }
 
-        #region Handler        
+        #region Handler
 
-        internal class CreateEmployeeRequesttHandler : IRequestHandler<CreateEmployeeRequest, Response<bool>>
+        internal class CreateEmployeeRequestHandler : IRequestHandler<CreateEmployeeRequest, Response<bool>>
         {
             private readonly IEmployeeFactory _factory;
             private readonly IEmployeesService<Employee> _service;
             private readonly INotifier _notifier;
-            private readonly ILogger<CreateEmployeeRequesttHandler> _logger;
-            public CreateEmployeeRequesttHandler(IEmployeeFactory factory,
+            private readonly ILogger<CreateEmployeeRequestHandler> _logger;
+            public CreateEmployeeRequestHandler(IEmployeeFactory factory,
                                                    IEmployeesService<Employee> service,
                                                    INotifier notifier,
-                                                   ILogger<CreateEmployeeRequesttHandler>  logger)
+                                                   ILogger<CreateEmployeeRequestHandler> logger)
             {
                 _factory = factory;
                 _service = service;
@@ -59,7 +59,7 @@ namespace Restaurante.Application.Users.Funcionarios.Requests.Create
                     _notifier.AddNotification(NotificationHelper.FromException(e));
                     return new Response<bool>(false, false);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     _logger.LogError(e, e.Message);
                     throw new Exception("Houve um erro ao tentar criar o funcionário!", e);

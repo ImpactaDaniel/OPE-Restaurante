@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using NSubstitute;
-using Restaurante.Application.Users.Delivers.Services;
+using Restaurante.Application.Users.Deliveries.Services;
 using Restaurante.Domain.Common.Data.Mappers.Interfaces;
 using Restaurante.Domain.Common.Models;
 using Restaurante.Domain.Common.Models.Integration;
@@ -17,35 +17,35 @@ namespace Restaurante.Test.Services
 {
     public class EntregadorServiceTest
     {
-        private readonly ILogger<DeliverService> _logger;
+        private readonly ILogger<DeliveryPersonService> _logger;
         private readonly INotifier _notifier;
         private readonly IEmployeeDomainRepository<Employee> _funcionarioDomainRepository;
-        private readonly IMapper<Deliver, EntregadorIntegration> _mapper;
+        private readonly IMapper<DeliveryPerson, DeliveryPersonIntegration> _mapper;
         private readonly IEntregadorIntegrationService _entregadorIntegrationService;
-        private IDeliversService _entregadoresService;
+        private IDeliveryPersonService _entregadoresService;
         public EntregadorServiceTest()
         {
-            _logger = Substitute.For<ILogger<DeliverService>>();
+            _logger = Substitute.For<ILogger<DeliveryPersonService>>();
             _notifier = Substitute.For<INotifier>();
             _funcionarioDomainRepository = Substitute.For<IEmployeeDomainRepository<Employee>>();
-            _mapper = Substitute.For<IMapper<Deliver, EntregadorIntegration>>();
+            _mapper = Substitute.For<IMapper<DeliveryPerson, DeliveryPersonIntegration>>();
             _entregadorIntegrationService = Substitute.For<IEntregadorIntegrationService>();
         }
         [Fact]
         public async Task ShouldCreateNewEntregador()
         {
             //arrange
-            _funcionarioDomainRepository.Get(Arg.Any<int>()).ReturnsForAnyArgs(FuncionarioMock.GetDefaultGerente());
-            _mapper.Map(Arg.Any<Deliver>()).ReturnsForAnyArgs(EntregadorIntegrationMock.GetDefault());            
+            _funcionarioDomainRepository.Get(Arg.Any<int>()).ReturnsForAnyArgs(EmployeeMock.GetDefaultManager());
+            _mapper.Map(Arg.Any<DeliveryPerson>()).ReturnsForAnyArgs(EntregadorIntegrationMock.GetDefault());            
 
-            _entregadoresService = new DeliverService(_notifier, _logger, _funcionarioDomainRepository, _entregadorIntegrationService, _mapper);
+            _entregadoresService = new DeliveryPersonService(_notifier, _logger, _funcionarioDomainRepository, _entregadorIntegrationService, _mapper);
 
             //act
-            var response = await _entregadoresService.CreateEmployee(EntregadorMock.GetDefaulEntregador(), FuncionarioMock.GetDefaultGerente().Id);
+            var response = await _entregadoresService.CreateEmployee(EntregadorMock.GetDefaulEntregador(), EmployeeMock.GetDefaultManager().Id);
 
             //assert
             Assert.True(response);
-            await _entregadorIntegrationService.ReceivedWithAnyArgs().CreateNewEntregador(Arg.Any<EntregadorIntegration>());
+            await _entregadorIntegrationService.ReceivedWithAnyArgs().CreateNewEntregador(Arg.Any<DeliveryPersonIntegration>());
             _notifier.DidNotReceiveWithAnyArgs().AddNotification(Arg.Any<Notification>());
         }
     }

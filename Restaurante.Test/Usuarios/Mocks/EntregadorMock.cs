@@ -14,10 +14,10 @@ namespace Restaurante.Test.Usuarios.Mocks
             .WithFactory(() => new Vehicle("Kawasaki", "Suzuki", 2010))
             .Build();
 
-        public static Deliver GetDefaulEntregador() =>
-            Builder<Deliver>
+        public static DeliveryPerson GetDefaulEntregador() =>
+            Builder<DeliveryPerson>
             .CreateNew()
-            .WithFactory(() => new Deliver("Daniel", "daniel@gmail.com", "123456", GetDefaultVehicle(), new Account(new Bank("'"), "", "", 0), new List<Phone>(), new Address("", "", "", "")))
+            .WithFactory(() => new DeliveryPerson("Daniel", "daniel@gmail.com", "123456", GetDefaultVehicle(), new Account(new Bank("'"), "", "", 0), new List<Phone>(), new Address("", "", "", "")))
             .Build();
     }
 

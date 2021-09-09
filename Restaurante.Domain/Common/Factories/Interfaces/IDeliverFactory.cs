@@ -2,7 +2,7 @@
 
 namespace Restaurante.Domain.Common.Factories.Interfaces
 {
-    public interface IDeliverFactory : IFactory<Deliver>, IUserFactory<Deliver>
+    public interface IDeliverFactory : IFactory<DeliveryPerson>, IUserFactory<DeliveryPerson>
     {
         IDeliverFactory WithVehicle(Vehicle veiculo);
     }

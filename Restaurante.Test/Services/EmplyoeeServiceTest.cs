@@ -11,13 +11,13 @@ using Xunit;
 
 namespace Restaurante.Test.Services
 {
-    public class FuncionarioServiceTest
+    public class EmplyoeeServiceTest
     {
         private readonly INotifier _notifier;
         private IEmployeeDomainRepository<Employee> _repository;
         private readonly ILogger<EmployeeService<Employee>> _logger;
 
-        public FuncionarioServiceTest()
+        public EmplyoeeServiceTest()
         {
             _notifier = Substitute.For<INotifier>();
             _repository = Substitute.For<IEmployeeDomainRepository<Employee>>();
@@ -29,10 +29,10 @@ namespace Restaurante.Test.Services
         {
             //Arrange
             var service = new EmployeeService<Employee>(_notifier, _repository, _logger);
-            _repository.Get(default).ReturnsForAnyArgs(FuncionarioMock.GetDefaultGerente());
+            _repository.Get(default).ReturnsForAnyArgs(EmployeeMock.GetDefaultManager());
 
             //Act
-            var response = await service.CreateEmployee(FuncionarioMock.GetDefault(), FuncionarioMock.GetDefaultGerente().Id);
+            var response = await service.CreateEmployee(EmployeeMock.GetDefault(), EmployeeMock.GetDefaultManager().Id);
 
             //Assert
             _notifier.DidNotReceiveWithAnyArgs().AddNotification(default);
@@ -55,7 +55,7 @@ namespace Restaurante.Test.Services
 
             //Act
             var ex = await Assert.ThrowsAsync<Exception>(async () =>
-                await service.CreateEmployee(FuncionarioMock.GetDefault(), FuncionarioMock.GetDefault().Id)
+                await service.CreateEmployee(EmployeeMock.GetDefault(), EmployeeMock.GetDefault().Id)
             );
 
             //Assert
@@ -70,7 +70,7 @@ namespace Restaurante.Test.Services
             _repository.Get(default).ReturnsForAnyArgs(Task.FromResult<Employee>(null));
 
             //Act
-            var response = await service.CreateEmployee(FuncionarioMock.GetDefault(), FuncionarioMock.GetDefaultGerente().Id);
+            var response = await service.CreateEmployee(EmployeeMock.GetDefault(), EmployeeMock.GetDefaultManager().Id);
 
             //Assert
             _notifier.ReceivedWithAnyArgs().AddNotification(default);

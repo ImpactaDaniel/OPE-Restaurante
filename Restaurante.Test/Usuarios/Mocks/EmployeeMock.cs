@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace Restaurante.Test.Usuarios.Mocks
 {
-    public static class FuncionarioMock
+    public static class EmployeeMock
     {
-        public static Employee GetDefaultGerente() =>
+        public static Employee GetDefaultManager() =>
             Builder<Employee>
             .CreateNew()
             .WithFactory(() => new Employee("Carlos", "carlos@gmail.com", "123456", EmployeesType.Manager, new Account(new Bank("'"), "", "", 0), new List<Phone>(), new Address("", "", "", "")))

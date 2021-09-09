@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Restaurante.Application.Users.Funcionarios.Requests.GetAll
+namespace Restaurante.Application.Users.Employees.Requests.GetAll
 {
     public class GetAllEmployeesRequest : IRequest<Response<IList<Employee>>>
     {
