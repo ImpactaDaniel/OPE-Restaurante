@@ -5,28 +5,19 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
-import { CadastroFuncionarioComponent } from './cadastro-restaurante/cadastro-funcionario.component';
-import { LoginFuncionario } from './login-restaurante/cadastro-funcionario.component';
+import { CadastroFuncionarioComponent } from './components/funcionario/cadastro-funcionario/cadastro-funcionario.component';
+import { FuncionarioModule } from './components/funcionario/funcionario.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavMenuComponent,
-    HomeComponent,
-    CadastroFuncionarioComponent,
-    LoginFuncionario
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
+    FuncionarioModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'funcionario', component: CadastroFuncionarioComponent, pathMatch: 'full' },
-      { path: 'funcionario/login', component: LoginFuncionario, pathMatch: 'full' },
+      { path: '', component: CadastroFuncionarioComponent, pathMatch: 'full' },
     ])
   ],
   providers: [],

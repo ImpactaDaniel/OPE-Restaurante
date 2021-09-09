@@ -8,6 +8,7 @@ using Restaurante.Application;
 using Restaurante.Domain;
 using Restaurante.Infra;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 
 namespace Restaurante.Web
 {
@@ -36,14 +37,21 @@ namespace Restaurante.Web
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Restaurante Service", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Restaurante Service V1"));
             }
             else
             {
@@ -67,9 +75,7 @@ namespace Restaurante.Web
                 .UseStaticFiles()
                 .UseEndpoints(endpoints =>
                 {
-                    endpoints.MapControllerRoute(
-                        name: "default",
-                        pattern: "{controller}/{action=Index}/{id?}");
+                    endpoints.MapControllers();
                 })
                 .Initialize()
                 .UseSpa(spa =>

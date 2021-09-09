@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Restaurante.Web.Controllers
 {
-    public abstract class APIControllerBase : Controller
+    public abstract class APIControllerBase : ControllerBase
     {
         private readonly INotifier _notifier;
         protected readonly IMediator _mediator;
@@ -27,7 +27,7 @@ namespace Restaurante.Web.Controllers
             return BadRequest(new DefaultApiResponse<T>(notifications: notifications, success: false));
         }
 
-        [HttpPost]
+        [HttpPost, Route("Authenticate")]
         public async Task<IActionResult> Authenticate([FromBody]LoginModel loginModel, CancellationToken cancellationToken = default)
         {
             var response = await _mediator.Send(new AutenticateEmployeeRequest() { Email = loginModel.Email, Password = loginModel.Password }, cancellationToken);

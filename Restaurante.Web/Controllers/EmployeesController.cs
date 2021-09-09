@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace Restaurante.Web.Controllers
 {
+    [ApiController, Route("[controller]")]
+    public class FuncionariosController : APIControllerBase
     public class EmployeesController : APIControllerBase
     {
         public EmployeesController(IMediator mediatr, INotifier notifier)
@@ -15,6 +17,7 @@ namespace Restaurante.Web.Controllers
         {
         }
 
+        [Route("GetAll"), HttpGet]
         public async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
         {
             var resp = await _mediator.Send(new GetAllEmployeesRequest(), cancellationToken);
@@ -23,6 +26,8 @@ namespace Restaurante.Web.Controllers
 
         [HttpPost]
         public async Task<IActionResult> CreateNew([FromBody]CreateEmployeeRequest request, CancellationToken cancellationToken = default)
+        [Route("Create"), HttpPost]
+        public async Task<IActionResult> CreateNew([FromBody]CreateFuncionarioRequest request, CancellationToken cancellationToken = default)
         {
             var resp = await _mediator.Send(request, cancellationToken);
             return GetResponse(resp.Result);

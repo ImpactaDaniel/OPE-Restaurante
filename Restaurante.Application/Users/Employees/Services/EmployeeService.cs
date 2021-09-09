@@ -31,6 +31,7 @@ namespace Restaurante.Application.Users.Funcionarios.Services
         {
             try
             {
+                //var user = new Funcionario("Teste", "teste@teste.com", "teste123", TiposFuncionario.Gerente);
                 var user = await _repository
                     .Get(currentUserId, cancellationToken);
 

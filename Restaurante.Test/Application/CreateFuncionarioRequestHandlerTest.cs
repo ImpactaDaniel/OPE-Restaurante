@@ -16,6 +16,9 @@ namespace Restaurante.Test.Application
     {
         private readonly IEmployeeFactory _factory;
         private readonly IEmployeesService<Employee> _service;
+        private readonly IFuncionarioFactory _factory;
+        private readonly IFuncionarioService<Funcionario> _service;
+        private readonly IMessageSenderService<EmailMessage> _emailService;
         private readonly INotifier _notifier;
         private readonly ILogger<CreateEmployeeRequestHandler> _logger;
 
@@ -26,7 +29,9 @@ namespace Restaurante.Test.Application
 
             _service = Substitute.For<IEmployeesService<Employee>>();
 
-            _logger = Substitute.For<ILogger<CreateEmployeeRequestHandler>>();
+            _emailService = Substitute.For<IMessageSenderService<EmailMessage>>();
+
+            _logger = Substitute.For<ILogger<CreateFuncionarioRequestHandler>>();
 
             _notifier = Substitute.For<INotifier>();
         }
@@ -55,6 +60,7 @@ namespace Restaurante.Test.Application
             Assert.True(response.Result);
             Assert.True(response.Success);
             _notifier.ReceivedWithAnyArgs().HasNotifications();
+            await _emailService.ReceivedWithAnyArgs().SendAsync(Arg.Any<EmailMessage>());
             _notifier.DidNotReceiveWithAnyArgs().AddNotification(default);
         }
 
