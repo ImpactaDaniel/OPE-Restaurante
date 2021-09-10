@@ -19,7 +19,7 @@ namespace Restaurante.Test.Services
         public void ShouldGenerateToken()
         {
             //Arrange
-            var user = FuncionarioMock.GetDefault();
+            var user = EmployeeMock.GetDefault();
 
             //Act
             var tokenResponse = _tokenService.GenerateToken(user);

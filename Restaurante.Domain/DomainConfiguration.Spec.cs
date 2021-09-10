@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Restaurante.Domain.Common.Factories.Interfaces;
-using Restaurante.Domain.Users.Funcionarios.Models;
 using Xunit;
 
 namespace Restaurante.Domain
@@ -19,8 +18,8 @@ namespace Restaurante.Domain
                 .BuildServiceProvider();
 
             // Assert
-            var funcionarioFactory = services.GetService<IFuncionarioFactory>();
-            var entregadorFactory = services.GetService<IEntregadorFactory>();
+            var funcionarioFactory = services.GetService<IEmployeeFactory>();
+            var entregadorFactory = services.GetService<IDeliverFactory>();
             Assert.NotNull(entregadorFactory);
             Assert.NotNull(funcionarioFactory);
         }

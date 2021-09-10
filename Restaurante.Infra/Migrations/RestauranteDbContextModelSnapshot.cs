@@ -16,7 +16,7 @@ namespace Restaurante.Infra.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.9");
 
-            modelBuilder.Entity("Restaurante.Domain.Users.Funcionarios.Models.Account", b =>
+            modelBuilder.Entity("Restaurante.Domain.Users.Employees.Models.Account", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -38,10 +38,10 @@ namespace Restaurante.Infra.Migrations
 
                     b.HasIndex("BankId");
 
-                    b.ToTable("Account");
+                    b.ToTable("Accounts");
                 });
 
-            modelBuilder.Entity("Restaurante.Domain.Users.Funcionarios.Models.Address", b =>
+            modelBuilder.Entity("Restaurante.Domain.Users.Employees.Models.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -61,10 +61,10 @@ namespace Restaurante.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Address");
+                    b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("Restaurante.Domain.Users.Funcionarios.Models.Bank", b =>
+            modelBuilder.Entity("Restaurante.Domain.Users.Employees.Models.Bank", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -78,7 +78,7 @@ namespace Restaurante.Infra.Migrations
                     b.ToTable("Bank");
                 });
 
-            modelBuilder.Entity("Restaurante.Domain.Users.Funcionarios.Models.Funcionario", b =>
+            modelBuilder.Entity("Restaurante.Domain.Users.Employees.Models.Employee", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -114,10 +114,10 @@ namespace Restaurante.Infra.Migrations
 
                     b.HasIndex("AddressId");
 
-                    b.ToTable("Funcionarios");
+                    b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("Restaurante.Domain.Users.Funcionarios.Models.Phone", b =>
+            modelBuilder.Entity("Restaurante.Domain.Users.Employees.Models.Phone", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -126,7 +126,7 @@ namespace Restaurante.Infra.Migrations
                     b.Property<string>("DDD")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("FuncionarioId")
+                    b.Property<int?>("EmployeeId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("PhoneNumber")
@@ -134,27 +134,27 @@ namespace Restaurante.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FuncionarioId");
+                    b.HasIndex("EmployeeId");
 
-                    b.ToTable("Phone");
+                    b.ToTable("Phones");
                 });
 
-            modelBuilder.Entity("Restaurante.Domain.Users.Funcionarios.Models.Account", b =>
+            modelBuilder.Entity("Restaurante.Domain.Users.Employees.Models.Account", b =>
                 {
-                    b.HasOne("Restaurante.Domain.Users.Funcionarios.Models.Bank", "Bank")
+                    b.HasOne("Restaurante.Domain.Users.Employees.Models.Bank", "Bank")
                         .WithMany()
                         .HasForeignKey("BankId");
 
                     b.Navigation("Bank");
                 });
 
-            modelBuilder.Entity("Restaurante.Domain.Users.Funcionarios.Models.Funcionario", b =>
+            modelBuilder.Entity("Restaurante.Domain.Users.Employees.Models.Employee", b =>
                 {
-                    b.HasOne("Restaurante.Domain.Users.Funcionarios.Models.Account", "Account")
+                    b.HasOne("Restaurante.Domain.Users.Employees.Models.Account", "Account")
                         .WithMany()
                         .HasForeignKey("AccountId");
 
-                    b.HasOne("Restaurante.Domain.Users.Funcionarios.Models.Address", "Address")
+                    b.HasOne("Restaurante.Domain.Users.Employees.Models.Address", "Address")
                         .WithMany()
                         .HasForeignKey("AddressId");
 
@@ -163,14 +163,14 @@ namespace Restaurante.Infra.Migrations
                     b.Navigation("Address");
                 });
 
-            modelBuilder.Entity("Restaurante.Domain.Users.Funcionarios.Models.Phone", b =>
+            modelBuilder.Entity("Restaurante.Domain.Users.Employees.Models.Phone", b =>
                 {
-                    b.HasOne("Restaurante.Domain.Users.Funcionarios.Models.Funcionario", null)
+                    b.HasOne("Restaurante.Domain.Users.Employees.Models.Employee", null)
                         .WithMany("Phones")
-                        .HasForeignKey("FuncionarioId");
+                        .HasForeignKey("EmployeeId");
                 });
 
-            modelBuilder.Entity("Restaurante.Domain.Users.Funcionarios.Models.Funcionario", b =>
+            modelBuilder.Entity("Restaurante.Domain.Users.Employees.Models.Employee", b =>
                 {
                     b.Navigation("Phones");
                 });

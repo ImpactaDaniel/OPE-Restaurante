@@ -7,7 +7,7 @@ namespace Restaurante.Domain.Common.Services.Interfaces
 {
     public interface IEntregadorIntegrationService
     {
-        Task<IntegrationResponse> CreateNewEntregador(EntregadorIntegration entregador, CancellationToken cancellationToken = default);
-        Task<IList<EntregadorIntegration>> GetAvailables(CancellationToken cancellationToken = default);
+        Task<IntegrationResponse> CreateNewEntregador(DeliveryPersonIntegration entregador, CancellationToken cancellationToken = default);
+        Task<IList<DeliveryPersonIntegration>> GetAvailables(CancellationToken cancellationToken = default);
     }
 }

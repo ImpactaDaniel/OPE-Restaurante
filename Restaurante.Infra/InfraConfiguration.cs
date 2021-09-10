@@ -33,7 +33,8 @@ namespace Restaurante.Infra
                                     .AsImplementedInterfaces()
                                     .WithTransientLifetime());
 
-        internal static IServiceCollection AddRepositories(this IServiceCollection services) =>
+        internal static IServiceCollection AddRepositories(this IServiceCollection services)
+        {
             services
                 .Scan(scan => scan
                     .FromCallingAssembly()
@@ -41,6 +42,15 @@ namespace Restaurante.Infra
                                     .AssignableTo(typeof(IDomainRepository<>)))
                                     .AsImplementedInterfaces()
                                     .WithTransientLifetime());
+            services
+               .Scan(scan => scan
+                   .FromCallingAssembly()
+                   .AddClasses(classes => classes
+                                   .AssignableTo(typeof(IDefaultDomainRepository)))
+                                   .AsImplementedInterfaces()
+                                   .WithTransientLifetime());
+            return services;
+        }
 
         internal static IServiceCollection AddContext(this IServiceCollection services, IConfiguration configuration) =>
             services
