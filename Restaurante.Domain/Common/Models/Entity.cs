@@ -1,19 +1,11 @@
 ﻿using Restaurante.Domain.Common.Models.Interfaces;
-using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Domain.Users.Exceptions;
-using System;
 
 namespace Restaurante.Domain.Common.Models
 {
     public abstract class Entity<TId> : IEntity
     {
         public TId Id { get; private set; } = default;
-
-        protected Entity(INotifier notifier)
-        {
-            _notifier = notifier;
-        }
-
         protected void ValidateNullString(string value, string name)
         {
             if (string.IsNullOrEmpty(value))

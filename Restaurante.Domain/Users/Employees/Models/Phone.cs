@@ -1,4 +1,6 @@
 ﻿using Restaurante.Domain.Common.Models;
+using Restaurante.Domain.Users.Exceptions;
+using System.Linq;
 
 namespace Restaurante.Domain.Users.Employees.Models
 {
@@ -14,6 +16,8 @@ namespace Restaurante.Domain.Users.Employees.Models
         {
             ValidateNullString(ddd, "DDD");
             ValidateNullString(phoneNumber, "Número de telefone");
+            ValidatePhoneNumber(phoneNumber);
+            ValidateDDD(ddd);
             DDD = ddd;
             PhoneNumber = phoneNumber;
         }
@@ -21,6 +25,7 @@ namespace Restaurante.Domain.Users.Employees.Models
         public Phone UpdateDDD(string ddd)
         {
             ValidateNullString(ddd, "DDD");
+            ValidateDDD(ddd);
             if (DDD != ddd)
                 DDD = ddd;
             return this;
@@ -29,9 +34,22 @@ namespace Restaurante.Domain.Users.Employees.Models
         public Phone UpdatePhoneNumber(string phoneNumber)
         {
             ValidateNullString(phoneNumber, "Número de telefone");
+            ValidatePhoneNumber(phoneNumber);
             if (PhoneNumber != phoneNumber)
                 PhoneNumber = phoneNumber;
             return this;
+        }
+
+        private static void ValidatePhoneNumber(string phoneNumber)
+        {
+            if (!phoneNumber.All(char.IsDigit) || phoneNumber.Length > 9  || phoneNumber.Length < 8)
+                throw new UserException("Telefone deve conter somente dígitos com 8 ou 9 caracteres!");
+        }
+
+        private static void ValidateDDD(string ddd)
+        {
+            if (!ddd.All(char.IsDigit) || ddd.Length != 2)
+                throw new UserException("DDD deve conter somente dígitos com 2 caracteres!");
         }
     }
 }

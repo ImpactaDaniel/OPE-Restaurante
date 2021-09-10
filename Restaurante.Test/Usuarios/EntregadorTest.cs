@@ -18,8 +18,11 @@ namespace Restaurante.Test.Usuarios
         public void DeveCriarUmNovoEntregadorQuandoInformacoesForemValidas()
         {
             //Arrange
-            _factory
-                .WithVehicle(EntregadorMock.GetDefaultVehicle())
+            _factory                
+                .WithVehicle(EntregadorMock.GetDefaultVehicle())                
+                .WithAccount(AccountMock.GetDefault())
+                .WithAddress(AddressMock.GetDefault())
+                .WithPhone(PhoneMock.GetDefault())                
                 .WithName("Daniel")
                 .WithEmail("daniel@gmail.com")
                 .WithPassword("123456");
@@ -44,7 +47,7 @@ namespace Restaurante.Test.Usuarios
 
             //Assert
             var ex = Assert.Throws<UserException>(() =>
-                _factory
+            _factory
                 .WithVehicle(veiculo)
                 .WithName(nome)
                 .WithEmail(email)

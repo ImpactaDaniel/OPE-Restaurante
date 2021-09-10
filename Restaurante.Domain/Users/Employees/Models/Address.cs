@@ -1,4 +1,6 @@
 ﻿using Restaurante.Domain.Common.Models;
+using Restaurante.Domain.Users.Exceptions;
+using System.Linq;
 
 namespace Restaurante.Domain.Users.Employees.Models
 {
@@ -17,6 +19,7 @@ namespace Restaurante.Domain.Users.Employees.Models
             ValidateNullString(number, "Número");
             ValidateNullString(district, "Bairro");
             ValidateNullString(cep, "CEP");
+            ValidateCEP(cep);
             Street = street;
             Number = number;
             District = district;
@@ -49,9 +52,16 @@ namespace Restaurante.Domain.Users.Employees.Models
         public Address UpdateCEP(string cep)
         {
             ValidateNullString(CEP, "CEP");
+            ValidateCEP(cep);
             if (CEP != cep)
                 CEP = cep;
             return this;
+        }
+
+        private void ValidateCEP(string cep)
+        {
+            if (!cep.All(char.IsDigit) || cep.Length != 8)
+                throw new UserException("CEP deve conter somente dígitos com 8 caracteres!");
         }
     }
 }

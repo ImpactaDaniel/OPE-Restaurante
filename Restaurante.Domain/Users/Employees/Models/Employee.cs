@@ -1,5 +1,4 @@
 ﻿using Restaurante.Domain.Users.Common.Models;
-using Restaurante.Domain.Users.Employees.Models;
 using Restaurante.Domain.Users.Enums;
 using Restaurante.Domain.Users.Exceptions;
 using System;
