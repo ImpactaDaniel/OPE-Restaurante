@@ -2,41 +2,42 @@
 using NSubstitute;
 using Restaurante.Application.Common.Models;
 using Restaurante.Application.Users.Common.Models;
-using Restaurante.Application.Users.Employees.Requests.Create;
+using Restaurante.Application.Users.Deliveries.Requests.Create;
 using Restaurante.Domain.Common.Factories.Interfaces;
 using Restaurante.Domain.Common.Repositories.Interfaces;
 using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Domain.Users.Employees.Models;
-using Restaurante.Domain.Users.Funcionarios.Services.Interfaces;
+using Restaurante.Domain.Users.Entregadores.Models;
+using Restaurante.Domain.Users.Entregadores.Services.Interfaces;
 using Restaurante.Test.Usuarios.Mocks;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Xunit;
-using static Restaurante.Application.Users.Employees.Requests.Create.CreateEmployeeRequest;
+using static Restaurante.Application.Users.Deliveries.Requests.Create.CreateDeliverymanRequest;
 
 namespace Restaurante.Test.Application
 {
-    public class CreateFuncionarioRequestHandlerTest
+    public class CreateDeliverymanRequestHandlerTest
     {
-        private readonly IEmployeeFactory _factory;
-        private readonly IEmployeesService<Employee> _service;
+        private readonly IDeliverFactory _factory;
+        private readonly IDeliveryPersonService _service;
         private readonly IMessageSenderService<EmailMessage> _emailService;
         private readonly INotifier _notifier;
-        private readonly ILogger<CreateEmployeeRequestHandler> _logger;
+        private readonly ILogger<CreateDeliverymanRequestHandler> _logger;
         private readonly IDefaultDomainRepository _defaultDomainRepository;
 
-        public CreateFuncionarioRequestHandlerTest()
+        public CreateDeliverymanRequestHandlerTest()
         {
-            _factory = Substitute.For<IEmployeeFactory>();
-            _factory.Build().ReturnsForAnyArgs(EmployeeMock.GetDefault());
+            _factory = Substitute.For<IDeliverFactory>();
+            _factory.Build().ReturnsForAnyArgs(EntregadorMock.GetDefaulEntregador());
 
-            _service = Substitute.For<IEmployeesService<Employee>>();
+            _service = Substitute.For<IDeliveryPersonService>();
 
             _emailService = Substitute.For<IMessageSenderService<EmailMessage>>();
 
-            _logger = Substitute.For<ILogger<CreateEmployeeRequestHandler>>();
+            _logger = Substitute.For<ILogger<CreateDeliverymanRequestHandler>>();
 
             _defaultDomainRepository = Substitute.For<IDefaultDomainRepository>();
 
@@ -50,7 +51,7 @@ namespace Restaurante.Test.Application
         public async Task ShouldCreateNewFuncionario()
         {
             //Arrange
-            var handler = new CreateEmployeeRequestHandler(_factory, _service, _notifier, _logger, _emailService, _defaultDomainRepository);
+            var handler = new CreateDeliverymanRequestHandler(_service, _notifier, _logger, _factory, _defaultDomainRepository, _emailService);
             var funcionarioDefault = EmployeeMock.GetDefault();
             var phones = new List<PhoneRequest>()
             {
@@ -60,7 +61,7 @@ namespace Restaurante.Test.Application
                     PhoneNumber = "9999999"
                 }
             };
-            var request = new CreateEmployeeRequest
+            var request = new CreateDeliverymanRequest
             {
                 Name = funcionarioDefault.Name,
                 Email = funcionarioDefault.Email,
@@ -85,6 +86,12 @@ namespace Restaurante.Test.Application
                 },
                 CurrentUser = 0,
                 Phones = phones,
+                Vehicle = new VehicleRequest
+                {
+                    MotorcycleBrand = "Suzuki",
+                    MotorcycleModel = "Kawasaki",
+                    MotorcycleYear = 2010
+                }
             };
             _service.CreateEmployee(default, default).ReturnsForAnyArgs(true);
 
@@ -96,7 +103,6 @@ namespace Restaurante.Test.Application
             //Assert
             Assert.True(response.Result);
             Assert.True(response.Success);
-            _notifier.ReceivedWithAnyArgs().HasNotifications();
             await _emailService.ReceivedWithAnyArgs().SendAsync(Arg.Any<EmailMessage>());
             _notifier.DidNotReceiveWithAnyArgs().AddNotification(default);
         }
@@ -105,7 +111,7 @@ namespace Restaurante.Test.Application
         public async Task ShouldNotCreateNewFuncionario()
         {
             //Arrange
-            var handler = new CreateEmployeeRequestHandler(_factory, _service, _notifier, _logger, _emailService, _defaultDomainRepository);
+            var handler = new CreateDeliverymanRequestHandler(_service, _notifier, _logger, _factory, _defaultDomainRepository, _emailService);
             var funcionarioDefault = EmployeeMock.GetDefault();
             var phones = new List<PhoneRequest>()
             {
@@ -115,7 +121,7 @@ namespace Restaurante.Test.Application
                     PhoneNumber = "9999999"
                 }
             };
-            var request = new CreateEmployeeRequest
+            var request = new CreateDeliverymanRequest
             {
                 Name = funcionarioDefault.Name,
                 Email = funcionarioDefault.Email,
@@ -140,9 +146,15 @@ namespace Restaurante.Test.Application
                 },
                 CurrentUser = 0,
                 Phones = phones,
+                Vehicle = new VehicleRequest
+                {
+                    MotorcycleBrand = "Suzuki",
+                    MotorcycleModel = "Kawasaki",
+                    MotorcycleYear = 2010
+                }
             };
 
-            _service.CreateEmployee(Arg.Any<Employee>(), default).ReturnsForAnyArgs(false);
+            _service.CreateEmployee(Arg.Any<DeliveryPerson>(), default).ReturnsForAnyArgs(false);
 
             _notifier.HasNotifications().ReturnsForAnyArgs(true);
 
@@ -152,7 +164,6 @@ namespace Restaurante.Test.Application
             //Assert
             Assert.False(response.Result);
             Assert.False(response.Success);
-            _notifier.ReceivedWithAnyArgs().HasNotifications();
         }
     }
 }
