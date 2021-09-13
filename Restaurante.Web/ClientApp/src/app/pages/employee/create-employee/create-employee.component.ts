@@ -1,16 +1,15 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { Employee } from '../../../models/funcionario/funcionario';
-import { EmployeeService } from '../../../services/funcionario/funcionario.service';
+import { Employee } from 'src/app/models/funcionario/funcionario';
+import { EmployeeService } from '../service/employee.service';
 
 @Component({
-  selector: 'app-cadastro-funcionario',
-  templateUrl: './cadastro-funcionario.component.html',
-  styleUrls: ['./cadastro-funcionario.component.css']
+  selector: 'app-create-employee',
+  templateUrl: './create-employee.component.html',
+  styleUrls: ['./create-employee.component.css']
 })
-export class CadastroFuncionarioComponent implements OnInit {
+export class CreateEmployeeComponent implements OnInit {
+
   funcionario: Employee;
   form: FormGroup;
 
@@ -35,4 +34,5 @@ export class CadastroFuncionarioComponent implements OnInit {
     let retorno = await this.employeeService.createEmployee(this.funcionario).toPromise();
     console.log(retorno)
   }
+
 }

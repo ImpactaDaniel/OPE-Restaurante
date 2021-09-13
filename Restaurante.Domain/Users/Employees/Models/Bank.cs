@@ -10,13 +10,13 @@ namespace Restaurante.Domain.Users.Employees.Models
         }
         public Bank(string name)
         {
-            ValidateNullString(name, "Nome");
+            ValidateNullString(name, "Nome do banco");
             Name = name;
         }
 
         public Bank UpdateName(string name)
         {
-            ValidateNullString(name, "Nome");
+            ValidateNullString(name, "Nome do banco");
             if (Name != name)
                 Name = name;
             return this;

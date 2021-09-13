@@ -1,12 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { CadastroFuncionarioComponent } from './components/funcionario/cadastro-funcionario/cadastro-funcionario.component';
-import { FuncionarioModule } from './components/funcionario/funcionario.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -14,11 +11,17 @@ import { FuncionarioModule } from './components/funcionario/funcionario.module';
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-    HttpClientModule,
-    FuncionarioModule,
     RouterModule.forRoot([
-      { path: '', component: CadastroFuncionarioComponent, pathMatch: 'full' },
-    ])
+      {
+        path: 'employee',
+        loadChildren: () => import('./pages/employee/employee.module').then(m => m.EmployeeModule)
+      },
+      {
+        path: '**',
+        loadChildren: () => import('./pages/employee/employee.module').then(m => m.EmployeeModule)
+      }
+    ]),
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -5,7 +5,6 @@ using Restaurante.Application.Common.Helper;
 using Restaurante.Application.Common.Models;
 using Restaurante.Application.Users.Common.Models;
 using Restaurante.Domain.Common.Factories.Interfaces;
-using Restaurante.Domain.Common.Models;
 using Restaurante.Domain.Common.Repositories.Interfaces;
 using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Domain.Users.Employees.Models;
@@ -52,13 +51,16 @@ namespace Restaurante.Application.Users.Employees.Requests.Create
             {
                 try
                 {
-                    var bank = await _defaultRepository.Get<Bank>(b => b.Id == request.BankId, cancellationToken);
+                    var bank = await _defaultRepository.Get<Bank>(b => b.Id == request.Bank.BankId, cancellationToken);
 
-                    var account = new Account(bank, request.Branch, request.AccountNumber, request.Digit);
+                    if (bank is null)
+                        throw new UserException("Banco não encontrado!");
 
-                    var address = new Address(request.Street, request.Number, request.District, request.CEP);
+                    var account = new Account(bank, request.Account.Branch, request.Account.AccountNumber, request.Account.Digit);
 
-                    var phones = request.Phones.Select(p => new Phone(p.Key, p.Value));
+                    var address = new Address(request.Address.Street, request.Address.Number, request.Address.District, request.Address.CEP);
+
+                    var phones = request.Phones.Select(p => new Phone(p.DDD, p.PhoneNumber));
 
                     _factory
                         .WithAccount(account)
