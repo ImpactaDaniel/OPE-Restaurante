@@ -19,9 +19,11 @@ namespace Restaurante.Domain.Users.Employees.Models
                        string accountNumber,
                        int digit)
         {
+            ValidateNullString(branch, "Agência");
+            ValidateNullString(accountNumber, "Número da conta");
             Bank = bank ?? throw new UserException(nameof(bank));
-            Branch = string.IsNullOrEmpty(branch) ? throw new UserException(nameof(branch)) : branch;
-            AccountNumber = string.IsNullOrEmpty(accountNumber) ? throw new UserException(nameof(accountNumber)) : accountNumber;
+            Branch = branch;
+            AccountNumber = accountNumber;
             Digit = digit;
         }
 
