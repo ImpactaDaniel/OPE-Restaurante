@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Account, Bank, Employee, Phone } from '../../../models/funcionario/employee';
@@ -10,10 +11,11 @@ import { EmployeeService } from '../service/employee.service';
 })
 export class CreateEmployeeComponent implements OnInit {
 
+  private urlViaCep = "https://viacep.com.br/ws/";
   funcionario: Employee;
   form: FormGroup;
 
-  constructor(private formbuilder: FormBuilder, private employeeService: EmployeeService) { }
+  constructor(private formbuilder: FormBuilder, private employeeService: EmployeeService, private httpClient: HttpClient) { }
 
   ngOnInit(): void {
     this.form = this.formbuilder.group({
@@ -36,14 +38,29 @@ export class CreateEmployeeComponent implements OnInit {
     })
   }
 
+
+  async consultarCep() {
+    let cep = this.form.get('cep').value;
+    console.log(`${this.urlViaCep}/${cep}/json`);
+    
+    var endereco = await this.httpClient.get<ViaCepResponse>(`${this.urlViaCep}/${cep}/json`).toPromise();
+    this.form.get('street').setValue(endereco.logradouro);
+    this.form.get('state').setValue(endereco.uf);
+    this.form.get('city').setValue(endereco.localidade);
+    this.form.get('district').setValue(endereco.bairro);
+
+  }
+
   async cadastrarFuncionario() {
     this.funcionario = new Employee();
     var account = new Account();
-    this.funcionario.accounts = this.form.get('account').value;
-    var bank = new Bank();
-    this.funcionario.banks = this.form.get('bank').value;
-    var phone = new Phone();
-    this.funcionario.phones = this.form.get('phone').value;
+    account.accountNumber = this.form.get('accountNumber').value;
+    account.digit = this.form.get('digit').value;
+    account.bank = new Bank();
+    account.bank.bankId = this.form.get('bankId').value;
+    this.funcionario.accounts.push(account);
+    //var phone = new Phone();
+    //this.funcionario.phones = this.form.get('phoneNumber').value;
     this.funcionario.name = this.form.get('name').value;
     this.funcionario.lastName = this.form.get('lastname').value;
     this.funcionario.email = this.form.get('email').value;
@@ -52,4 +69,11 @@ export class CreateEmployeeComponent implements OnInit {
     console.log(retorno)
   }
 
+}
+
+class ViaCepResponse {
+  logradouro: string;
+  bairro: string;
+  localidade: string;
+  uf: string;
 }

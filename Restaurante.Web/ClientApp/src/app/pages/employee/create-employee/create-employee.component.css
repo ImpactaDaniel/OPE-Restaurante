@@ -78,9 +78,6 @@ body {
     }
   
     .box_logo {
-      height: 30vh;
-      width: 100vh;
-      flex-direction: row;
     }
   
     .text_logo {
@@ -94,10 +91,6 @@ body {
     }
   
     .box_login {
-      height: auto;
-      width: 100vh;
-      flex: 1;
-      flex-direction: column;
     }
   
     #btn_login {
