@@ -17,11 +17,12 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
-    - name: Enter solution folder
-      run: cd Restaurante-Back-End
     - name: Restore dependencies
       run: dotnet restore
+      working-directory: ./Restaurante-Back-End
     - name: Build
       run: dotnet build --no-restore
+      working-directory: ./Restaurante-Back-End
     - name: Test
       run: dotnet test --no-build --verbosity normal
+      working-directory: ./Restaurante-Back-End
