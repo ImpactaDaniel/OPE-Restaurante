@@ -14,6 +14,7 @@ namespace Restaurante.Web
 {
     public class Startup
     {
+        private static string CORS_NAME = "Default";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -32,11 +33,15 @@ namespace Restaurante.Web
             services.AddLogging(configure => configure.AddFile("Logs/Restaurante-{Date}.txt"));
 
             services.AddControllersWithViews();
-            // In production, the Angular files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
+
+            services.AddCors(cors =>
             {
-                configuration.RootPath = "ClientApp/dist";
+                cors.AddPolicy(CORS_NAME, policy =>
+                {
+                    policy.AllowAnyOrigin();                    
+                });
             });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Restaurante Service", Version = "v1" });
@@ -71,25 +76,14 @@ namespace Restaurante.Web
             app.UseAuthorization();
 
             app
+                .UseCors(CORS_NAME)
                 .UseHttpsRedirection()
                 .UseStaticFiles()
                 .UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllers();
                 })
-                .Initialize()
-                .UseSpa(spa =>
-                {
-                    // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                    // see https://go.microsoft.com/fwlink/?linkid=864501
-
-                    spa.Options.SourcePath = "ClientApp";
-
-                    if (env.IsDevelopment())
-                    {
-                        spa.UseAngularCliServer(npmScript: "start");
-                    }
-                });
+                .Initialize();
         }
     }
 }
