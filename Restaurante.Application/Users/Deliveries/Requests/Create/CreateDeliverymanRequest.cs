@@ -50,7 +50,7 @@ namespace Restaurante.Application.Users.Deliveries.Requests.Create
                 try
                 {
                     var bank = await
-                        _defaultDomainRepository.Get<Bank>(bank => bank.Id == request.Bank.BankId, cancellationToken);
+                        _defaultDomainRepository.Get<Bank>(bank => bank.Id == request.Account.Bank.BankId, cancellationToken);
 
                     if (bank is null)
                         throw new UserException("Banco não encontrado!");

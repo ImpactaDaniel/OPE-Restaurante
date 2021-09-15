@@ -41,6 +41,8 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\models\common\apiResponse.ts" />
+    <None Remove="ClientApp\src\app\models\common\models\model.ts" />
+    <None Remove="ClientApp\src\app\models\funcionario\employee.ts" />
     <None Remove="ClientApp\src\app\models\funcionario\funcionario.ts" />
   </ItemGroup>
 
@@ -50,7 +52,6 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\models\common\apiResponse.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\models\funcionario\funcionario.ts" />
   </ItemGroup>
 
   <ItemGroup>

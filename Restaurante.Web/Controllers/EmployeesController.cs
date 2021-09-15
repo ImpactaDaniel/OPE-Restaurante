@@ -17,7 +17,6 @@ namespace Restaurante.Web.Controllers
             : base(notifier, mediatr)
         {
         }
-
         [Route("GetAll"), HttpGet]
         public async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
         {
