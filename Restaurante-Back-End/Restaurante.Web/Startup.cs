@@ -38,7 +38,10 @@ namespace Restaurante.Web
             {
                 cors.AddPolicy(CORS_NAME, policy =>
                 {
-                    policy.AllowAnyOrigin();                    
+                    policy
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();                           
                 });
             });
 
@@ -51,7 +54,7 @@ namespace Restaurante.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-
+            app.UseCors(CORS_NAME);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -76,7 +79,6 @@ namespace Restaurante.Web
             app.UseAuthorization();
 
             app
-                .UseCors(CORS_NAME)
                 .UseHttpsRedirection()
                 .UseStaticFiles()
                 .UseEndpoints(endpoints =>
