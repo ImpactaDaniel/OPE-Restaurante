@@ -8,7 +8,7 @@ export class Employee extends Model {
   password: string;
   address: Address;
   phones: Phone[] = [];
-  accounts: Account[] = [];
+  account: Account;
 }
 
 export class Account extends Model {

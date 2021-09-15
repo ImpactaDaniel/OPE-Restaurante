@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Account, Bank, Employee, Phone } from '../../../models/funcionario/employee';
+import { Account, Address, Bank, Employee, Phone } from '../../../models/funcionario/employee';
 import { EmployeeService } from '../service/employee.service';
 
 @Component({
@@ -56,17 +56,23 @@ export class CreateEmployeeComponent implements OnInit {
     var account = new Account();
     account.accountNumber = this.form.get('accountNumber').value;
     account.digit = this.form.get('digit').value;
+    account.branch = this.form.get('branch').value;
     account.bank = new Bank();
     account.bank.bankId = this.form.get('bankId').value;
-    this.funcionario.accounts.push(account);
-    //var phone = new Phone();
-    //this.funcionario.phones = this.form.get('phoneNumber').value;
+    this.funcionario.account = account;
+    var phone = new Phone();
+    phone.phoneNumber = this.form.get('phoneNumber').value;
+    phone.ddd = this.form.get('ddd').value;
+    this.funcionario.phones.push(phone); 
+    let addres = new Address({
+      street: this.form.get('street').value,
+    });
+    this.funcionario.address = addres;
     this.funcionario.name = this.form.get('name').value;
     this.funcionario.lastName = this.form.get('lastname').value;
     this.funcionario.email = this.form.get('email').value;
     this.funcionario.password = this.form.get('password').value;
     let retorno = await this.employeeService.createEmployee(this.funcionario).toPromise();
-    console.log(retorno)
   }
 
 }

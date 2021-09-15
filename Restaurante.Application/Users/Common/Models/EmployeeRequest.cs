@@ -12,7 +12,6 @@ namespace Restaurante.Application.Users.Common.Models
         public string Email { get; set; }
         public string Password { get; set; }
         public AccountRequest Account { get; set; }
-        public BankRequest Bank { get; set; }
         public AddressRequest Address { get; set; }
         public List<PhoneRequest> Phones { get; set; }
         public EmployeesType Type { get; set; }
@@ -26,6 +25,7 @@ namespace Restaurante.Application.Users.Common.Models
         public string Branch { get; set; }
         public string AccountNumber { get; set; }
         public int Digit { get; set; }
+        public BankRequest Bank { get; set; }
     }
 
     public class AddressRequest
