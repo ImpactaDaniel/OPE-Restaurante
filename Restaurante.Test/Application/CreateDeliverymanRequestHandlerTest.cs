@@ -71,11 +71,11 @@ namespace Restaurante.Test.Application
                 {
                     Branch = "teste",
                     AccountNumber = "teste",
-                    Digit = 1
-                },
-                Bank = new BankRequest()
-                {
-                    BankId = 0,
+                    Digit = 1,
+                    Bank = new BankRequest()
+                    {
+                        BankId = 0,
+                    },
                 },
                 Address = new AddressRequest()
                 {
@@ -131,11 +131,11 @@ namespace Restaurante.Test.Application
                 {
                     Branch = "teste",
                     AccountNumber = "teste",
-                    Digit = 1
-                },
-                Bank = new BankRequest()
-                {
-                    BankId = 0,
+                    Digit = 1,
+                    Bank = new BankRequest()
+                    {
+                        BankId = 0,
+                    },
                 },
                 Address = new AddressRequest()
                 {
