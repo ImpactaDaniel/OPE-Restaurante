@@ -26,7 +26,7 @@
 Cypress.Commands.add('fillFormCreateEmployee', () => {
     cy.get('[name="nome"]').type('Daniel');
     cy.get('[name="sobrenome"]').type('Santos');
-    cy.get('[name="email"]').type('danielcity1@gmail.com');
+    cy.get('[name="email"]').type('denists88@gmail.com');
     cy.get('[name="senha"]').type('123456');
     cy.get('[name="cep"]').type('02998190');
     cy.get('[name="number"]').type('120');
