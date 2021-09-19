@@ -41,7 +41,6 @@ export class CreateEmployeeComponent implements OnInit {
 
   async consultarCep() {
     let cep = this.form.get('cep');
-    console.log(cep);
     if (cep.invalid)
       return;
     var endereco = await this.consultaCepService.consultaCep(cep.value).toPromise();
@@ -53,28 +52,39 @@ export class CreateEmployeeComponent implements OnInit {
   }
 
   async cadastrarFuncionario() {
-    this.funcionario = new Employee();
+    this.funcionario = this.getEmployee();
+    
+    let retorno = await this.employeeService.createEmployee(this.funcionario).toPromise();
+
+    console.log(retorno);
+  }
+
+  private getEmployee(): Employee {
+    let employee = new Employee()
     var account = new Account();
     account.accountNumber = this.form.get('accountNumber').value;
     account.digit = this.form.get('digit').value;
     account.branch = this.form.get('branch').value;
     account.bank = new Bank();
     account.bank.bankId = this.form.get('bankId').value;
-    this.funcionario.account = account;
+    employee.account = account;
     var phone = new Phone();
     phone.phoneNumber = this.form.get('phoneNumber').value;
     phone.ddd = this.form.get('ddd').value;
-    this.funcionario.phones.push(phone);
+    employee.phones.push(phone);
     let addres = new Address({
       street: this.form.get('street').value,
+      number: this.form.get('number').value,
+      district: this.form.get('district').value,
+      cep: this.form.get('cep').value
     });
-    this.funcionario.address = addres;
-    this.funcionario.name = this.form.get('name').value;
-    this.funcionario.lastName = this.form.get('lastname').value;
-    this.funcionario.email = this.form.get('email').value;
-    this.funcionario.password = this.form.get('password').value;
-    let retorno = await this.employeeService.createEmployee(this.funcionario).toPromise();
-  }
+    employee.address = addres;
+    employee.name = this.form.get('name').value;
+    employee.lastName = this.form.get('lastname').value;
+    employee.email = this.form.get('email').value;
+    employee.password = this.form.get('password').value;
 
+    return employee;
+  }
 }
 

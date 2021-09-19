@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Restaurante.Application.Users.Employees.Requests.Create;
 using Restaurante.Application.Users.Employees.Requests.GetAll;

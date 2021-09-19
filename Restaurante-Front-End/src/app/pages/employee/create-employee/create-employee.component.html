@@ -18,7 +18,7 @@
       <div class="row justify-content-center text_login">
         Preencha os dados abaixo.
       </div>
-      <form [formGroup]="form">
+      <form [formGroup]="form" (ngSubmit)="cadastrarFuncionario()">
         <div class="row">
           <div class="col-md-6">
             <input type="text" tabindex="1" formControlName="name" name="nome" class="form-control campos-form" placeholder="Nome">
@@ -42,7 +42,7 @@
           </div>
         </div>
         <div class="button-form">
-          <button id="btn_logar" type="submit" (click)="cadastrarFuncionario()" class="btn btn-primary button-form">Criar</button>
+          <button id="btn_logar" type="submit" class="btn btn-primary button-form">Criar</button>
         </div>
       </form>
     </div>

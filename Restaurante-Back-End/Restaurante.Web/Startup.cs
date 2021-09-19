@@ -28,8 +28,32 @@ namespace Restaurante.Web
                 .AddDomain()
                 .AddApplication(Configuration)
                 .AddLogging(configure => configure.AddFile("Logs/Restaurante-{Date}.txt"))
-                .AddSwaggerGen(c => c
-                                    .SwaggerDoc("v1", new OpenApiInfo { Title = "Restaurante Service", Version = "v1" }))
+                .AddSwaggerGen(c => {
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Restaurante Service", Version = "v1" });
+                    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                    {
+                        Type = SecuritySchemeType.Http,
+                        BearerFormat = "JWT",
+                        In = ParameterLocation.Header,
+                        Scheme = "bearer",
+                        Description = "Insert a valid Token"
+                    });
+
+                    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer"
+                                }
+                            },
+                            new string[] { }
+                        }
+                    });
+                })
                 .AddCors(cors => cors
                                     .AddPolicy(CORS_NAME, policy => policy
                                                                     .AllowAnyOrigin()
