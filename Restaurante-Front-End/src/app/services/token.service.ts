@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { APIResponse } from '../models/common/apiResponse';
 @Injectable({
   providedIn: 'root'
@@ -7,13 +7,11 @@ import { APIResponse } from '../models/common/apiResponse';
 export class TokenService {
 
   chaveToken = btoa('tokenRequest');
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, @Inject('BASE_URL') private url: string) { }
 
   public isAuthenticated(): boolean {
     let token = this.getToken();
-    if(!token || token === null)
-      return false;
-    return new Date(token.validTo) > new Date();
+    return token && token !== null;
   }
 
   private saveToken(token: TokenRespose): void {
@@ -21,24 +19,30 @@ export class TokenService {
     localStorage.setItem(this.chaveToken, btoa(json));
   }
 
-  public async authenticate(login: LoginModel, url: string): Promise<void> {
-    let response = await this.httpClient.post<APIResponse<any>>(url, login).toPromise();
+  public async renewToken(): Promise<boolean> {
+    let response = await this.httpClient.get<APIResponse<any>>(this.url + 'Auth/RenewToken').toPromise();
+    if (response.success)
+      this.saveToken(response.response.result);
+    return response.success;
+  }
 
-    if(response.success)
+  public async authenticate(login: LoginModel): Promise<void> {
+    let response = await this.httpClient.post<APIResponse<any>>(this.url + 'Auth/Authenticate', login).toPromise();
+
+    if (response.success)
       this.saveToken(response.response.result);
   }
 
   public getToken(): TokenRespose {
-    let json = this.returnFromLocalStorage(this.chaveToken); 
-    console.log(json);
-    if(json === '' || !json)
+    let json = this.returnFromLocalStorage(this.chaveToken);
+    if (json === '' || !json)
       return null;
     return JSON.parse(json);
   }
 
-  private returnFromLocalStorage(key: string): string{
+  private returnFromLocalStorage(key: string): string {
     let value = localStorage.getItem(key);
-    if(!value || value === '')
+    if (!value || value === '')
       return value;
     return atob(value);
   }

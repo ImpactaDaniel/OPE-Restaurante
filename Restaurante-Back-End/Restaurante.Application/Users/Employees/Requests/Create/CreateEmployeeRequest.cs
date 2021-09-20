@@ -78,7 +78,7 @@ namespace Restaurante.Application.Users.Employees.Requests.Create
                     var created = await _service.CreateEmployee(employee, request.CurrentUser, cancellationToken);
 
                     if (!created)
-                        return new Response<bool>(false, false);
+                        return new Response<bool>(!_notifier.HasNotifications(), false);
 
                     var responseEmail = await _emailService.SendAsync(new EmailMessage(employee.Email, "Your new Credentials", $"E-mail: {employee.Email} Senha: {employee.Password}"), cancellationToken);
 
