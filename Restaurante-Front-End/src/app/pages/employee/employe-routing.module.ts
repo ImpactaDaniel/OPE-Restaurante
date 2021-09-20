@@ -1,3 +1,4 @@
+import { AuthenticateGuardService } from './authenticate-guard.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
@@ -18,7 +19,8 @@ const routes : Routes = [
   },
   {
     path: 'login',
-    component: LoginEmployeeComponent
+    component: LoginEmployeeComponent,
+    canActivate: [AuthenticateGuardService]
   }
 ];
 
