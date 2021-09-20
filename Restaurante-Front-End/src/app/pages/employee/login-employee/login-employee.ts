@@ -15,21 +15,22 @@ export class LoginEmployeeComponent {
 
     ngOnInit(): void {
         this.form = this.formbuilder.group({
-            login: [""],
+            email: [""],
             password: [""]
         })
     }
 
     getInfoLogin(): LoginModel {
         let loginmodel = new LoginModel();
-        loginmodel.email = this.form.get('login').value;
+        loginmodel.email = this.form.get('email').value;
         loginmodel.password = this.form.get('password').value;
         return loginmodel;
     }
     
     authentication() {
         let loginmodel = this.getInfoLogin();
-        let retorno = this.tokenservice.authenticate(loginmodel).toPromise()
+        this.tokenservice.authenticate(loginmodel).then( (response) => {
+            console.log(response)
+        })
     }
 }
-
