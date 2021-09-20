@@ -21,6 +21,9 @@ namespace Restaurante.Application.Common.Helper
         public static Notification DoesntHavePermission(string nameUser, string toDo) =>
             new Notification((int)NotificationKeys.DoesntHavePermission, $"{nameUser} não tem permissão para {toDo}");
 
+        public static Notification InvalidCredentials() =>
+            new Notification((int)NotificationKeys.DoesntHavePermission, $"Credenciais inválidas!");
+
         public static Notification InvalidEmailOrPassword() =>
             new Notification((int)NotificationKeys.InvalidEmailOrPassword, "E-mail ou senha inválidos!");
     }

@@ -75,11 +75,14 @@ namespace Restaurante.Application.Users.Employees.Requests.Create
                     var employee = _factory
                         .Build();
 
-                    var func = await _service.CreateEmployee(employee, request.CurrentUser, cancellationToken);
+                    var created = await _service.CreateEmployee(employee, request.CurrentUser, cancellationToken);
+
+                    if (!created)
+                        return new Response<bool>(!_notifier.HasNotifications(), false);
 
                     var responseEmail = await _emailService.SendAsync(new EmailMessage(employee.Email, "Your new Credentials", $"E-mail: {employee.Email} Senha: {employee.Password}"), cancellationToken);
 
-                    return new Response<bool>(!_notifier.HasNotifications(), func);
+                    return new Response<bool>(!_notifier.HasNotifications(), created);
                 }
                 catch (UserException e)
                 {

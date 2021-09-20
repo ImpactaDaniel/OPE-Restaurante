@@ -5,5 +5,6 @@ namespace Restaurante.Domain.Users.Common.Services.Interfaces
     public interface ITokenService
     {
         TokenResponse GenerateToken(User user);
+        int? GetIdByToken(string token, bool validateLifeTime);
     }
 }

@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenInterceptor } from './middlewares/TokenInterceptor';
+import { RequestInterceptor } from './middlewares/TokenInterceptor';
 
 @NgModule({
   declarations: [
@@ -27,7 +27,7 @@ import { TokenInterceptor } from './middlewares/TokenInterceptor';
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
+      useClass: RequestInterceptor,
       multi: true
     }
   ],
