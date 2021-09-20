@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { LoginModel, TokenService } from 'src/app/services/token.service';
 
 @Component({
     selector: 'app-login-employee',
@@ -19,9 +20,16 @@ export class LoginEmployeeComponent {
         })
     }
 
+    getInfoLogin(): LoginModel {
+        let loginmodel = new LoginModel();
+        loginmodel.email = this.form.get('login').value;
+        loginmodel.password = this.form.get('password').value;
+        return loginmodel;
+    }
+    
     authentication() {
-        
-        this.form
+        let loginmodel = this.getInfoLogin();
+        let retorno = this.tokenservice.authenticate(loginmodel).toPromise()
     }
 }
 
