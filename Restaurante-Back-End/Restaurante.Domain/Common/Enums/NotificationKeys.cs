@@ -7,6 +7,7 @@
         InvalidPassword,
         DoesntHavePermission,
         InvalidEmailOrPassword,
+        InvalidCredentials,
         Error
     }
 }
