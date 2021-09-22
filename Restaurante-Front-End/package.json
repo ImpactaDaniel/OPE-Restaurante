@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "angular:dev": "ng serve --port 4200 --host 0.0.0.0 --disable-host-check --poll 2000",
     "cy:verify": "cypress verify",
     "build:ssr": "ng run Restaurante.Web:server:dev",
     "test": "ng test",

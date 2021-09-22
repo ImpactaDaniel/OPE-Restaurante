@@ -19,6 +19,6 @@ describe('Create employee tests', function() {
         cy.fillFormCreateEmployee();
 
         cy.wait(500);
-        cy.get('#btn_logar').click();        
+        cy.get('#btn_logar').click();
     })
 })
