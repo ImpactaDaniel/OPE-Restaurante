@@ -1,5 +1,4 @@
-﻿using MediatR;
-using Restaurante.Application.Common;
+﻿using Restaurante.Application.Common;
 
 namespace Restaurante.Application.Users.Common.Models
 {

@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using Restaurante.Application;
 using Restaurante.Domain;
 using Restaurante.Infra;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 
 namespace Restaurante.Web
 {
@@ -28,7 +28,8 @@ namespace Restaurante.Web
                 .AddDomain()
                 .AddApplication(Configuration)
                 .AddLogging(configure => configure.AddFile("Logs/Restaurante-{Date}.txt"))
-                .AddSwaggerGen(c => {
+                .AddSwaggerGen(c =>
+                {
                     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Restaurante Service", Version = "v1" });
                     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                     {
@@ -77,7 +78,7 @@ namespace Restaurante.Web
                 app.UseHsts();
             }
 
-            app                
+            app
                 .UseCors(CORS_NAME)
                 .UseRouting()
                 .UseAuthentication()

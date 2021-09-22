@@ -1,4 +1,5 @@
-﻿using Restaurante.Domain.Users.Common.Models;
+﻿using Restaurante.Domain.Common.Enums;
+using Restaurante.Domain.Users.Common.Models;
 using Restaurante.Domain.Users.Enums;
 using Restaurante.Domain.Users.Exceptions;
 using System;
@@ -24,7 +25,7 @@ namespace Restaurante.Domain.Users.Employees.Models
         public Employee UpdateType(EmployeesType type)
         {
             if (type == EmployeesType.Deliver)
-                throw new UserException("Esse funcionário não pode ser entregador!");
+                throw new UserException("Esse funcionário não pode ser entregador!", NotificationKeys.InvalidEntity);
             Type = type;
             return this;
         }

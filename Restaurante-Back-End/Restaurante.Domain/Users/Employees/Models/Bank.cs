@@ -1,8 +1,9 @@
-﻿using Restaurante.Domain.Common.Models;
+﻿using Restaurante.Domain.BasicEntities.Common.Interfaces;
+using Restaurante.Domain.Common.Models;
 
 namespace Restaurante.Domain.Users.Employees.Models
 {
-    public class Bank : Entity<int>
+    public class Bank : Entity<int>, IBasicEntity
     {
         public string Name { get; private set; }
         private Bank()

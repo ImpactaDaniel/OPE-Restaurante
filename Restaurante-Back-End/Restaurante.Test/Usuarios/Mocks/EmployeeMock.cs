@@ -34,7 +34,7 @@ namespace Restaurante.Test.Usuarios.Mocks
         public static Account GetDefault() =>
             Builder<Account>
             .CreateNew()
-            .WithFactory(() => new Account( BankMock.GetDefault(), "teste", "teste", 0))
+            .WithFactory(() => new Account(BankMock.GetDefault(), "teste", "teste", 0))
             .Build();
     }
     public static class PhoneMock

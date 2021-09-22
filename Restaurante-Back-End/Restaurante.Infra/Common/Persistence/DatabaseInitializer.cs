@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace Restaurante.Infra.Common.Persistence
+﻿namespace Restaurante.Infra.Common.Persistence
 {
     internal class DatabaseInitializer : IInitializer
     {
@@ -13,8 +11,7 @@ namespace Restaurante.Infra.Common.Persistence
 
         public void Initialize()
         {
-            _db.Database.EnsureCreated();            
-            _db.Database.Migrate();            
+            _db.Database.EnsureCreated();
         }
     }
 }

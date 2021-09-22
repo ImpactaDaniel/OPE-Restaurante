@@ -1,18 +1,16 @@
-﻿using NSubstitute;
-using System.Net.Mail;
-using Xunit;
+﻿using Xunit;
 
 namespace Restaurante.Test.Usuarios
 {
     public class GerentesTeste
     {
-       
+
         [Fact]
         public void DeveraEnviarEmailQuandoCadastrarNovoUsuario()
         {
             //Arrange
             //var emailService = Substitute.For<IEmailService>();           
-            var smtp = new SmtpClient();
+            //var smtp = new SmtpClient();
 
             //var usuarioParaCadastrar = usuario.
 

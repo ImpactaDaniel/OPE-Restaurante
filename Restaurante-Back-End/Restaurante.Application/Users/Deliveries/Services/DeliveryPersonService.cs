@@ -3,12 +3,12 @@ using Restaurante.Application.Common.Helper;
 using Restaurante.Domain.Common.Data.Mappers.Interfaces;
 using Restaurante.Domain.Common.Models.Integration;
 using Restaurante.Domain.Common.Services.Interfaces;
+using Restaurante.Domain.Users.Employees.Models;
+using Restaurante.Domain.Users.Employees.Repositories;
 using Restaurante.Domain.Users.Entregadores.Models;
 using Restaurante.Domain.Users.Entregadores.Services.Interfaces;
 using Restaurante.Domain.Users.Enums;
 using Restaurante.Domain.Users.Exceptions;
-using Restaurante.Domain.Users.Employees.Models;
-using Restaurante.Domain.Users.Employees.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -45,13 +45,13 @@ namespace Restaurante.Application.Users.Deliveries.Services
                             _funcionarioRepository
                             .Get(currentUserId, cancellationToken);
 
-                if(user is null)
+                if (user is null)
                 {
                     _notifier.AddNotification(NotificationHelper.EntityNotFound(nameof(Employee)));
                     return false;
                 }
 
-                if(user.Type != EmployeesType.Manager)
+                if (user.Type != EmployeesType.Manager)
                 {
                     _notifier.AddNotification(NotificationHelper.DoesntHavePermission(nameof(Employee), "criar novo Entregador!"));
                     return false;
@@ -63,7 +63,7 @@ namespace Restaurante.Application.Users.Deliveries.Services
 
                 return true;
             }
-            catch(UserException e)
+            catch (UserException e)
             {
                 _notifier.AddNotification(NotificationHelper.FromException(e));
                 return false;

@@ -14,14 +14,11 @@ namespace Restaurante.Application.Users.Deliveries.Services
 {
     public class DeliveriesIntegrationService : IEntregadorIntegrationService
     {
-        private readonly INotifier _notifier;
         private readonly ILogger<DeliveriesIntegrationService> _logger;
         public DeliveriesIntegrationService(IntegrationConfiguration integrationConfiguration,
-                                            INotifier notifier,
                                             ILogger<DeliveriesIntegrationService> logger)
         {
             IntegrationConfiguration = integrationConfiguration;
-            _notifier = notifier;
             _logger = logger;
         }
 
@@ -43,17 +40,13 @@ namespace Restaurante.Application.Users.Deliveries.Services
                     await requestStream.WriteAsync(bytesRequest, cancellationToken);
                     requestStream.Close();
                 }
-                using (var response = (HttpWebResponse)await webRequest.GetResponseAsync())
-                {
-                    if (response.StatusCode != HttpStatusCode.OK)
-                        return null;
-                    using (var responseStream = new StreamReader(response.GetResponseStream()))
-                    {
-                        var responseString = responseStream.ReadToEnd();
-                        integrationResponse = JsonConvert.DeserializeObject<IntegrationResponse>(responseString);
-                        responseStream.Close();
-                    }
-                }
+                using var response = (HttpWebResponse)await webRequest.GetResponseAsync();
+                if (response.StatusCode != HttpStatusCode.OK)
+                    return null;
+                using var responseStream = new StreamReader(response.GetResponseStream());
+                var responseString = responseStream.ReadToEnd();
+                integrationResponse = JsonConvert.DeserializeObject<IntegrationResponse>(responseString);
+                responseStream.Close();
             }
             catch (Exception e)
             {

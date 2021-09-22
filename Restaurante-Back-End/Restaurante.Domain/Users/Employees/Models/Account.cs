@@ -1,6 +1,6 @@
-﻿using Restaurante.Domain.Common.Models;
+﻿using Restaurante.Domain.Common.Enums;
+using Restaurante.Domain.Common.Models;
 using Restaurante.Domain.Users.Exceptions;
-using System;
 
 namespace Restaurante.Domain.Users.Employees.Models
 {
@@ -21,7 +21,7 @@ namespace Restaurante.Domain.Users.Employees.Models
         {
             ValidateNullString(branch, "Agência");
             ValidateNullString(accountNumber, "Número da conta");
-            Bank = bank ?? throw new UserException(nameof(bank));
+            Bank = bank ?? throw new UserException(nameof(bank), NotificationKeys.InvalidEntity);
             Branch = branch;
             AccountNumber = accountNumber;
             Digit = digit;
@@ -29,7 +29,7 @@ namespace Restaurante.Domain.Users.Employees.Models
 
         public Account UpdateBank(Bank bank)
         {
-            bank = bank ?? throw new UserException(nameof(bank));
+            bank = bank ?? throw new UserException(nameof(bank), NotificationKeys.InvalidEntity);
             if (Bank.Id != bank?.Id)
                 Bank = bank;
             return this;

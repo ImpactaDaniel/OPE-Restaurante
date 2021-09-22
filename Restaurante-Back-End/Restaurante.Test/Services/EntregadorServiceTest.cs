@@ -36,7 +36,7 @@ namespace Restaurante.Test.Services
         {
             //arrange
             _funcionarioDomainRepository.Get(Arg.Any<int>()).ReturnsForAnyArgs(EmployeeMock.GetDefaultManager());
-            _mapper.Map(Arg.Any<DeliveryPerson>()).ReturnsForAnyArgs(EntregadorIntegrationMock.GetDefault());            
+            _mapper.Map(Arg.Any<DeliveryPerson>()).ReturnsForAnyArgs(EntregadorIntegrationMock.GetDefault());
 
             _entregadoresService = new DeliveryPersonService(_notifier, _logger, _funcionarioDomainRepository, _entregadorIntegrationService, _mapper);
 

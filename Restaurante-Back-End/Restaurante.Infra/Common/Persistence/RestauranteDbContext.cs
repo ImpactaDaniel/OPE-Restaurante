@@ -7,7 +7,7 @@ namespace Restaurante.Infra.Common.Persistence
     internal class RestauranteDbContext : DbContext, IRestauranteDbContext
     {
         public RestauranteDbContext(DbContextOptions<RestauranteDbContext> options) : base(options)
-        {            
+        {
         }
         public DbSet<Employee> Employees { get; set; }
 

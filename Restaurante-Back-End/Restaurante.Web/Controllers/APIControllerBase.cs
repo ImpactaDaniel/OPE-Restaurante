@@ -15,7 +15,7 @@ namespace Restaurante.Web.Controllers
             _mediator = mediator;
         }
 
-        protected IActionResult GetResponse<T>(T data, object paginationInfo = null)
+        protected IActionResult GetResponse<T>(T data)
         {
             if (!_notifier.HasNotifications())
                 return Ok(new DefaultApiResponse<T>(response: data));

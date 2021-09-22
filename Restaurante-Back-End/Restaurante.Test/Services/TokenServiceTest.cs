@@ -2,7 +2,6 @@
 using Restaurante.Domain.Users.Common.Models;
 using Restaurante.Domain.Users.Common.Services.Interfaces;
 using Restaurante.Test.Usuarios.Mocks;
-using System;
 using Xunit;
 
 namespace Restaurante.Test.Services

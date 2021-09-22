@@ -4,8 +4,10 @@ using Restaurante.Application.Common;
 using Restaurante.Application.Common.Helper;
 using Restaurante.Application.Common.Models;
 using Restaurante.Application.Users.Common.Models;
+using Restaurante.Domain.BasicEntities.Services.Interfaces;
+using Restaurante.Domain.Common.Enums;
+using Restaurante.Domain.Common.Exceptions;
 using Restaurante.Domain.Common.Factories.Interfaces;
-using Restaurante.Domain.Common.Repositories.Interfaces;
 using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Domain.Users.Employees.Models;
 using Restaurante.Domain.Users.Exceptions;
@@ -27,7 +29,7 @@ namespace Restaurante.Application.Users.Employees.Requests.Create
         {
             private readonly IEmployeeFactory _factory;
             private readonly IEmployeesService<Employee> _service;
-            private readonly IDefaultDomainRepository _defaultRepository;
+            private readonly IBasicEntitiesService _basicEntitiesService;
             private readonly INotifier _notifier;
             private readonly ILogger<CreateEmployeeRequestHandler> _logger;
             private readonly IMessageSenderService<EmailMessage> _emailService;
@@ -35,15 +37,15 @@ namespace Restaurante.Application.Users.Employees.Requests.Create
             public CreateEmployeeRequestHandler(IEmployeeFactory factory,
                                                    IEmployeesService<Employee> service,
                                                    INotifier notifier,
-                                                   ILogger<CreateEmployeeRequestHandler>  logger,
+                                                   ILogger<CreateEmployeeRequestHandler> logger,
                                                    IMessageSenderService<EmailMessage> emailService,
-                                                   IDefaultDomainRepository defaulRepository)
+                                                   IBasicEntitiesService basicEntitiesService)
             {
                 _factory = factory;
                 _service = service;
                 _notifier = notifier;
                 _logger = logger;
-                _defaultRepository = defaulRepository;
+                _basicEntitiesService = basicEntitiesService;
                 _emailService = emailService;
             }
 
@@ -51,10 +53,10 @@ namespace Restaurante.Application.Users.Employees.Requests.Create
             {
                 try
                 {
-                    var bank = await _defaultRepository.Get<Bank>(b => b.Id == request.Account.Bank.BankId, cancellationToken);
+                    var bank = await _basicEntitiesService.GetEntity<Bank>(b => b.Id == request.Account.Bank.BankId, cancellationToken);
 
                     if (bank is null)
-                        throw new UserException("Banco não encontrado!");
+                        throw new UserException("Banco não encontrado!", NotificationKeys.InvalidEntity);
 
                     var account = new Account(bank, request.Account.Branch, request.Account.AccountNumber, request.Account.Digit);
 
@@ -70,7 +72,7 @@ namespace Restaurante.Application.Users.Employees.Requests.Create
                         .WithName(request.Name)
                         .WithEmail(request.Email)
                         .WithPassword(request.Password);
-                        
+
 
                     var employee = _factory
                         .Build();
@@ -84,7 +86,7 @@ namespace Restaurante.Application.Users.Employees.Requests.Create
 
                     return new Response<bool>(!_notifier.HasNotifications(), created);
                 }
-                catch (UserException e)
+                catch (RestauranteException e)
                 {
                     _notifier.AddNotification(NotificationHelper.FromException(e));
                     return new Response<bool>(false, false);

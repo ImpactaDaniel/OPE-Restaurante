@@ -27,8 +27,7 @@ namespace Restaurante.Application.Users.Common.Services
                     new Claim(ClaimTypes.Sid, user.Id.ToString()),
                     new Claim(ClaimTypes.Role, user.Type.ToString())
                 }),
-                Expires = DateTime.Now.AddSeconds(TokenConfiguration.ValidTime),
-                NotBefore = DateTime.Now,
+                Expires = DateTime.UtcNow.AddMinutes(TokenConfiguration.ValidTime),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
@@ -47,7 +46,7 @@ namespace Restaurante.Application.Users.Common.Services
                 ValidateIssuer = false,
                 IssuerSigningKey = new SymmetricSecurityKey(key)
             };
-            
+
             ClaimsPrincipal principal;
             try
             {

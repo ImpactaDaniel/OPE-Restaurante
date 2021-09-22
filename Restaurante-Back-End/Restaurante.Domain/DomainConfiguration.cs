@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Restaurante.Domain.Common.Factories.Interfaces;
-using Restaurante.Domain.Common.Services.Interfaces;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("Restaurante.Test")]
@@ -19,6 +18,6 @@ namespace Restaurante.Domain
                     .AddClasses(classes => classes
                                     .AssignableTo(typeof(IFactory<>)))
                                     .AsMatchingInterface()
-                                    .WithTransientLifetime());        
+                                    .WithTransientLifetime());
     }
 }
