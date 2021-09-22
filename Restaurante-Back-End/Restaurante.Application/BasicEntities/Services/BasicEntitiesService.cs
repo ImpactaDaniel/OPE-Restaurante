@@ -1,4 +1,5 @@
-﻿using Restaurante.Application.Common.Helper;
+﻿using Microsoft.Extensions.Logging;
+using Restaurante.Application.Common.Helper;
 using Restaurante.Domain.BasicEntities.Common.Interfaces;
 using Restaurante.Domain.BasicEntities.Exception;
 using Restaurante.Domain.BasicEntities.Services.Interfaces;
@@ -17,11 +18,13 @@ namespace Restaurante.Application.BasicEntities.Services
     {
         private readonly IDefaultDomainRepository _basicEntityRepository;
         private readonly INotifier _notifier;
+        private readonly ILogger<BasicEntitiesService> _logger;
 
-        public BasicEntitiesService(IDefaultDomainRepository basicEntityRepository, INotifier notifier)
+        public BasicEntitiesService(IDefaultDomainRepository basicEntityRepository, INotifier notifier, ILogger<BasicEntitiesService> logger)
         {
             _basicEntityRepository = basicEntityRepository;
             _notifier = notifier;
+            _logger = logger;
         }
 
         public async Task<IEntity> CreateEntity<TEntity>(TEntity entity, CancellationToken cancellationToken = default)
@@ -35,6 +38,11 @@ namespace Restaurante.Application.BasicEntities.Services
             catch (BasicTableException e)
             {
                 _notifier.AddNotification(NotificationHelper.FromException(e));
+                return null;
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e, e.Message);
                 return null;
             }
         }
@@ -51,6 +59,11 @@ namespace Restaurante.Application.BasicEntities.Services
                 _notifier.AddNotification(NotificationHelper.FromException(e));
                 return null;
             }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                return null;
+            }
         }
 
         public async Task<IEnumerable<TEntity>> GetEntities<TEntity>(CancellationToken cancellationToken)
@@ -63,6 +76,11 @@ namespace Restaurante.Application.BasicEntities.Services
             catch (BasicTableException e)
             {
                 _notifier.AddNotification(NotificationHelper.FromException(e));
+                return null;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
                 return null;
             }
         }
