@@ -77,11 +77,6 @@ namespace Restaurante.Web
                 app.UseHsts();
             }
 
-            if (!env.IsDevelopment())
-            {
-                app.UseSpaStaticFiles();
-            }
-
             app                
                 .UseCors(CORS_NAME)
                 .UseRouting()

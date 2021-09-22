@@ -9,5 +9,6 @@ namespace Restaurante.Infra.Common.Persistence.Interfaces
         DbSet<Account> Accounts { get; }
         DbSet<Phone> Phones { get; }
         DbSet<Address> Addresses { get; }
+        DbSet<Bank> Banks { get; }
     }
 }

@@ -13,6 +13,8 @@ namespace Restaurante.Infra.Common.Persistence
 
         public DbSet<Account> Accounts { get; set; }
 
+        public DbSet<Bank> Banks { get; set; }
+
         public DbSet<Phone> Phones { get; set; }
 
         public DbSet<Address> Addresses { get; set; }

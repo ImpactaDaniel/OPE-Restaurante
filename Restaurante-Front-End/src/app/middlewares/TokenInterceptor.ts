@@ -1,3 +1,4 @@
+import { AlertService } from 'src/app/services/alert.service';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, throwError } from "rxjs";
@@ -8,7 +9,7 @@ import Swal from 'sweetalert2';
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
 
-  constructor(private tokenService: TokenService) { }
+  constructor(private tokenService: TokenService, private alertService: AlertService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -38,24 +39,9 @@ export class RequestInterceptor implements HttpInterceptor {
         req = this.addToken(req, tokenResponse.token);
         s(next.handle(req));
       }
-      f(this.showError());
+      f(this.alertService.showError());
     });
   }
-
-  private showError(message?: string, text?: string): void {
-    Swal.fire({
-      position: 'top',
-      icon: 'error',
-      title: message || 'Ops.. Algo deu errado!',
-      text: text || 'Tente novamente mais tarde',
-      timer: 5000,
-      showConfirmButton: true,
-      didClose: function () {
-        console.log(text);
-      }
-    });
-  }
-
   private addToken(request: HttpRequest<any>, token: string): HttpRequest<any>{
     return request.clone({
       setHeaders: {
