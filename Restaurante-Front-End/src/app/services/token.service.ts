@@ -26,11 +26,13 @@ export class TokenService {
     return response.success;
   }
 
-  public async authenticate(login: LoginModel): Promise<void> {
+  public async authenticate(login: LoginModel): Promise<APIResponse<any>> {
     let response = await this.httpClient.post<APIResponse<any>>(this.url + 'Auth/Authenticate', login).toPromise();
 
     if (response.success)
       this.saveToken(response.response.result);
+
+    return response;
   }
 
   public getToken(): TokenRespose {
