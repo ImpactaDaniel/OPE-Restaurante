@@ -59,7 +59,7 @@ namespace Restaurante.Domain.Users.Employees.Models
             return this;
         }
 
-        private void ValidateCEP(string cep)
+        private static void ValidateCEP(string cep)
         {
             if (!cep.All(char.IsDigit) || cep.Length != 8)
                 throw new UserException("CEP deve conter somente dígitos com 8 caracteres!", NotificationKeys.InvalidEntity);

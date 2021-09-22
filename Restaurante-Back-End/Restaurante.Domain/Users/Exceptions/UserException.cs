@@ -1,6 +1,5 @@
 ﻿using Restaurante.Domain.Common.Enums;
 using Restaurante.Domain.Common.Exceptions;
-using System;
 
 namespace Restaurante.Domain.Users.Exceptions
 {

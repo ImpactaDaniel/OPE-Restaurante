@@ -8,7 +8,6 @@ using Restaurante.Domain.BasicEntities.Services.Interfaces;
 using Restaurante.Domain.Common.Enums;
 using Restaurante.Domain.Common.Exceptions;
 using Restaurante.Domain.Common.Factories.Interfaces;
-using Restaurante.Domain.Common.Repositories.Interfaces;
 using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Domain.Users.Employees.Models;
 using Restaurante.Domain.Users.Exceptions;
@@ -38,7 +37,7 @@ namespace Restaurante.Application.Users.Employees.Requests.Create
             public CreateEmployeeRequestHandler(IEmployeeFactory factory,
                                                    IEmployeesService<Employee> service,
                                                    INotifier notifier,
-                                                   ILogger<CreateEmployeeRequestHandler>  logger,
+                                                   ILogger<CreateEmployeeRequestHandler> logger,
                                                    IMessageSenderService<EmailMessage> emailService,
                                                    IBasicEntitiesService basicEntitiesService)
             {
@@ -73,7 +72,7 @@ namespace Restaurante.Application.Users.Employees.Requests.Create
                         .WithName(request.Name)
                         .WithEmail(request.Email)
                         .WithPassword(request.Password);
-                        
+
 
                     var employee = _factory
                         .Build();

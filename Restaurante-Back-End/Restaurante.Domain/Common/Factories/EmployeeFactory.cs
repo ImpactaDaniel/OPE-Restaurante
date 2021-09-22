@@ -41,9 +41,9 @@ namespace Restaurante.Domain.Common.Factories
 
         public IEmployeeFactory WithPhones(IEnumerable<Phone> phones)
         {
-            if(phones.Any())
+            if (phones.Any())
             {
-                foreach(var phone in phones)
+                foreach (var phone in phones)
                     _phones.Add(phone ?? throw new UserException("Telefone não pode ser nulo!", NotificationKeys.InvalidEntity));
             }
             return this;

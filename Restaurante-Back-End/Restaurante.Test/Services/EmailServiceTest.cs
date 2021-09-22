@@ -9,7 +9,7 @@ namespace Restaurante.Test.Services
 {
     public class EmailServiceTest
     {
-        IMessageSenderService<EmailMessage> _emailService;
+        private readonly IMessageSenderService<EmailMessage> _emailService;
         public EmailServiceTest()
         {
             _emailService = Substitute.For<IMessageSenderService<EmailMessage>>();

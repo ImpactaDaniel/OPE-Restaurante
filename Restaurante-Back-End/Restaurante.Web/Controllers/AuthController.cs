@@ -25,7 +25,7 @@ namespace Restaurante.Web.Controllers
 
         [HttpGet, Route("RenewToken")]
         public async Task<IActionResult> RenewToken(CancellationToken cancellationToken = default)
-         {
+        {
             var token = Request.Headers["Authorization"].ToString();
             token = token.Replace("Bearer ", string.Empty);
             var response = await _mediator.Send(new RenewTokenRequest() { Token = token }, cancellationToken);

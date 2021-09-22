@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Restaurante.Domain.Users.Employees.Models;
+using Restaurante.Domain.Users.Employees.Repositories;
 using Restaurante.Infra.Common.Persistence;
 using Restaurante.Infra.Common.Persistence.Interfaces;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using Restaurante.Domain.Users.Employees.Repositories;
-using Restaurante.Domain.Users.Employees.Models;
 
 namespace Restaurante.Infra.Users.Employees
 {
@@ -37,16 +37,16 @@ namespace Restaurante.Infra.Users.Employees
 
         public async Task<Employee> Get(int id, CancellationToken cancellationToken = default)
         {
-                var entity = await
-                    All()
-                        .AsNoTrackingWithIdentityResolution()
-                    .Include(e => e.Account)
-                    .ThenInclude(a => a.Bank)
-                    .Include(e => e.Address)
-                    .Include(e => e.Phones)
-                    .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+            var entity = await
+                All()
+                    .AsNoTrackingWithIdentityResolution()
+                .Include(e => e.Account)
+                .ThenInclude(a => a.Bank)
+                .Include(e => e.Address)
+                .Include(e => e.Phones)
+                .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
 
-                return entity;
+            return entity;
         }
 
         public async Task<IList<Employee>> GetAll(CancellationToken cancellationToken = default) =>
@@ -61,9 +61,9 @@ namespace Restaurante.Infra.Users.Employees
         public async Task<Employee> Login(string email, string password, CancellationToken cancellationToken = default)
         {
             var user = await All()
-                .FirstOrDefaultAsync(u => 
-                    u.Email == email && 
-                    u.Password == password, 
+                .FirstOrDefaultAsync(u =>
+                    u.Email == email &&
+                    u.Password == password,
                     cancellationToken);
 
             return user;

@@ -10,7 +10,7 @@ namespace Restaurante.Domain.Users.Employees.Repositories
         where TEmployee : Employee
     {
         Task<TEmployee> Login(string email, string password, CancellationToken cancellationToken = default);
-        Task<TEmployee> Get(int id, CancellationToken cancellationToken = default);        
+        Task<TEmployee> Get(int id, CancellationToken cancellationToken = default);
         Task<bool> Delete(int id, CancellationToken cancellationToken = default);
         Task<TEmployee> CreateEmployee(TEmployee employee, Employee currentUser, CancellationToken cancellationToken = default);
         Task<IList<TEmployee>> GetAll(CancellationToken cancellationToken = default);

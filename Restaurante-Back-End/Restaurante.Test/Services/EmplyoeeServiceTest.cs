@@ -14,7 +14,7 @@ namespace Restaurante.Test.Services
     public class EmplyoeeServiceTest
     {
         private readonly INotifier _notifier;
-        private IEmployeeDomainRepository<Employee> _repository;
+        private readonly IEmployeeDomainRepository<Employee> _repository;
         private readonly ILogger<EmployeeService<Employee>> _logger;
 
         public EmplyoeeServiceTest()
@@ -48,8 +48,9 @@ namespace Restaurante.Test.Services
 
             _repository.When(repository =>
             {
-                repository.Get(Arg.Any<int>());                
-            }).Do((a) => {
+                repository.Get(Arg.Any<int>());
+            }).Do((a) =>
+            {
                 throw new Exception();
             });
 

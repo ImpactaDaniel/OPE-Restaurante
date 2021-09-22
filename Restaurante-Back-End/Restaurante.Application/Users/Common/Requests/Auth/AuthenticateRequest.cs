@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Restaurante.Application.Common;
 using Restaurante.Application.Users.Common.Models;
-using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Domain.Users.Common.Models;
 using Restaurante.Domain.Users.Common.Services.Interfaces;
 using Restaurante.Domain.Users.Employees.Models;
@@ -17,16 +16,13 @@ namespace Restaurante.Application.Users.Common.Requests.Auth
         {
             private readonly IEmployeesService<Employee> _service;
             private readonly ITokenService _tokenService;
-            private readonly INotifier _notifier;
 
             public AutenticateEmployeeRequestHandler(
                 IEmployeesService<Employee> service,
-                ITokenService tokenService,
-                INotifier notifier)
+                ITokenService tokenService)
             {
                 _service = service;
                 _tokenService = tokenService;
-                _notifier = notifier;
             }
 
             public async Task<Response<TokenResponse>> Handle(AuthenticateRequest request, CancellationToken cancellationToken)

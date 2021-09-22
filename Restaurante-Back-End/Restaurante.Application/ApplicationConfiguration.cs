@@ -1,19 +1,22 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System.Runtime.CompilerServices;
-using MediatR;
-using System.Reflection;
-using Restaurante.Domain.Common.Services.Interfaces;
-using Restaurante.Application.Common.Services;
-using Restaurante.Domain.Users.Common.Models;
-using System.Text;
-using Microsoft.Extensions.Configuration;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Restaurante.Domain.Users.Common.Services.Interfaces;
+using Restaurante.Application.BasicEntities.Services;
+using Restaurante.Application.Common.Services;
 using Restaurante.Application.Users.Common.Services;
+using Restaurante.Application.Users.Deliveries.Services;
+using Restaurante.Domain.BasicEntities.Services.Interfaces;
 using Restaurante.Domain.Common.Data.Mappers.Interfaces;
 using Restaurante.Domain.Common.Models.Integration;
-using Restaurante.Application.Users.Deliveries.Services;
+using Restaurante.Domain.Common.Services.Interfaces;
+using Restaurante.Domain.Users.Common.Models;
+using Restaurante.Domain.Users.Common.Services.Interfaces;
+using System;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Text;
 
 [assembly: InternalsVisibleTo("Restaurante.Test")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
@@ -32,6 +35,7 @@ namespace Restaurante.Application
 
         internal static IServiceCollection AddServices(this IServiceCollection services) =>
             services
+                .AddTransient<IBasicEntitiesService, BasicEntitiesService>()
                 .Scan(scan => scan
                     .FromCallingAssembly()
                     .AddClasses(classes => classes
@@ -83,7 +87,9 @@ namespace Restaurante.Application
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(key),
                         ValidateIssuer = false,
-                        ValidateAudience = false
+                        ValidateAudience = false,
+                        ClockSkew = TimeSpan.Zero,
+                        ValidateLifetime = true
                     };
                 });
 

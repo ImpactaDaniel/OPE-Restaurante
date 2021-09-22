@@ -5,7 +5,6 @@ using Restaurante.Application.Users.Common.Models;
 using Restaurante.Application.Users.Employees.Requests.Create;
 using Restaurante.Domain.BasicEntities.Services.Interfaces;
 using Restaurante.Domain.Common.Factories.Interfaces;
-using Restaurante.Domain.Common.Repositories.Interfaces;
 using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Domain.Users.Employees.Models;
 using Restaurante.Domain.Users.Funcionarios.Services.Interfaces;

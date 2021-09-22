@@ -44,7 +44,7 @@ namespace Restaurante.Domain.Users.Employees.Models
 
         private static void ValidatePhoneNumber(string phoneNumber)
         {
-            if (!phoneNumber.All(char.IsDigit) || phoneNumber.Length > 9  || phoneNumber.Length < 8)
+            if (!phoneNumber.All(char.IsDigit) || phoneNumber.Length > 9 || phoneNumber.Length < 8)
                 throw new UserException("Telefone deve conter somente dígitos com 8 ou 9 caracteres!", NotificationKeys.InvalidEntity);
         }
 

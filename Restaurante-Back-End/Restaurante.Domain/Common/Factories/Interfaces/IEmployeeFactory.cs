@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Restaurante.Domain.Common.Factories.Interfaces
 {
-    public interface IEmployeeFactory: IFactory<Employee>, IUserFactory<Employee>
+    public interface IEmployeeFactory : IFactory<Employee>, IUserFactory<Employee>
     {
         IEmployeeFactory WithType(EmployeesType type);
         IEmployeeFactory WithPhone(Phone phone);

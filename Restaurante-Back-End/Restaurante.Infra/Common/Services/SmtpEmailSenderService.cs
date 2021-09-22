@@ -13,7 +13,7 @@ namespace Restaurante.Infra.Common.Services
     internal class SmtpEmailSenderService : IMessageSenderService<EmailMessage>
     {
         private readonly SmtpEmailSettings _smtpEmailSettings;
-        public SmtpEmailSenderService(SmtpEmailSettings smtpEmailSettings) => 
+        public SmtpEmailSenderService(SmtpEmailSettings smtpEmailSettings) =>
             _smtpEmailSettings = smtpEmailSettings;
 
         public async Task<SenderResponse> SendAsync(EmailMessage message, CancellationToken cancellationToken = default)
@@ -40,7 +40,8 @@ namespace Restaurante.Infra.Common.Services
                 smtpClient.Timeout = 20_000;
                 await smtpClient.SendMailAsync(emailMsg, cancellationToken);
                 return new SenderResponse(true, string.Empty);
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return new SenderResponse(false, e.Message);
             }

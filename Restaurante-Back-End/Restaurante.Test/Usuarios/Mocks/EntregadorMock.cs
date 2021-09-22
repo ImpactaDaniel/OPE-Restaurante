@@ -23,7 +23,7 @@ namespace Restaurante.Test.Usuarios.Mocks
 
     public class EntregadoresInvalidos : IEnumerable<object[]>
     {
-        private IList<object[]> _data = new List<object[]>(4);
+        private readonly IList<object[]> _data = new List<object[]>(4);
         public EntregadoresInvalidos()
         {
             _data.Add(new object[]
