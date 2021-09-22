@@ -17,4 +17,8 @@
     <ProjectReference Include="..\Restaurante.Domain\Restaurante.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="BasicEntities\Requests\" />
+  </ItemGroup>
+
 </Project>

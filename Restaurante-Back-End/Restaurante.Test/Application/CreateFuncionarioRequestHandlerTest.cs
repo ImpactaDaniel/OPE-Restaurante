@@ -3,6 +3,7 @@ using NSubstitute;
 using Restaurante.Application.Common.Models;
 using Restaurante.Application.Users.Common.Models;
 using Restaurante.Application.Users.Employees.Requests.Create;
+using Restaurante.Domain.BasicEntities.Services.Interfaces;
 using Restaurante.Domain.Common.Factories.Interfaces;
 using Restaurante.Domain.Common.Repositories.Interfaces;
 using Restaurante.Domain.Common.Services.Interfaces;
@@ -25,7 +26,7 @@ namespace Restaurante.Test.Application
         private readonly IMessageSenderService<EmailMessage> _emailService;
         private readonly INotifier _notifier;
         private readonly ILogger<CreateEmployeeRequestHandler> _logger;
-        private readonly IDefaultDomainRepository _defaultDomainRepository;
+        private readonly IBasicEntitiesService _basicEntitiesService;
 
         public CreateFuncionarioRequestHandlerTest()
         {
@@ -38,9 +39,9 @@ namespace Restaurante.Test.Application
 
             _logger = Substitute.For<ILogger<CreateEmployeeRequestHandler>>();
 
-            _defaultDomainRepository = Substitute.For<IDefaultDomainRepository>();
+            _basicEntitiesService = Substitute.For<IBasicEntitiesService>();
 
-            _defaultDomainRepository.Get(Arg.Any<Expression<Func<Bank, bool>>>())
+            _basicEntitiesService.GetEntity(Arg.Any<Expression<Func<Bank, bool>>>())
                 .ReturnsForAnyArgs(new Bank("teste"));
 
             _notifier = Substitute.For<INotifier>();
@@ -50,7 +51,7 @@ namespace Restaurante.Test.Application
         public async Task ShouldCreateNewFuncionario()
         {
             //Arrange
-            var handler = new CreateEmployeeRequestHandler(_factory, _service, _notifier, _logger, _emailService, _defaultDomainRepository);
+            var handler = new CreateEmployeeRequestHandler(_factory, _service, _notifier, _logger, _emailService, _basicEntitiesService);
             var funcionarioDefault = EmployeeMock.GetDefault();
             var phones = new List<PhoneRequest>()
             {
@@ -105,7 +106,7 @@ namespace Restaurante.Test.Application
         public async Task ShouldNotCreateNewFuncionario()
         {
             //Arrange
-            var handler = new CreateEmployeeRequestHandler(_factory, _service, _notifier, _logger, _emailService, _defaultDomainRepository);
+            var handler = new CreateEmployeeRequestHandler(_factory, _service, _notifier, _logger, _emailService, _basicEntitiesService);
             var funcionarioDefault = EmployeeMock.GetDefault();
             var phones = new List<PhoneRequest>()
             {

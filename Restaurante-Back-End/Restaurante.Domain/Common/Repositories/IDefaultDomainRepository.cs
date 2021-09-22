@@ -9,5 +9,6 @@ namespace Restaurante.Domain.Common.Repositories.Interfaces
     public interface IDefaultDomainRepository
     {
         Task<TEntity> Get<TEntity>(Expression<Func<TEntity, bool>> condicao, CancellationToken cancellationToken = default) where TEntity : class, IEntity;
+        Task<TEntity> Create<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class, IEntity;
     }
 }

@@ -1,4 +1,5 @@
-﻿using Restaurante.Domain.Common.Models;
+﻿using Restaurante.Domain.Common.Enums;
+using Restaurante.Domain.Common.Models;
 using Restaurante.Domain.Users.Exceptions;
 using System.Linq;
 
@@ -61,7 +62,7 @@ namespace Restaurante.Domain.Users.Employees.Models
         private void ValidateCEP(string cep)
         {
             if (!cep.All(char.IsDigit) || cep.Length != 8)
-                throw new UserException("CEP deve conter somente dígitos com 8 caracteres!");
+                throw new UserException("CEP deve conter somente dígitos com 8 caracteres!", NotificationKeys.InvalidEntity);
         }
     }
 }

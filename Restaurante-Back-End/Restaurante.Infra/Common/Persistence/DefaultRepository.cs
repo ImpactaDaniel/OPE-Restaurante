@@ -24,5 +24,17 @@ namespace Restaurante.Infra.Common.Persistence
             var entity = await _context.Set<TEntity>().FirstOrDefaultAsync(condicao, cancellationToken);
             return entity;
         }
+
+        public async Task<TEntity> Create<TEntity>(TEntity entity, CancellationToken cancellationToken)
+            where TEntity : class, IEntity
+        {
+            await _context
+                .Set<TEntity>()
+                .AddAsync(entity, cancellationToken);
+
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return entity;
+        }
     }
 }

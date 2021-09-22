@@ -4,6 +4,9 @@ using Restaurante.Application.Common;
 using Restaurante.Application.Common.Helper;
 using Restaurante.Application.Common.Models;
 using Restaurante.Application.Users.Common.Models;
+using Restaurante.Domain.BasicEntities.Services.Interfaces;
+using Restaurante.Domain.Common.Enums;
+using Restaurante.Domain.Common.Exceptions;
 using Restaurante.Domain.Common.Factories.Interfaces;
 using Restaurante.Domain.Common.Repositories.Interfaces;
 using Restaurante.Domain.Common.Services.Interfaces;
@@ -27,21 +30,21 @@ namespace Restaurante.Application.Users.Deliveries.Requests.Create
             private readonly INotifier _notifier;
             private readonly ILogger<CreateDeliverymanRequestHandler> _logger;
             private readonly IDeliverFactory _factory;
-            private readonly IDefaultDomainRepository _defaultDomainRepository;
+            private readonly IBasicEntitiesService _basicEntitiesService;
             private readonly IMessageSenderService<EmailMessage> _emailService;
             public CreateDeliverymanRequestHandler(
                 IDeliveryPersonService deliveryPersonService,
                 INotifier notifier,
                 ILogger<CreateDeliverymanRequestHandler> logger,
                 IDeliverFactory factory,
-                IDefaultDomainRepository defaultDomainRepository,
+                IBasicEntitiesService basicEntitiesService,
                 IMessageSenderService<EmailMessage> emailService)
             {
                 _deliveryPersonService = deliveryPersonService;
                 _notifier = notifier;
                 _logger = logger;
                 _factory = factory;
-                _defaultDomainRepository = defaultDomainRepository;
+                _basicEntitiesService = basicEntitiesService;
                 _emailService = emailService;
             }
 
@@ -50,10 +53,10 @@ namespace Restaurante.Application.Users.Deliveries.Requests.Create
                 try
                 {
                     var bank = await
-                        _defaultDomainRepository.Get<Bank>(bank => bank.Id == request.Account.Bank.BankId, cancellationToken);
+                        _basicEntitiesService.GetEntity<Bank>(bank => bank.Id == request.Account.Bank.BankId, cancellationToken);
 
                     if (bank is null)
-                        throw new UserException("Banco não encontrado!");
+                        throw new UserException("Banco não encontrado!", NotificationKeys.InvalidEntity);
 
                     var account = new Account(bank, request.Account.Branch, request.Account.AccountNumber, request.Account.Digit);
 
@@ -81,7 +84,7 @@ namespace Restaurante.Application.Users.Deliveries.Requests.Create
 
                     return new Response<bool>(success, success);
                 }
-                catch (UserException e)
+                catch (RestauranteException e)
                 {
                     _notifier.AddNotification(NotificationHelper.FromException(e));
                     return new Response<bool>(false, false);

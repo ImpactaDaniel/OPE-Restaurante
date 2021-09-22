@@ -1,4 +1,5 @@
-﻿using Restaurante.Domain.Common.Models.Interfaces;
+﻿using Restaurante.Domain.Common.Enums;
+using Restaurante.Domain.Common.Models.Interfaces;
 using Restaurante.Domain.Users.Exceptions;
 
 namespace Restaurante.Domain.Common.Models
@@ -9,7 +10,7 @@ namespace Restaurante.Domain.Common.Models
         protected void ValidateNullString(string value, string name)
         {
             if (string.IsNullOrEmpty(value))
-                throw new UserException($"{name} precisa ter um valor!");
+                throw new UserException($"{name} precisa ter um valor!", NotificationKeys.InvalidEntity);
         }
         public override bool Equals(object obj)
         {

@@ -1,10 +1,12 @@
-﻿using Restaurante.Domain.Common.Models;
+﻿using Restaurante.Domain.BasicEntities.Common.Interfaces;
+using Restaurante.Domain.Common.Enums;
+using Restaurante.Domain.Common.Models;
 using Restaurante.Domain.Users.Exceptions;
 using System.Linq;
 
 namespace Restaurante.Domain.Users.Employees.Models
 {
-    public class Phone : Entity<int>
+    public class Phone : Entity<int>, IBasicEntity
     {
         public string DDD { get; private set; }
         public string PhoneNumber { get; private set; }
@@ -43,13 +45,13 @@ namespace Restaurante.Domain.Users.Employees.Models
         private static void ValidatePhoneNumber(string phoneNumber)
         {
             if (!phoneNumber.All(char.IsDigit) || phoneNumber.Length > 9  || phoneNumber.Length < 8)
-                throw new UserException("Telefone deve conter somente dígitos com 8 ou 9 caracteres!");
+                throw new UserException("Telefone deve conter somente dígitos com 8 ou 9 caracteres!", NotificationKeys.InvalidEntity);
         }
 
         private static void ValidateDDD(string ddd)
         {
             if (!ddd.All(char.IsDigit) || ddd.Length != 2)
-                throw new UserException("DDD deve conter somente dígitos com 2 caracteres!");
+                throw new UserException("DDD deve conter somente dígitos com 2 caracteres!", NotificationKeys.InvalidEntity);
         }
     }
 }

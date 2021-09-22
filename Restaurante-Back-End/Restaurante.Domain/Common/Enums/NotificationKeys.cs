@@ -3,6 +3,7 @@
     public enum NotificationKeys
     {
         EntityNotFound,
+        InvalidEntity,
         InvalidEmail,
         InvalidPassword,
         DoesntHavePermission,
