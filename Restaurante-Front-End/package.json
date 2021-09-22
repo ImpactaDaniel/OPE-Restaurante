@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --configuration=development",
     "build": "ng build",
-    "angular:dev": "ng serve --port 4200 --host 0.0.0.0 --disable-host-check --poll 2000",
+    "angular:dev": "ng serve --port 4200 --host 0.0.0.0 --disable-host-check --poll 2000 --configuration=development",
     "cy:verify": "cypress verify",
     "build:ssr": "ng run Restaurante.Web:server:dev",
     "test": "ng test",

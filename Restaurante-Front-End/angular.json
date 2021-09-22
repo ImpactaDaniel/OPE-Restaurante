@@ -63,6 +63,9 @@
           "configurations": {
             "production": {
               "browserTarget": "Restaurante.Web:build:production"
+            },
+            "development": {
+              "browserTarget": "Restaurante.Web:build:development"
             }
           }
         },

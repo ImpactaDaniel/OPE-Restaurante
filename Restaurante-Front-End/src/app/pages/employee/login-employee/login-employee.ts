@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { LoginModel, TokenService } from 'src/app/services/token.service';
@@ -11,7 +12,7 @@ import { LoginModel, TokenService } from 'src/app/services/token.service';
 export class LoginEmployeeComponent {
     form: FormGroup;
 
-    constructor(private formbuilder: FormBuilder, private tokenservice: TokenService) { }
+    constructor(private formbuilder: FormBuilder, private tokenservice: TokenService, private router: Router) { }
 
     ngOnInit(): void {
         this.form = this.formbuilder.group({
@@ -26,11 +27,13 @@ export class LoginEmployeeComponent {
         loginmodel.password = this.form.get('password').value;
         return loginmodel;
     }
-    
+
     authentication() {
         let loginmodel = this.getInfoLogin();
         this.tokenservice.authenticate(loginmodel).then( (response) => {
-            console.log(response)
-        })
+            this.router.navigate(['/']);
+        }).catch(e => {
+          console.log(e);
+        });
     }
 }

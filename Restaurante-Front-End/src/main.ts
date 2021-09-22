@@ -5,7 +5,7 @@ import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 
 export function getBaseUrl() {
-  return "https://localhost:44334/";
+  return environment.urlService;
 }
 
 const providers = [

@@ -36,4 +36,12 @@ Cypress.Commands.add('fillFormCreateEmployee', () => {
     cy.get('[name="branch"]').type('120');
     cy.get('[name="digit"]').type('0');
     cy.get('[name="accountNumber"]').type('1200');
+});
+
+Cypress.Commands.add('loginDefaultUser', () => {
+  cy.visit(`${Cypress.env('urlSite')}/employee/login`)
+  cy.get('[name=email]').type(Cypress.env('email'));
+  cy.get('[name=password]').type(Cypress.env('senha'));
+  cy.get('#btn-login').click();
+  cy.wait(1000);
 })
