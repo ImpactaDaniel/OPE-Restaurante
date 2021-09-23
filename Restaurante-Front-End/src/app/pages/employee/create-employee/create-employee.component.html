@@ -21,48 +21,126 @@
         </div>
         <form [formGroup]="form" (ngSubmit)="cadastrarFuncionario()">
           <div class="row">
-            <mat-form-field>
-              <mat-label>Nome</mat-label>
-              <input type="text" matInput formControlName="name">
-            </mat-form-field>
-            <div class="col-md-6">
-              <input type="text" tabindex="1" formControlName="name" name="nome" class="form-control campos-form"
-                placeholder="Nome">
-              <input type="text" formControlName="lastname" name="sobrenome" class="form-control campos-form"
-                placeholder="Sobrenome">
-              <input type="email" formControlName="email" name="email" class="form-control campos-form"
-                aria-describedby="emailHelp" placeholder="E-mail">
-              <input type="password" formControlName="password" name="senha" class="form-control campos-form"
-                placeholder="Senha">
-              <input type="text" (blur)="consultarCep()" formControlName="cep" name="cep"
-                class="form-control campos-form" placeholder="CEP">
-              <input type="text" formControlName="city" name="city" class="form-control campos-form"
-                placeholder="Cidade">
-              <input type="text" formControlName="state" name="state" class="form-control campos-form"
-                placeholder="Estado">
-              <input type="text" formControlName="street" name="street" class="form-control campos-form"
-                placeholder="Logradouro">
+            <div class="col-sm-6">
+              <mat-form-field>
+                <mat-label>Nome</mat-label>
+                <input tabindex="1" type="text" matInput formControlName="name">
+              </mat-form-field>
             </div>
-            <div class="col-md-6">
-              <input type="text" tabindex="2" formControlName="number" name="number" class="form-control campos-form"
-                placeholder="Número">
-              <input type="text" formControlName="district" name="district" class="form-control campos-form"
-                placeholder="Bairro">
-              <input type="text" formControlName="ddd" name="ddd" class="form-control campos-form" placeholder="DDD">
-              <input type="text" formControlName="phoneNumber" name="phoneNumber" class="form-control campos-form"
-                placeholder="Telefone">
-              <input type="text" formControlName="bankId" name="bankId" class="form-control campos-form"
-                placeholder="Banco">
-              <input type="text" formControlName="branch" name="branch" class="form-control campos-form"
-                placeholder="Agência">
-              <input type="text" formControlName="accountNumber" name="accountNumber" class="form-control campos-form"
-                placeholder="Conta">
-              <input type="text" formControlName="digit" name="digit" class="form-control campos-form"
-                placeholder="Dígito">
+            <div class="col-sm-6">
+              <mat-form-field>
+                <mat-label>Sobrenome</mat-label>
+                <input tabindex="2" type="text" matInput formControlName="lastname">
+              </mat-form-field>
             </div>
           </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field>
+                <mat-label>CEP</mat-label>
+                <input tabindex="3" mask="00000-000" type="text" matInput (blur)="consultarCep()" placeholder="000000-000" formControlName="cep" name="cep">
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field>
+                <mat-label>Número</mat-label>
+                <input tabindex="4" type="text" matInput formControlName="number" name="number">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field>
+                <mat-label>Cidade</mat-label>
+                <input type="text" readonly formControlName="city" name="city" matInput >
+                </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field>
+                <mat-label>Estado</mat-label>
+                <input type="text" readonly matInput formControlName="state" name="state">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field>
+                <mat-label>Logradouro</mat-label>
+                <input type="text" readonly matInput formControlName="street" name="street">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field>
+                <mat-label>Bairro</mat-label>
+                <input type="text" formControlName="district" name="district" matInput readonly>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input tabindex="5" placeholder="Ex. test@example.com" type="text" matInput formControlName="email">
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field>
+                <mat-label>Senha</mat-label>
+                <input tabindex="6" type="password" matInput formControlName="password">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field>
+                <mat-label>DDD</mat-label>
+                <input tabindex="7" type="text" matInput formControlName="ddd" name="ddd">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field>
+                <mat-label>Telefone</mat-label>
+                <input tabindex="8" mask="00000-0000" type="text" formControlName="phoneNumber" name="phoneNumber" matInput>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field>
+                <mat-label>Banco</mat-label>
+                <mat-select formControlName="bankId" tabindex="9">
+                  <mat-option [value]="1">Bradesco</mat-option>
+                  <mat-option [value]="2">Banco do Brasil</mat-option>
+                </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field>
+                <mat-label>Agência</mat-label>
+                <input tabindex="10" type="text" formControlName="branch" name="branch" matInput>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field>
+                <mat-label>Conta</mat-label>
+                <input tabindex="11" type="text" matInput formControlName="accountNumber" name="accountNumber">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field>
+                <mat-label>Dígito</mat-label>
+                <input tabindex="12" type="text" matInput formControlName="digit" name="digit">
+              </mat-form-field>
+            </div>
+          </div>
+
           <div class="button-form">
-            <button id="btn_logar" type="submit" class="btn btn-primary button-form">Criar</button>
+            <button id="btn_logar" [disabled]="!form.valid" type="submit"
+              class="btn btn-primary button-form">Criar</button>
           </div>
         </form>
       </div>

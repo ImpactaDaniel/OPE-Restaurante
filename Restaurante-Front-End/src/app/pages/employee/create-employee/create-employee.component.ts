@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConsultaCepService } from 'src/app/services/consulta-cep.service';
 import { Account, Address, Bank, Employee, Phone } from '../../../models/funcionario/employee';
 import { EmployeeService } from '../service/employee.service';
@@ -22,25 +22,26 @@ export class CreateEmployeeComponent implements OnInit {
       name: ["", Validators.required],
       lastname: ["", Validators.required],
       email: ["", [Validators.required, Validators.email]],
-      password: ["", [Validators.required, Validators.pattern('/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/')]],
+      password: ["", [Validators.required, Validators.pattern(/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])/)]],
       street: ["", Validators.required],
       number: ["", Validators.required],
       district: ["", Validators.required],
-      cep: ["", [Validators.minLength(8), Validators.pattern('^[0-9]{8}$')]],
+      cep: ["", [Validators.minLength(8), Validators.pattern(/[0-9]{8}/)]],
       city: ["", Validators.required],
       state: ["", Validators.required],
       ddd: ["", [Validators.required, Validators.pattern(/\d+/g), Validators.maxLength(2)]],
-      phoneNumber: ["", [Validators.required, Validators.pattern(/\d+/g), Validators.maxLength(9)]],
+      phoneNumber: ["", [Validators.required, Validators.pattern(/\d+/g), Validators.maxLength(10)]],
       bankId: [""],
       branch: ["", Validators.required],
       accountNumber: ["", [Validators.required, Validators.pattern(/\d+/g)]],
       digit: ["", [Validators.required, Validators.pattern(/\d+/g)]],
-    })
+    });
   }
 
 
   async consultarCep() {
     let cep = this.form.get('cep');
+    console.log(cep);
     if (cep.invalid)
       return;
     var endereco = await this.consultaCepService.consultaCep(cep.value).toPromise();
