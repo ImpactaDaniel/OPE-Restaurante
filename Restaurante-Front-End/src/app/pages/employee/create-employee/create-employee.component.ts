@@ -23,15 +23,15 @@ export class CreateEmployeeComponent implements OnInit {
       lastname: ["", Validators.required],
       email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required, Validators.pattern(/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])/)]],
-      street: ["", Validators.required],
+      street: [""],
       number: ["", Validators.required],
-      district: ["", Validators.required],
-      cep: ["", [Validators.minLength(8), Validators.pattern(/[0-9]{8}/)]],
-      city: ["", Validators.required],
-      state: ["", Validators.required],
+      district: [""],
+      cep: ["", [Validators.minLength(8), Validators.pattern(/[0-9]{8}/), Validators.required]],
+      city: [""],
+      state: [""],
       ddd: ["", [Validators.required, Validators.pattern(/\d+/g), Validators.maxLength(2)]],
       phoneNumber: ["", [Validators.required, Validators.pattern(/\d+/g), Validators.maxLength(10)]],
-      bankId: [""],
+      bankId: ["", Validators.required],
       branch: ["", Validators.required],
       accountNumber: ["", [Validators.required, Validators.pattern(/\d+/g)]],
       digit: ["", [Validators.required, Validators.pattern(/\d+/g)]],
@@ -53,6 +53,9 @@ export class CreateEmployeeComponent implements OnInit {
   }
 
   async cadastrarFuncionario() {
+
+    if(!this.form.valid)
+      return;
     this.funcionario = this.getEmployee();
 
     let retorno = await this.employeeService.createEmployee(this.funcionario).toPromise();
