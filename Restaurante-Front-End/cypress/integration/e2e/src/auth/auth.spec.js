@@ -9,7 +9,6 @@ describe('Authentication tests', () => {
     cy.get('[name=email]').type(Cypress.env('email'));
     cy.get('[name=password]').type(Cypress.env('senha'));
     cy.get('#btn-login').click();
-    console.log(cy.url());
-    cy.url().should('include', `${Cypress.env('urlSite')}`);
+    cy.url().should('equal', `${Cypress.env('urlSite')}/`);
   });
 });

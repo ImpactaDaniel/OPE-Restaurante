@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConsultaCepService } from 'src/app/services/consulta-cep.service';
 import { Account, Address, Bank, Employee, Phone } from '../../../models/funcionario/employee';
 import { EmployeeService } from '../service/employee.service';
@@ -19,28 +19,29 @@ export class CreateEmployeeComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formbuilder.group({
-      name: [""],
-      lastname: [""],
-      email: [""],
-      password: [""],
+      name: ["", Validators.required],
+      lastname: ["", Validators.required],
+      email: ["", [Validators.required, Validators.email]],
+      password: ["", [Validators.required, Validators.pattern(/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])/)]],
       street: [""],
-      number: [""],
+      number: ["", Validators.required],
       district: [""],
-      cep: ["", [Validators.minLength(8), Validators.pattern('^[0-9]{8}$')]],
+      cep: ["", [Validators.minLength(8), Validators.pattern(/[0-9]{8}/), Validators.required]],
       city: [""],
       state: [""],
-      ddd: [""],
-      phoneNumber: [""],
-      bankId: [""],
-      branch: [""],
-      accountNumber: [""],
-      digit: [""],
-    })
+      ddd: ["", [Validators.required, Validators.pattern(/\d+/g), Validators.maxLength(2)]],
+      phoneNumber: ["", [Validators.required, Validators.pattern(/\d+/g), Validators.maxLength(10)]],
+      bankId: ["", Validators.required],
+      branch: ["", Validators.required],
+      accountNumber: ["", [Validators.required, Validators.pattern(/\d+/g)]],
+      digit: ["", [Validators.required, Validators.pattern(/\d+/g)]],
+    });
   }
 
 
   async consultarCep() {
     let cep = this.form.get('cep');
+    console.log(cep);
     if (cep.invalid)
       return;
     var endereco = await this.consultaCepService.consultaCep(cep.value).toPromise();
@@ -52,8 +53,11 @@ export class CreateEmployeeComponent implements OnInit {
   }
 
   async cadastrarFuncionario() {
+
+    if(!this.form.valid)
+      return;
     this.funcionario = this.getEmployee();
-    
+
     let retorno = await this.employeeService.createEmployee(this.funcionario).toPromise();
 
     console.log(retorno);

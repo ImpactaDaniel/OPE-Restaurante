@@ -1,3 +1,5 @@
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CreateEmployeeComponent } from './create-employee/create-employee.component';
@@ -5,6 +7,7 @@ import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
 import { EmployeRoutingModule } from './employe-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginEmployeeComponent } from './login-employee/login-employee';
+import { NgxMaskModule } from 'ngx-mask';
 
 
 
@@ -15,7 +18,10 @@ import { LoginEmployeeComponent } from './login-employee/login-employee';
     CommonModule,
     EmployeRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSelectModule,
+    NgxMaskModule.forRoot(),
+    MatInputModule
   ]
 })
 export class EmployeeModule { }
