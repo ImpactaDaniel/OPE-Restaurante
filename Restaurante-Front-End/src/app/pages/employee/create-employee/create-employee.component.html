@@ -21,6 +21,10 @@
         </div>
         <form [formGroup]="form" (ngSubmit)="cadastrarFuncionario()">
           <div class="row">
+            <mat-form-field>
+              <mat-label>Nome</mat-label>
+              <input type="text" matInput formControlName="name">
+            </mat-form-field>
             <div class="col-md-6">
               <input type="text" tabindex="1" formControlName="name" name="nome" class="form-control campos-form"
                 placeholder="Nome">

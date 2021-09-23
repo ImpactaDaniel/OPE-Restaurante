@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -19,7 +19,7 @@ import { RequestInterceptor } from './middlewares/TokenInterceptor';
       },
       {
         path: '**',
-        loadChildren: () => import('./pages/employee/employee.module').then(m => m.EmployeeModule)
+        component: AppComponent
       }
     ]),
     HttpClientModule

@@ -1,3 +1,4 @@
+import { MatInputModule } from '@angular/material/input';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CreateEmployeeComponent } from './create-employee/create-employee.component';
@@ -15,7 +16,8 @@ import { LoginEmployeeComponent } from './login-employee/login-employee';
     CommonModule,
     EmployeRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatInputModule
   ]
 })
 export class EmployeeModule { }

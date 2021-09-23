@@ -19,22 +19,22 @@ export class CreateEmployeeComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formbuilder.group({
-      name: [""],
-      lastname: [""],
-      email: [""],
-      password: [""],
-      street: [""],
-      number: [""],
-      district: [""],
+      name: ["", Validators.required],
+      lastname: ["", Validators.required],
+      email: ["", [Validators.required, Validators.email]],
+      password: ["", [Validators.required, Validators.pattern('/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/')]],
+      street: ["", Validators.required],
+      number: ["", Validators.required],
+      district: ["", Validators.required],
       cep: ["", [Validators.minLength(8), Validators.pattern('^[0-9]{8}$')]],
-      city: [""],
-      state: [""],
-      ddd: [""],
-      phoneNumber: [""],
+      city: ["", Validators.required],
+      state: ["", Validators.required],
+      ddd: ["", [Validators.required, Validators.pattern(/\d+/g), Validators.maxLength(2)]],
+      phoneNumber: ["", [Validators.required, Validators.pattern(/\d+/g), Validators.maxLength(9)]],
       bankId: [""],
-      branch: [""],
-      accountNumber: [""],
-      digit: [""],
+      branch: ["", Validators.required],
+      accountNumber: ["", [Validators.required, Validators.pattern(/\d+/g)]],
+      digit: ["", [Validators.required, Validators.pattern(/\d+/g)]],
     })
   }
 
@@ -53,7 +53,7 @@ export class CreateEmployeeComponent implements OnInit {
 
   async cadastrarFuncionario() {
     this.funcionario = this.getEmployee();
-    
+
     let retorno = await this.employeeService.createEmployee(this.funcionario).toPromise();
 
     console.log(retorno);
