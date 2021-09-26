@@ -1,8 +1,11 @@
 ﻿using Restaurante.Domain.Common.Factories;
 using Restaurante.Domain.Common.Factories.Interfaces;
+using Restaurante.Domain.Users.Employees.Models;
 using Restaurante.Domain.Users.Entregadores.Models;
 using Restaurante.Domain.Users.Exceptions;
 using Restaurante.Test.Usuarios.Mocks;
+using System;
+using System.Collections.Generic;
 using Xunit;
 namespace Restaurante.Test.Usuarios
 {
@@ -15,14 +18,40 @@ namespace Restaurante.Test.Usuarios
         }
 
         [Fact]
-        public void DeveCriarUmNovoEntregadorQuandoInformacoesForemValidas()
+        public void ShouldCreateNewDeliveryManWhenValidInfos()
         {
             //Arrange
             _factory
                 .WithVehicle(EntregadorMock.GetDefaultVehicle())
                 .WithAccount(AccountMock.GetDefault())
                 .WithAddress(AddressMock.GetDefault())
+                .WithDocument("45464")
+                .WithBirthDate(DateTime.Now)
                 .WithPhone(PhoneMock.GetDefault())
+                .WithName("Daniel")
+                .WithEmail("daniel@gmail.com")
+                .WithPassword("123456");
+
+            //Act
+            var entregador = _factory.Build();
+
+            //Assert
+            Assert.NotNull(entregador);
+            Assert.Equal("Daniel", entregador.Name);
+        }
+
+
+        [Fact]
+        public void ShouldCreteNewDeliverWhenItsValid()
+        {
+            //Arrange
+            _factory
+                .WithVehicle(EntregadorMock.GetDefaultVehicle())
+                .WithAccount(AccountMock.GetDefault())
+                .WithDocument("45464")
+                .WithBirthDate(DateTime.Now)
+                .WithAddress(AddressMock.GetDefault())
+                .WithPhones(new List<Phone> { PhoneMock.GetDefault() })
                 .WithName("Daniel")
                 .WithEmail("daniel@gmail.com")
                 .WithPassword("123456");
@@ -38,7 +67,7 @@ namespace Restaurante.Test.Usuarios
         //Arrange
         [Theory]
         [ClassData(typeof(EntregadoresInvalidos))]
-        public void DeveRetornarUserExceptionQuandoInformacoesInvalidas(string nome,
+        public void ShouldThrowUserExceptionWhenInvalidInfos(string nome,
                                                                             string email,
                                                                             string password,
                                                                             Vehicle veiculo,

@@ -82,6 +82,8 @@ namespace Restaurante.Test.Application
                     District = "Hata",
                     Street = "Haerar",
                     Number = "1",
+                    State = "SP",
+                    City = "são paulo"
                 },
                 CurrentUser = 0,
                 Phones = phones,
@@ -137,6 +139,8 @@ namespace Restaurante.Test.Application
                     District = "Hata",
                     Street = "Haerar",
                     Number = "1",
+                    State = "SP",
+                    City = "são paulo"
                 },
                 CurrentUser = 0,
                 Phones = phones,
