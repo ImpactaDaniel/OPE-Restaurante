@@ -24,13 +24,13 @@ namespace Restaurante.Test.Usuarios
             //Arrange
             _factory
                 .WithType(Restaurante.Domain.Users.Enums.EmployeesType.Manager)
-                .WithDocument("45464")
+                .WithDocument(DataTest.CPF)
                 .WithBirthDate(DateTime.Now)
                 .WithAccount(AccountMock.GetDefault())
                 .WithAddress(AddressMock.GetDefault())
                 .WithPhone(PhoneMock.GetDefault())
                 .WithName("Daniel")
-                .WithEmail("daniel@gmail.com")
+                .WithEmail(DataTest.EMAIL)
                 .WithPassword("123456");
 
             //Act
@@ -48,13 +48,13 @@ namespace Restaurante.Test.Usuarios
             //Arrange
             _factory
                 .WithAccount(AccountMock.GetDefault())
-                .WithDocument("45464")
+                .WithDocument(DataTest.CPF)
                 .WithBirthDate(DateTime.Now)
                 .WithType(Restaurante.Domain.Users.Enums.EmployeesType.Employee)
                 .WithAddress(AddressMock.GetDefault())
                 .WithPhones(new List<Phone> { PhoneMock.GetDefault() })
                 .WithName("Daniel")
-                .WithEmail("daniel@gmail.com")
+                .WithEmail(DataTest.EMAIL)
                 .WithPassword("123456");
 
             //Act
@@ -73,13 +73,13 @@ namespace Restaurante.Test.Usuarios
                 //act
                 _factory
                     .WithAccount(AccountMock.GetDefault())
-                    .WithDocument("45464")
+                    .WithDocument(DataTest.CPF)
                     .WithBirthDate(DateTime.Now)
                     .WithType(Restaurante.Domain.Users.Enums.EmployeesType.Deliver)
                     .WithAddress(AddressMock.GetDefault())
                     .WithPhones(new List<Phone> { PhoneMock.GetDefault() })
                     .WithName("Daniel")
-                    .WithEmail("daniel@gmail.com")
+                    .WithEmail(DataTest.EMAIL)
                     .WithPassword("123456")
 
             );

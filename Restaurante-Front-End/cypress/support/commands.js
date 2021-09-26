@@ -24,15 +24,16 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 Cypress.Commands.add('fillFormCreateEmployee', () => {
-    cy.get('[name="nome"]').type('Daniel');
-    cy.get('[name="sobrenome"]').type('Santos');
+    cy.get('[name="name"]').type('Daniel');
+    cy.get('[name="lastName"]').type('Santos');
     cy.get('[name="email"]').type('denists88@gmail.com');
-    cy.get('[name="senha"]').type('123456');
+    cy.get('[name="password"]').type('Restaurante@123456');
     cy.get('[name="cep"]').type('02998190');
     cy.get('[name="number"]').type('120');
     cy.get('[name="ddd"]').type('11');
     cy.get('[name="phoneNumber"]').type('910702074');
-    cy.get('[name="bankId"]').type('1');
+    cy.get('[name="bankId"]').click();
+    cy.get('[name="bb"]').click();
     cy.get('[name="branch"]').type('120');
     cy.get('[name="digit"]').type('0');
     cy.get('[name="accountNumber"]').type('1200');

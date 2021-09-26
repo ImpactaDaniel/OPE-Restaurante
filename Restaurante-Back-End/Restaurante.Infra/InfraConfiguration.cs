@@ -3,10 +3,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Restaurante.Domain.Common.Repositories.Interfaces;
 using Restaurante.Domain.Common.Services.Interfaces;
+using Restaurante.Domain.Encrypt.Intefaces;
 using Restaurante.Infra.Common;
 using Restaurante.Infra.Common.Persistence;
 using Restaurante.Infra.Common.Persistence.Interfaces;
 using Restaurante.Infra.Common.Settings;
+using Restaurante.Infra.Encrypt;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("Restaurante.Test")]
@@ -18,6 +20,7 @@ namespace Restaurante.Infra
         public static IServiceCollection AddInfra(this IServiceCollection services, IConfiguration configuration) =>
             services
                 .AddContext(configuration)
+                .AddPasswordEncrypt()
                 .AddRepositories()
                 .AddMessageServices(configuration);
 
@@ -51,6 +54,10 @@ namespace Restaurante.Infra
                                    .WithTransientLifetime());
             return services;
         }
+
+        internal static IServiceCollection AddPasswordEncrypt(this IServiceCollection services) =>
+            services
+                .AddSingleton<IPasswordEncrypt, PasswordEncrypt>();
 
         internal static IServiceCollection AddContext(this IServiceCollection services, IConfiguration configuration) =>
             services

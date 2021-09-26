@@ -24,13 +24,13 @@
             <div class="col-sm-6">
               <mat-form-field>
                 <mat-label>Nome</mat-label>
-                <input tabindex="1" type="text" matInput formControlName="name">
+                <input tabindex="1" type="text" matInput name="name" formControlName="name">
               </mat-form-field>
             </div>
             <div class="col-sm-6">
               <mat-form-field>
                 <mat-label>Sobrenome</mat-label>
-                <input tabindex="2" type="text" matInput formControlName="lastname">
+                <input tabindex="2" type="text" matInput name="lastName" formControlName="lastname">
               </mat-form-field>
             </div>
           </div>
@@ -80,13 +80,13 @@
             <div class="col-sm-6">
               <mat-form-field>
                 <mat-label>Email</mat-label>
-                <input tabindex="5" placeholder="Ex. test@example.com" type="text" matInput formControlName="email">
+                <input tabindex="5" placeholder="Ex. test@example.com" type="text" matInput name="email" formControlName="email">
               </mat-form-field>
             </div>
             <div class="col-sm-6">
               <mat-form-field>
                 <mat-label>Senha</mat-label>
-                <input tabindex="6" type="password" matInput formControlName="password">
+                <input tabindex="6" type="password" matInput name="password" formControlName="password">
               </mat-form-field>
             </div>
           </div>
@@ -109,9 +109,9 @@
             <div class="col-sm-6">
               <mat-form-field>
                 <mat-label>Banco</mat-label>
-                <mat-select formControlName="bankId" tabindex="9">
-                  <mat-option [value]="1">Bradesco</mat-option>
-                  <mat-option [value]="2">Banco do Brasil</mat-option>
+                <mat-select formControlName="bankId" name="bankId" tabindex="9">
+                  <mat-option name="bd" [value]="1">Bradesco</mat-option>
+                  <mat-option name="bb" [value]="2">Banco do Brasil</mat-option>
                 </mat-select>
                 </mat-form-field>
             </div>

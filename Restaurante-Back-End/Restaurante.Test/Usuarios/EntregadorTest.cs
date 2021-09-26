@@ -25,11 +25,11 @@ namespace Restaurante.Test.Usuarios
                 .WithVehicle(EntregadorMock.GetDefaultVehicle())
                 .WithAccount(AccountMock.GetDefault())
                 .WithAddress(AddressMock.GetDefault())
-                .WithDocument("45464")
+                .WithDocument(DataTest.CPF)
                 .WithBirthDate(DateTime.Now)
                 .WithPhone(PhoneMock.GetDefault())
                 .WithName("Daniel")
-                .WithEmail("daniel@gmail.com")
+                .WithEmail(DataTest.EMAIL)
                 .WithPassword("123456");
 
             //Act
@@ -48,12 +48,12 @@ namespace Restaurante.Test.Usuarios
             _factory
                 .WithVehicle(EntregadorMock.GetDefaultVehicle())
                 .WithAccount(AccountMock.GetDefault())
-                .WithDocument("45464")
+                .WithDocument(DataTest.CPF)
                 .WithBirthDate(DateTime.Now)
                 .WithAddress(AddressMock.GetDefault())
                 .WithPhones(new List<Phone> { PhoneMock.GetDefault() })
                 .WithName("Daniel")
-                .WithEmail("daniel@gmail.com")
+                .WithEmail(DataTest.EMAIL)
                 .WithPassword("123456");
 
             //Act

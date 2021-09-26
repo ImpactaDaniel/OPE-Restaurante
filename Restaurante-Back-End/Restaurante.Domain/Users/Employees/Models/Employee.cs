@@ -1,4 +1,5 @@
 ﻿using Restaurante.Domain.Common.Enums;
+using Restaurante.Domain.Helpers;
 using Restaurante.Domain.Users.Common.Models;
 using Restaurante.Domain.Users.Enums;
 using Restaurante.Domain.Users.Exceptions;
@@ -20,12 +21,14 @@ namespace Restaurante.Domain.Users.Employees.Models
         public Employee(string name, string email, string password, EmployeesType type, Account account, IList<Phone> phones, Address address, string document, DateTime birthDate) :
             base(name, email, password, type)
         {
-            ValidateNullString(document, "CPF");
+            ValidateDocument(document);
             Account = account ?? throw new UserException("Conta não pode ser nula!", NotificationKeys.InvalidEntity);
             Phones = (phones is null || phones.Count <= 0) ? throw new UserException("Telefones não podem ser nulos!", NotificationKeys.InvalidEntity) : phones;
             Address = address ?? throw new UserException("Endereço não pode ser nulo!", NotificationKeys.InvalidEntity);
             BirthDate = birthDate;
+            Document = document;
         }
+
         public Employee UpdateType(EmployeesType type)
         {
             if (type == EmployeesType.Deliver)
@@ -51,10 +54,17 @@ namespace Restaurante.Domain.Users.Employees.Models
 
         public Employee UpdateDocument(string document)
         {
-            ValidateNullString(document, "CPF");
+            ValidateDocument(document);
             if (Document != document)
                 Document = document;
             return this;
+        }
+
+        private void ValidateDocument(string document)
+        {
+            ValidateNullString(document, "CPF");
+            if (!document.ValidCPF())
+                throw new UserException("CPF não é válido!", NotificationKeys.InvalidEntity);
         }
     }
 }
