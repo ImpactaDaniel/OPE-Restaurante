@@ -47,7 +47,7 @@ namespace Restaurante.Application.Users.Funcionarios.Services
                     return false;
                 }
                 funcionario.CreatedDate = DateTime.Now;
-                await _repository.CreateEmployee(funcionario, user, cancellationToken);
+                await _repository.CreateEmployee(funcionario, cancellationToken);
                 return true;
 
             }

@@ -80,7 +80,9 @@ export class CreateEmployeeComponent implements OnInit {
       street: this.form.get('street').value,
       number: this.form.get('number').value,
       district: this.form.get('district').value,
-      cep: this.form.get('cep').value
+      cep: this.form.get('cep').value,
+      state: this.form.get('state').value,
+      city: this.form.get('city').value
     });
     employee.address = addres;
     employee.name = this.form.get('name').value;

@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Restaurante.Domain.Encrypt.Intefaces;
 using Restaurante.Domain.Users.Employees.Models;
 using Restaurante.Domain.Users.Employees.Repositories;
 using Restaurante.Infra.Common.Persistence;
 using Restaurante.Infra.Common.Persistence.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,12 +15,17 @@ namespace Restaurante.Infra.Users.Employees
         DataRepository<IRestauranteDbContext, Employee>,
         IEmployeeDomainRepository<Employee>
     {
-        public EmployeesRepository(IRestauranteDbContext db) : base(db)
+        private readonly IPasswordEncrypt _passwordEncrypt;
+
+        public EmployeesRepository(IRestauranteDbContext db, IPasswordEncrypt passwordEncrypt) : base(db)
         {
+            _passwordEncrypt = passwordEncrypt;
         }
 
-        public async Task<Employee> CreateEmployee(Employee funcionario, Employee usuario, CancellationToken cancellationToken = default)
+        public async Task<Employee> CreateEmployee(Employee funcionario, CancellationToken cancellationToken = default)
         {
+            funcionario.UpdatePassword(_passwordEncrypt.Encrypt(funcionario.Password));
+            funcionario.CreatedDate = DateTime.Now;
             await Data.Employees.AddAsync(funcionario, cancellationToken);
             await Data.SaveChangesAsync(cancellationToken);
             return funcionario;
@@ -62,9 +69,11 @@ namespace Restaurante.Infra.Users.Employees
         {
             var user = await All()
                 .FirstOrDefaultAsync(u =>
-                    u.Email == email &&
-                    u.Password == password,
+                    u.Email == email,
                     cancellationToken);
+
+            if (!_passwordEncrypt.Compare(user?.Password, password))
+                return null;
 
             return user;
         }

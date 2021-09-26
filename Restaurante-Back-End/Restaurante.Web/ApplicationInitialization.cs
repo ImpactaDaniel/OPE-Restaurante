@@ -13,7 +13,7 @@ namespace Restaurante.Web
             var initializers = serviceScope.ServiceProvider.GetServices<IInitializer>();
 
             foreach (var initializer in initializers)
-            {
+            {                
                 initializer.Initialize();
             }
 
