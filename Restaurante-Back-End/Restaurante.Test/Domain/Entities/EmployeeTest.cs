@@ -17,8 +17,8 @@ namespace Restaurante.Test.Domain.Entities
             //assert
             var ex = Assert.Throws<UserException>(() =>
             //act
-                new Employee("teste", "teste", "teste", Restaurante.Domain.Users.Enums.EmployeesType.Deliver,
-                                null, new List<Phone>() { PhoneMock.GetDefault() }, AddressMock.GetDefault(), "4256456", DateTime.Now)
+                new Employee("teste", DataTest.EMAIL, "teste", Restaurante.Domain.Users.Enums.EmployeesType.Deliver,
+                                null, new List<Phone>() { PhoneMock.GetDefault() }, AddressMock.GetDefault(), DataTest.CPF, DateTime.Now)
             );
 
             Assert.Equal("Conta não pode ser nula!", ex.Message);
@@ -31,8 +31,8 @@ namespace Restaurante.Test.Domain.Entities
             //assert
             var ex = Assert.Throws<UserException>(() =>
             //act
-                new Employee("teste", "teste", "teste", Restaurante.Domain.Users.Enums.EmployeesType.Deliver,
-                                AccountMock.GetDefault(), null, AddressMock.GetDefault(), "25337808", DateTime.Now)
+                new Employee("teste", DataTest.EMAIL, "teste", EmployeesType.Deliver,
+                                AccountMock.GetDefault(), null, AddressMock.GetDefault(), DataTest.CPF, DateTime.Now)
             );
 
             Assert.Equal("Telefones não podem ser nulos!", ex.Message);
@@ -45,8 +45,8 @@ namespace Restaurante.Test.Domain.Entities
             //assert
             var ex = Assert.Throws<UserException>(() =>
             //act
-                new Employee("teste", "teste", "teste", Restaurante.Domain.Users.Enums.EmployeesType.Deliver,
-                                AccountMock.GetDefault(), new List<Phone>(), AddressMock.GetDefault(), "25337808", DateTime.Now)
+                new Employee("teste", DataTest.EMAIL, "teste", EmployeesType.Deliver,
+                                AccountMock.GetDefault(), new List<Phone>(), AddressMock.GetDefault(), DataTest.CPF, DateTime.Now)
             );
 
             Assert.Equal("Telefones não podem ser nulos!", ex.Message);
@@ -59,8 +59,8 @@ namespace Restaurante.Test.Domain.Entities
             //assert
             var ex = Assert.Throws<UserException>(() =>
             //act
-                new Employee("teste", "teste", "teste", Restaurante.Domain.Users.Enums.EmployeesType.Deliver,
-                                AccountMock.GetDefault(), new List<Phone> { PhoneMock.GetDefault() }, null, "2564", DateTime.Now)
+                new Employee("teste", DataTest.EMAIL, "teste", EmployeesType.Deliver,
+                                AccountMock.GetDefault(), new List<Phone> { PhoneMock.GetDefault() }, null, DataTest.CPF, DateTime.Now)
             );
 
             Assert.Equal("Endereço não pode ser nulo!", ex.Message);
@@ -174,7 +174,7 @@ namespace Restaurante.Test.Domain.Entities
         {
             //arrange
             var employee = EmployeeMock.GetDefault();
-            var expDocument = "25337808";
+            var expDocument = "713.385.260-81";
 
             //act
             employee.UpdateDocument(expDocument);

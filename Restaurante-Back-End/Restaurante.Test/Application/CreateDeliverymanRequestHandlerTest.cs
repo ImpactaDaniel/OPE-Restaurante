@@ -67,6 +67,7 @@ namespace Restaurante.Test.Application
                 Email = funcionarioDefault.Email,
                 Password = funcionarioDefault.Password,
                 Type = funcionarioDefault.Type,
+                Document = DataTest.CPF,
                 Account = new AccountRequest()
                 {
                     Branch = "teste",
@@ -129,6 +130,7 @@ namespace Restaurante.Test.Application
                 Email = funcionarioDefault.Email,
                 Password = funcionarioDefault.Password,
                 Type = funcionarioDefault.Type,
+                Document = DataTest.CPF,
                 Account = new AccountRequest()
                 {
                     Branch = "teste",

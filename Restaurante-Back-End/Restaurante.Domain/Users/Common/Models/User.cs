@@ -1,5 +1,8 @@
-﻿using Restaurante.Domain.Common.Models;
+﻿using Restaurante.Domain.Common.Enums;
+using Restaurante.Domain.Common.Models;
+using Restaurante.Domain.Helpers;
 using Restaurante.Domain.Users.Enums;
+using Restaurante.Domain.Users.Exceptions;
 using System;
 
 namespace Restaurante.Domain.Users.Common.Models
@@ -19,7 +22,7 @@ namespace Restaurante.Domain.Users.Common.Models
             : this()
         {
             ValidateNullString(name, "Nome");
-            ValidateNullString(email, "E-mail");
+            ValidateEmail(email);
             Name = name;
             Email = email;
             Password = password;
@@ -35,7 +38,7 @@ namespace Restaurante.Domain.Users.Common.Models
         }
         public virtual User UpdateEmail(string email)
         {
-            ValidateNullString(email, "E-mail");
+            ValidateEmail(email);
             if (email != Email)
                 Email = email;
             return this;
@@ -47,6 +50,13 @@ namespace Restaurante.Domain.Users.Common.Models
             if (password != Password)
                 Password = password;
             return this;
+        }
+
+        private void ValidateEmail(string email)
+        {
+            ValidateNullString(email, "E-mail");
+            if (!email.ValidEmail())
+                throw new UserException("E-mail não é válido!", NotificationKeys.InvalidEmail);
         }
     }
 }

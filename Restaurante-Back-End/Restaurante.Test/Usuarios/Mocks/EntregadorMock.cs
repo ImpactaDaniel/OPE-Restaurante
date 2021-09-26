@@ -18,7 +18,7 @@ namespace Restaurante.Test.Usuarios.Mocks
         public static DeliveryPerson GetDefaulEntregador() =>
             Builder<DeliveryPerson>
             .CreateNew()
-            .WithFactory(() => new DeliveryPerson("Daniel", "daniel@gmail.com", "123456", GetDefaultVehicle(), AccountMock.GetDefault(), new List<Phone>() { PhoneMock.GetDefault() }, AddressMock.GetDefault(), "4256456", DateTime.Now))
+            .WithFactory(() => new DeliveryPerson("Daniel", DataTest.EMAIL, "123456", GetDefaultVehicle(), AccountMock.GetDefault(), new List<Phone>() { PhoneMock.GetDefault() }, AddressMock.GetDefault(), DataTest.CPF, DateTime.Now))
             .Build();
     }
 
