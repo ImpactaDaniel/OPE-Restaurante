@@ -1,5 +1,6 @@
 ﻿using Restaurante.Domain.Users.Employees.Models;
 using Restaurante.Domain.Users.Entregadores.Models;
+using System;
 using System.Collections.Generic;
 
 namespace Restaurante.Domain.Common.Factories.Interfaces
@@ -11,5 +12,7 @@ namespace Restaurante.Domain.Common.Factories.Interfaces
         IDeliverFactory WithPhones(IEnumerable<Phone> phones);
         IDeliverFactory WithAddress(Address address);
         IDeliverFactory WithAccount(Account account);
+        IDeliverFactory WithDocument(string document);
+        IDeliverFactory WithBirthDate(DateTime birthDate);
     }
 }

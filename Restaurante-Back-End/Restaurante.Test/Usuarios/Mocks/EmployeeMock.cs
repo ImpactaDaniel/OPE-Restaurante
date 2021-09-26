@@ -1,6 +1,7 @@
 ﻿using FizzWare.NBuilder;
 using Restaurante.Domain.Users.Employees.Models;
 using Restaurante.Domain.Users.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace Restaurante.Test.Usuarios.Mocks
@@ -10,13 +11,13 @@ namespace Restaurante.Test.Usuarios.Mocks
         public static Employee GetDefaultManager() =>
             Builder<Employee>
             .CreateNew()
-            .WithFactory(() => new Employee("Carlos", "carlos@gmail.com", "123456", EmployeesType.Manager, AccountMock.GetDefault(), new List<Phone>() { PhoneMock.GetDefault() }, AddressMock.GetDefault()))
+            .WithFactory(() => new Employee("Carlos", "carlos@gmail.com", "123456", EmployeesType.Manager, AccountMock.GetDefault(), new List<Phone>() { PhoneMock.GetDefault() }, AddressMock.GetDefault(), "4256456", DateTime.Now))
             .Build();
 
         public static Employee GetDefault() =>
             Builder<Employee>
             .CreateNew()
-            .WithFactory(() => new Employee("Carlos", "carlos@gmail.com", "123456", EmployeesType.Employee, AccountMock.GetDefault(), new List<Phone>() { PhoneMock.GetDefault() }, AddressMock.GetDefault()))
+            .WithFactory(() => new Employee("Carlos", "carlos@gmail.com", "123456", EmployeesType.Employee, AccountMock.GetDefault(), new List<Phone>() { PhoneMock.GetDefault() }, AddressMock.GetDefault(), "4256456", DateTime.Now))
             .Build();
     }
 
@@ -50,7 +51,7 @@ namespace Restaurante.Test.Usuarios.Mocks
         public static Address GetDefault() =>
             Builder<Address>
             .CreateNew()
-            .WithFactory(() => new Address("teste", "teste", "teste", "00000000"))
+            .WithFactory(() => new Address("teste", "teste", "teste", "00000000", "SP", "São Paulo"))
             .Build();
     }
 }

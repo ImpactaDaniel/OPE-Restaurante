@@ -83,6 +83,8 @@ namespace Restaurante.Test.Application
                     District = "Hata",
                     Street = "Haerar",
                     Number = "1",
+                    State = "SP",
+                    City = "São Paulo"
                 },
                 CurrentUser = 0,
                 Phones = phones,

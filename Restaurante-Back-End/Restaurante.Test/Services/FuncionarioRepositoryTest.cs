@@ -26,13 +26,14 @@ namespace Restaurante.Test.Services
         }
 
         [Fact]
-        public async Task ShouldCreateNewEntregador()
+        public async Task ShouldCreateNewFuncionario()
         {
             //Arrange
             var funcionario = EmployeeMock.GetDefault();
             var usuario = EmployeeMock.GetDefaultManager();
             _context.Employees.Add(usuario);
             await _context.SaveChangesAsync();
+            _context.ChangeTracker.Clear();
 
             //Act
             var ent = await _repository.CreateEmployee(funcionario, usuario);

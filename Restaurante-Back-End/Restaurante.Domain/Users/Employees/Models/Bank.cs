@@ -9,9 +9,15 @@ namespace Restaurante.Domain.Users.Employees.Models
         private Bank()
         {
         }
-        public Bank(string name)
+        public Bank(string name, int id)
+            : base(id)
         {
             ValidateNullString(name, "Nome do banco");
+            Name = name;
+        }
+
+        public Bank(string name) : this()
+        {
             Name = name;
         }
 

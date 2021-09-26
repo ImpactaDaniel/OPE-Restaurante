@@ -1,6 +1,6 @@
-﻿using Restaurante.Domain.Common.Enums;
+﻿using Restaurante.Domain.BasicEntities.Exception;
+using Restaurante.Domain.Common.Enums;
 using Restaurante.Domain.Common.Models;
-using Restaurante.Domain.Users.Exceptions;
 
 namespace Restaurante.Domain.Users.Employees.Models
 {
@@ -18,10 +18,26 @@ namespace Restaurante.Domain.Users.Employees.Models
                        string branch,
                        string accountNumber,
                        int digit)
+            : this()
         {
             ValidateNullString(branch, "Agência");
             ValidateNullString(accountNumber, "Número da conta");
-            Bank = bank ?? throw new UserException(nameof(bank), NotificationKeys.InvalidEntity);
+            Bank = bank ?? throw new BasicTableException(nameof(bank), NotificationKeys.InvalidEntity);
+            Branch = branch;
+            AccountNumber = accountNumber;
+            Digit = digit;
+        }
+
+        public Account(Bank bank,
+                       string branch,
+                       string accountNumber,
+                       int digit,
+                       int id)
+            : base(id)
+        {
+            ValidateNullString(branch, "Agência");
+            ValidateNullString(accountNumber, "Número da conta");
+            Bank = bank ?? throw new BasicTableException(nameof(bank), NotificationKeys.InvalidEntity);
             Branch = branch;
             AccountNumber = accountNumber;
             Digit = digit;
@@ -29,7 +45,7 @@ namespace Restaurante.Domain.Users.Employees.Models
 
         public Account UpdateBank(Bank bank)
         {
-            bank = bank ?? throw new UserException(nameof(bank), NotificationKeys.InvalidEntity);
+            bank = bank ?? throw new BasicTableException("Banco não pode ser nulo!", NotificationKeys.InvalidEntity);
             if (Bank.Id != bank?.Id)
                 Bank = bank;
             return this;

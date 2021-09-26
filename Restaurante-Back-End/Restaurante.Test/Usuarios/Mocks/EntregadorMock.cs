@@ -1,6 +1,7 @@
 ﻿using FizzWare.NBuilder;
 using Restaurante.Domain.Users.Employees.Models;
 using Restaurante.Domain.Users.Entregadores.Models;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -17,7 +18,7 @@ namespace Restaurante.Test.Usuarios.Mocks
         public static DeliveryPerson GetDefaulEntregador() =>
             Builder<DeliveryPerson>
             .CreateNew()
-            .WithFactory(() => new DeliveryPerson("Daniel", "daniel@gmail.com", "123456", GetDefaultVehicle(), AccountMock.GetDefault(), new List<Phone>() { PhoneMock.GetDefault() }, AddressMock.GetDefault()))
+            .WithFactory(() => new DeliveryPerson("Daniel", "daniel@gmail.com", "123456", GetDefaultVehicle(), AccountMock.GetDefault(), new List<Phone>() { PhoneMock.GetDefault() }, AddressMock.GetDefault(), "4256456", DateTime.Now))
             .Build();
     }
 

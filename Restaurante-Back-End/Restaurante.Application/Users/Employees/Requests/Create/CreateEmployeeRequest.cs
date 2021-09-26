@@ -60,7 +60,7 @@ namespace Restaurante.Application.Users.Employees.Requests.Create
 
                     var account = new Account(bank, request.Account.Branch, request.Account.AccountNumber, request.Account.Digit);
 
-                    var address = new Address(request.Address.Street, request.Address.Number, request.Address.District, request.Address.CEP);
+                    var address = new Address(request.Address.Street, request.Address.Number, request.Address.District, request.Address.CEP, request.Address.State, request.Address.City);
 
                     var phones = request.Phones.Select(p => new Phone(p.DDD, p.PhoneNumber));
 
@@ -68,6 +68,8 @@ namespace Restaurante.Application.Users.Employees.Requests.Create
                         .WithAccount(account)
                         .WithAddress(address)
                         .WithPhones(phones)
+                        .WithDocument(request.Document)
+                        .WithBirthDate(request.BirthDate)
                         .WithType(Domain.Users.Enums.EmployeesType.Employee)
                         .WithName(request.Name)
                         .WithEmail(request.Email)

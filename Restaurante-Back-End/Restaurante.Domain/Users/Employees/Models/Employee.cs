@@ -11,16 +11,20 @@ namespace Restaurante.Domain.Users.Employees.Models
     {
         public Account Account { get; private set; }
         public IList<Phone> Phones { get; private set; }
+        public DateTime BirthDate { get; private set; }
+        public string Document { get; private set; }
         public Address Address { get; set; }
         protected Employee()
         {
         }
-        public Employee(string name, string email, string password, EmployeesType type, Account account, IList<Phone> phones, Address address) :
+        public Employee(string name, string email, string password, EmployeesType type, Account account, IList<Phone> phones, Address address, string document, DateTime birthDate) :
             base(name, email, password, type)
         {
-            Account = account ?? throw new ArgumentNullException(nameof(account));
-            Phones = phones ?? throw new ArgumentNullException(nameof(phones));
-            Address = address ?? throw new ArgumentNullException(nameof(address));
+            ValidateNullString(document, "CPF");
+            Account = account ?? throw new UserException("Conta não pode ser nula!", NotificationKeys.InvalidEntity);
+            Phones = (phones is null || phones.Count <= 0) ? throw new UserException("Telefones não podem ser nulos!", NotificationKeys.InvalidEntity) : phones;
+            Address = address ?? throw new UserException("Endereço não pode ser nulo!", NotificationKeys.InvalidEntity);
+            BirthDate = birthDate;
         }
         public Employee UpdateType(EmployeesType type)
         {
@@ -32,10 +36,25 @@ namespace Restaurante.Domain.Users.Employees.Models
 
         public Employee UpdateAccount(Account account)
         {
-            if (Account != account)
+            account = account ?? throw new UserException("Conta não pode ser nula!", NotificationKeys.InvalidEntity);
+            if (Account.Id != account.Id)
+                Account = account;
                 Account = account;
             return this;
         }
 
+        public Employee UpdateBirthDate(DateTime birthDate)
+        {
+            BirthDate = birthDate;
+            return this;
+        }
+
+        public Employee UpdateDocument(string document)
+        {
+            ValidateNullString(document, "CPF");
+            if (Document != document)
+                Document = document;
+            return this;
+        }
     }
 }

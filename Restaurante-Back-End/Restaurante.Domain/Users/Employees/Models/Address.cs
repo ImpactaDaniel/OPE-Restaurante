@@ -11,15 +11,21 @@ namespace Restaurante.Domain.Users.Employees.Models
         public string Number { get; private set; }
         public string District { get; private set; }
         public string CEP { get; private set; }
+        public string State { get; private set; }
+        public string City { get; private set; }
         private Address()
         {
         }
-        public Address(string street, string number, string district, string cep)
+
+        public Address(string street, string number, string district, string cep, string state, string city)
+            : this()
         {
             ValidateNullString(street, "Rua");
             ValidateNullString(number, "Número");
             ValidateNullString(district, "Bairro");
             ValidateNullString(cep, "CEP");
+            ValidateNullString(state, "Estado");
+            ValidateNullString(city, "Cidade");
             ValidateCEP(cep);
             Street = street;
             Number = number;
@@ -37,14 +43,14 @@ namespace Restaurante.Domain.Users.Employees.Models
 
         public Address UpdateNumber(string number)
         {
-            ValidateNullString(Number, "Número");
+            ValidateNullString(number, "Número");
             if (Number != number)
                 Number = number;
             return this;
         }
         public Address UpdateDistrict(string district)
         {
-            ValidateNullString(District, "Bairro");
+            ValidateNullString(district, "Bairro");
             if (District != district)
                 District = district;
             return this;
@@ -52,10 +58,26 @@ namespace Restaurante.Domain.Users.Employees.Models
 
         public Address UpdateCEP(string cep)
         {
-            ValidateNullString(CEP, "CEP");
+            ValidateNullString(cep, "CEP");
             ValidateCEP(cep);
             if (CEP != cep)
                 CEP = cep;
+            return this;
+        }
+
+        public Address UpdateCity(string city)
+        {
+            ValidateNullString(city, "Cidade");
+            if (City != city)
+                City = city;
+            return this;
+        }
+
+        public Address UpdateState(string state)
+        {
+            ValidateNullString(state, "Estado");
+            if (State != state)
+                State = state;
             return this;
         }
 

@@ -16,6 +16,7 @@ namespace Restaurante.Domain.Users.Common.Models
         {
         }
         public User(string name, string email, string password, EmployeesType type)
+            : this()
         {
             ValidateNullString(name, "Nome");
             ValidateNullString(email, "E-mail");
