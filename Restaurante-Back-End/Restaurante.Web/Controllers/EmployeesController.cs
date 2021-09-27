@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Restaurante.Application.Users.Employees.Requests.Create;
 using Restaurante.Application.Users.Employees.Requests.GetAll;
 using Restaurante.Domain.Common.Services.Interfaces;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,6 +28,7 @@ namespace Restaurante.Web.Controllers
         [Route("Create"), HttpPost, Authorize(Roles = "Manager")]
         public async Task<IActionResult> CreateNew([FromBody] CreateEmployeeRequest request, CancellationToken cancellationToken = default)
         {
+            request.CurrentUser = GetLoggedUserId();
             var resp = await _mediator.Send(request, cancellationToken);
             return GetResponse(resp.Result);
         }

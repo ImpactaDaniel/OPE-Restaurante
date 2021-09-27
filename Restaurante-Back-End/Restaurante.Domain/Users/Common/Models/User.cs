@@ -12,6 +12,7 @@ namespace Restaurante.Domain.Users.Common.Models
         public string Name { get; protected set; }
         public string Email { get; protected set; }
         public string Password { get; protected set; }
+        public bool FirstAccess { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; protected set; }
         public EmployeesType Type { get; protected set; }
