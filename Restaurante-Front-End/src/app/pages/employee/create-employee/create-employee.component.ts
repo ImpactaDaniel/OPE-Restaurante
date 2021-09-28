@@ -35,6 +35,8 @@ export class CreateEmployeeComponent implements OnInit {
       branch: ["", Validators.required],
       accountNumber: ["", [Validators.required, Validators.pattern(/\d+/g)]],
       digit: ["", [Validators.required, Validators.pattern(/\d+/g)]],
+      cpf: ["", Validators.required],
+      birthDate: ["", Validators.required]
     });
   }
 
