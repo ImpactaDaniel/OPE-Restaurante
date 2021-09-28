@@ -162,5 +162,10 @@ namespace Restaurante.Application.Users.Funcionarios.Services
                 throw new Exception("Houve um erro ao tentar buscar funcionários!", e);
             }
         }
+
+        public async Task<bool> Update(TEmployee employee, CancellationToken cancellationToken = default)
+        {
+            return await _repository.Save(employee, cancellationToken);
+        }
     }
 }

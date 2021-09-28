@@ -94,5 +94,10 @@ namespace Restaurante.Application.Users.Deliveries.Services
         {
             throw new System.NotImplementedException();
         }
+
+        public Task<bool> Update(DeliveryPerson employee, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

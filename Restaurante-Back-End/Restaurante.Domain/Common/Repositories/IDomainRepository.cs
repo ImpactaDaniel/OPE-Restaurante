@@ -8,7 +8,7 @@ namespace Restaurante.Domain.Common.Repositories.Interfaces
 {
     public interface IDomainRepository<TEntity> where TEntity : IEntity
     {
-        Task<TEntity> Save(TEntity entidade, CancellationToken cancellationToken = default);
+        Task<bool> Save(TEntity entidade, CancellationToken cancellationToken = default);
         Task<TEntity> Get(Expression<Func<TEntity, bool>> condicao, CancellationToken cancellationToken = default);
     }
 }

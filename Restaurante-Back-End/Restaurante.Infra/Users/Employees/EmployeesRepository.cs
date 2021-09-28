@@ -76,5 +76,11 @@ namespace Restaurante.Infra.Users.Employees
 
             return user;
         }
+
+        public override async Task<bool> Save(Employee entity, CancellationToken cancellationToken = default)
+        {
+            entity.UpdatePassword(_passwordEncrypt.Encrypt(entity.Password));
+            return await base.Save(entity, cancellationToken);
+        }
     }
 }
