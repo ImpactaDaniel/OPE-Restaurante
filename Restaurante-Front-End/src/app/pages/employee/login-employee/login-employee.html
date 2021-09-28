@@ -12,10 +12,14 @@
       <div class="col-lg-4 col-md-6 col-sm-8 col-xs-10 h-100">
         <form [formGroup]="form" (ngSubmit)="authentication()">
           <div class="">
-            <div class="campos-login">
-              <input class="form-control" formControlName="email" name="email" type="text" placeholder="E-mail">
+            <div class="campos-login bg-white">
+              <mat-form-field class="w-100">
+                <input matInput formControlName="email" name="email" type="text" placeholder="E-mail">
+              </mat-form-field>
+              <mat-form-field class="w-100">
+                <input matInput formControlName="password" name="password" type="password" placeholder="Senha">
+              </mat-form-field>
               <br>
-              <input class="form-control" formControlName="password" name="password" type="password" placeholder="Senha">
             </div>
             <div class="button-form">
               <button type="submit" id="btn-login" class="btn btn-primary button-form">Login</button>

@@ -29,3 +29,7 @@ h1 {
 .campos-login {
     margin-top: 15px;
 }
+
+.mat-form-field-flex {
+    background-color: white;
+}
