@@ -25,7 +25,6 @@ namespace Restaurante.Infra.Users.Employees
         public async Task<Employee> CreateEmployee(Employee funcionario, CancellationToken cancellationToken = default)
         {
             funcionario.UpdatePassword(_passwordEncrypt.Encrypt(funcionario.Password));
-            funcionario.CreatedDate = DateTime.Now;
             await Data.Employees.AddAsync(funcionario, cancellationToken);
             await Data.SaveChangesAsync(cancellationToken);
             return funcionario;
@@ -76,6 +75,12 @@ namespace Restaurante.Infra.Users.Employees
                 return null;
 
             return user;
+        }
+
+        public override async Task<bool> Save(Employee entity, CancellationToken cancellationToken = default)
+        {
+            entity.UpdatePassword(_passwordEncrypt.Encrypt(entity.Password));
+            return await base.Save(entity, cancellationToken);
         }
     }
 }

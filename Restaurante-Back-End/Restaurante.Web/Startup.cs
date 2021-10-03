@@ -8,6 +8,7 @@ using Microsoft.OpenApi.Models;
 using Restaurante.Application;
 using Restaurante.Domain;
 using Restaurante.Infra;
+using Restaurante.Web.Middlewares;
 
 namespace Restaurante.Web
 {
@@ -24,6 +25,7 @@ namespace Restaurante.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) =>
             services
+                .AddTransient<RequestMiddleware>()
                 .AddInfra(Configuration)
                 .AddDomain()
                 .AddApplication(Configuration)
@@ -84,6 +86,7 @@ namespace Restaurante.Web
                 .UseAuthentication()
                 .UseAuthorization()
                 .UseHttpsRedirection()
+                .UseMiddleware<RequestMiddleware>()
                 .UseStaticFiles()
                 .UseEndpoints(endpoints =>
                 {

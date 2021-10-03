@@ -16,6 +16,19 @@ namespace Restaurante.Web.Controllers
         {
         }
 
+        [HttpPost, Route("ChangePassword"), Authorize]
+        public async Task<IActionResult> ChangePasswordFirstAccess([FromBody] ChangePasswordModel changePasswordModel, CancellationToken cancellationToken = default)
+        {
+            var response = await _mediator.Send(new ChangePasswordFirstAccessRequest { Id = GetLoggedUserId(), OldPassword = changePasswordModel.OldPassword, Password = changePasswordModel.NewPassword}, cancellationToken);
+
+            if (!response.Success)
+                return GetResponse(response);
+
+            var token = await _mediator.Send(new AuthenticateRequest { Email = response.Result.Email, Password = changePasswordModel.NewPassword }, cancellationToken);
+
+            return GetResponse(token);
+        }
+
         [HttpPost, Route("Authenticate"), AllowAnonymous]
         public async Task<IActionResult> Authenticate([FromBody] LoginModel loginModel, CancellationToken cancellationToken = default)
         {

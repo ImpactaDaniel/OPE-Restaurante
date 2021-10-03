@@ -32,7 +32,7 @@ namespace Restaurante.Application.Users.Common.Services
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            return new TokenResponse(tokenHandler.WriteToken(token), token.ValidFrom, token.ValidTo);
+            return new TokenResponse(tokenHandler.WriteToken(token), token.ValidFrom, token.ValidTo, user.FirstAccess);
         }
 
         public int? GetIdByToken(string token, bool validateLifeTime)

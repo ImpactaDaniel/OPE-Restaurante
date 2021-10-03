@@ -7,11 +7,13 @@ namespace Restaurante.Domain.Users.Common.Models
         public string Token { get; private set; }
         public DateTime ValidFrom { get; private set; }
         public DateTime ValidTo { get; private set; }
-        public TokenResponse(string token, DateTime validFrom, DateTime validTo)
+        public bool IsChangePasswordRequired { get; private set; }
+        public TokenResponse(string token, DateTime validFrom, DateTime validTo, bool isChangePasswordRequired)
         {
             Token = token;
             ValidFrom = validFrom;
             ValidTo = validTo;
+            IsChangePasswordRequired = isChangePasswordRequired;
         }
     }
 }

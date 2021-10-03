@@ -26,11 +26,10 @@ namespace Restaurante.Infra.Common.Persistence
             return entity;
         }
 
-        public async Task<TEntity> Save(TEntity entity, CancellationToken cancellationToken = default)
+        public virtual async Task<bool> Save(TEntity entity, CancellationToken cancellationToken = default)
         {
             Data.Update(entity);
-            await Data.SaveChangesAsync(cancellationToken);
-            return entity;
+            return await Data.SaveChangesAsync(cancellationToken) > 0;            
         }
     }
 }

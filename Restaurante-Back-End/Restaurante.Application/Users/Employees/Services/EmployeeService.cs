@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Restaurante.Application.Common.Helper;
+using Restaurante.Domain.Common.Enums;
+using Restaurante.Domain.Common.Models;
 using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Domain.Users.Employees.Models;
 using Restaurante.Domain.Users.Employees.Repositories;
@@ -35,9 +37,17 @@ namespace Restaurante.Application.Users.Funcionarios.Services
                 var user = await _repository
                     .Get(currentUserId, cancellationToken);
 
+                var employeeExist = await _repository.Get(e => e.Email == funcionario.Email, cancellationToken);
+
                 if (user is null)
                 {
                     _notifier.AddNotification(NotificationHelper.EntityNotFound(nameof(Employee)));
+                    return false;
+                }
+
+                if(employeeExist is not null)
+                {
+                    _notifier.AddNotification(new Notification((int)NotificationKeys.Error, "Funcionário já existe!"));
                     return false;
                 }
 
@@ -47,6 +57,7 @@ namespace Restaurante.Application.Users.Funcionarios.Services
                     return false;
                 }
                 funcionario.CreatedDate = DateTime.Now;
+                funcionario.FirstAccess = true;
                 await _repository.CreateEmployee(funcionario, cancellationToken);
                 return true;
 
@@ -150,6 +161,11 @@ namespace Restaurante.Application.Users.Funcionarios.Services
                 _logger.LogError(e, e.Message);
                 throw new Exception("Houve um erro ao tentar buscar funcionários!", e);
             }
+        }
+
+        public async Task<bool> Update(TEmployee employee, CancellationToken cancellationToken = default)
+        {
+            return await _repository.Save(employee, cancellationToken);
         }
     }
 }

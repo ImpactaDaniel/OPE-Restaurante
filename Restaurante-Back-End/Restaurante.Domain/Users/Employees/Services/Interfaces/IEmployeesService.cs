@@ -13,5 +13,6 @@ namespace Restaurante.Domain.Users.Funcionarios.Services.Interfaces
         Task<bool> Delete(int id, int currentUserId, CancellationToken cancellationToken = default);
         Task<TEmployee> Login(string email, string password, CancellationToken cancellationToken = default);
         Task<IList<TEmployee>> GetAll(CancellationToken cancellationToken = default);
+        Task<bool> Update(TEmployee employee, CancellationToken cancellationToken = default);
     }
 }
