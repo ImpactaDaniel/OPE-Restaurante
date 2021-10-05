@@ -17,6 +17,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       {
         path: 'employee',
         loadChildren: () => import('./pages/employee/employee.module').then(m => m.EmployeeModule)
+      },{
+        path: 'deliveryman',
+        loadChildren: () => import('./pages/deliveryman/deliveryman.module').then(m => m.DeliverymanModule)
       },
       {
         path: '**',

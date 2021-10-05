@@ -9,7 +9,7 @@ export class Employee extends Model {
   address: Address;
   phones: Phone[] = [];
   account: Account;
-  cpf: string;
+  document: string;
   birthDate: Date;
 }
 

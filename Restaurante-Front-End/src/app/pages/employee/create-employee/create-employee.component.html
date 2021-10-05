@@ -39,8 +39,8 @@
             <div class="col-sm-6">
               <mat-form-field>
                 <mat-label>CPF</mat-label>
-                <input tabindex="3" type="text" matInput formControlName="cpf" name="cpf">
-                </mat-form-field>
+                <input tabindex="3" mask="000.000.000-00" type="text" matInput formControlName="document" name="document">
+              </mat-form-field>
             </div>
             <div class="col-sm-6">
               <mat-form-field>
@@ -49,54 +49,57 @@
               </mat-form-field>
             </div>
           </div>
-
-          <div class="row">
-            <div class="col-sm-6">
-              <mat-form-field>
-                <mat-label>CEP</mat-label>
-                <input tabindex="5" mask="00000-000" type="text" matInput (blur)="consultarCep()" placeholder="000000-000" formControlName="cep" name="cep">
-              </mat-form-field>
-            </div>
-            <div class="col-sm-6">
-              <mat-form-field>
-                <mat-label>Número</mat-label>
-                <input tabindex="6" type="text" matInput formControlName="number" name="number">
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-6">
-              <mat-form-field>
-                <mat-label>Cidade</mat-label>
-                <input type="text" readonly formControlName="city" name="city" matInput >
+          <div formGroupName="address">
+            <div class="row">
+              <div class="col-sm-6">
+                <mat-form-field>
+                  <mat-label>CEP</mat-label>
+                  <input tabindex="5" mask="00000-000" type="text" matInput (blur)="consultarCep()"
+                    placeholder="000000-000" formControlName="cep" name="cep">
                 </mat-form-field>
-            </div>
-            <div class="col-sm-6">
-              <mat-form-field>
-                <mat-label>Estado</mat-label>
-                <input type="text" readonly matInput formControlName="state" name="state">
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-6">
-              <mat-form-field>
-                <mat-label>Logradouro</mat-label>
-                <input type="text" readonly matInput formControlName="street" name="street">
+              </div>
+              <div class="col-sm-6">
+                <mat-form-field>
+                  <mat-label>Número</mat-label>
+                  <input tabindex="6" type="text" matInput formControlName="number" name="number">
                 </mat-form-field>
+              </div>
             </div>
-            <div class="col-sm-6">
-              <mat-form-field>
-                <mat-label>Bairro</mat-label>
-                <input type="text" formControlName="district" name="district" matInput readonly>
-              </mat-form-field>
+            <div class="row">
+              <div class="col-sm-6">
+                <mat-form-field>
+                  <mat-label>Cidade</mat-label>
+                  <input type="text" readonly formControlName="city" name="city" matInput>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-6">
+                <mat-form-field>
+                  <mat-label>Estado</mat-label>
+                  <input type="text" readonly matInput formControlName="state" name="state">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <mat-form-field>
+                  <mat-label>Logradouro</mat-label>
+                  <input type="text" readonly matInput formControlName="street" name="street">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-6">
+                <mat-form-field>
+                  <mat-label>Bairro</mat-label>
+                  <input type="text" formControlName="district" name="district" matInput readonly>
+                </mat-form-field>
+              </div>
             </div>
           </div>
           <div class="row">
             <div class="col-sm-6">
               <mat-form-field>
                 <mat-label>Email</mat-label>
-                <input tabindex="7" placeholder="Ex. test@example.com" type="text" matInput name="email" formControlName="email">
+                <input tabindex="7" placeholder="Ex. test@example.com" type="text" matInput name="email"
+                  formControlName="email">
               </mat-form-field>
             </div>
             <div class="col-sm-6">
@@ -106,57 +109,59 @@
               </mat-form-field>
             </div>
           </div>
-          <div class="row">
-            <div class="col-sm-6">
-              <mat-form-field>
-                <mat-label>DDD</mat-label>
-                <input tabindex="9" type="text" matInput formControlName="ddd" name="ddd">
+          <div formGroupName="phones">
+            <div class="row">
+              <div class="col-sm-6">
+                <mat-form-field>
+                  <mat-label>DDD</mat-label>
+                  <input tabindex="9" type="text" matInput formControlName="ddd" name="ddd">
                 </mat-form-field>
-            </div>
-            <div class="col-sm-6">
-              <mat-form-field>
-                <mat-label>Telefone</mat-label>
-                <input tabindex="10" mask="00000-0000" type="text" formControlName="phoneNumber" name="phoneNumber" matInput>
-              </mat-form-field>
+              </div>
+              <div class="col-sm-6">
+                <mat-form-field>
+                  <mat-label>Telefone</mat-label>
+                  <input tabindex="10" mask="00000-0000" type="text" formControlName="phoneNumber" name="phoneNumber"
+                    matInput>
+                </mat-form-field>
+              </div>
             </div>
           </div>
-
-          <div class="row">
-            <div class="col-sm-6">
-              <mat-form-field>
-                <mat-label>Banco</mat-label>
-                <mat-select formControlName="bankId" name="bankId" tabindex="9">
-                  <mat-option name="bd" [value]="1">Bradesco</mat-option>
-                  <mat-option name="bb" [value]="2">Banco do Brasil</mat-option>
-                </mat-select>
+          <div formGroupName="account">
+            <div class="row">
+              <div formGroupName="bank" class="col-sm-6">
+                <mat-form-field>
+                  <mat-label>Banco</mat-label>
+                  <mat-select formControlName="bankId" name="bankId" tabindex="9">
+                    <mat-option name="bd" [value]="1">Bradesco</mat-option>
+                    <mat-option name="bb" [value]="2">Banco do Brasil</mat-option>
+                  </mat-select>
                 </mat-form-field>
+              </div>
+              <div class="col-sm-6">
+                <mat-form-field>
+                  <mat-label>Agência</mat-label>
+                  <input tabindex="11" type="text" formControlName="branch" name="branch" matInput>
+                </mat-form-field>
+              </div>
             </div>
-            <div class="col-sm-6">
-              <mat-form-field>
-                <mat-label>Agência</mat-label>
-                <input tabindex="11" type="text" formControlName="branch" name="branch" matInput>
-              </mat-form-field>
+
+            <div class="row">
+              <div class="col-sm-6">
+                <mat-form-field>
+                  <mat-label>Conta</mat-label>
+                  <input tabindex="12" type="text" matInput formControlName="accountNumber" name="accountNumber">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-6">
+                <mat-form-field>
+                  <mat-label>Dígito</mat-label>
+                  <input tabindex="13" type="text" matInput formControlName="digit" name="digit">
+                </mat-form-field>
+              </div>
             </div>
           </div>
-
-          <div class="row">
-            <div class="col-sm-6">
-              <mat-form-field>
-                <mat-label>Conta</mat-label>
-                <input tabindex="12" type="text" matInput formControlName="accountNumber" name="accountNumber">
-                </mat-form-field>
-            </div>
-            <div class="col-sm-6">
-              <mat-form-field>
-                <mat-label>Dígito</mat-label>
-                <input tabindex="13" type="text" matInput formControlName="digit" name="digit">
-              </mat-form-field>
-            </div>
-          </div>
-
           <div class="button-form">
-            <button id="btn_logar" type="submit"
-              class="btn btn-primary button-form">Criar</button>
+            <button id="btn_logar" type="submit" class="btn btn-primary button-form">Criar</button>
           </div>
         </form>
       </div>
