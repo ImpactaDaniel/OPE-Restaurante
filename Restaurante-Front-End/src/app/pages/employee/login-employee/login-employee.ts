@@ -1,8 +1,9 @@
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { LoginModel, TokenService } from 'src/app/services/token.service';
 import { AlertService } from 'src/app/services/alert.service';
+import { TokenService } from 'src/app/services/token.service';
+import { LoginModel } from 'src/app/models/common/login.model';
 
 @Component({
   selector: 'app-login-employee',
@@ -19,7 +20,6 @@ export class LoginEmployeeComponent {
               private alertService: AlertService) { }
 
   ngOnInit(): void {
-    console.log(this.alertService);
     this.form = this.formbuilder.group({
       email: [""],
       password: [""]
@@ -45,9 +45,10 @@ export class LoginEmployeeComponent {
         this.alertService.showError(null, message);
         return;
       }
+      if(this.tokenservice.getTokenData().firstAccess === 'True')
+        console.log('haa');
       this.router.navigate(['/']);
     }).catch(e => {
-      console.log(e);
       var message = '';
         e.error.notifications.map(not => {
           message += not.message;

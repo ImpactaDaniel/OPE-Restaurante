@@ -22,8 +22,6 @@ export class AppComponent {
   async mostrarMenu(): Promise<boolean> {
     return new Promise((s, f) => {
       this.router.events.pipe(filter(ev => ev instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
-        console.log(event.url);
-        console.log(event.url.indexOf('login') < 0 && event.url.indexOf('signup') < 0);
         s(event.url.indexOf('login') < 0 && event.url.indexOf('signup') < 0);
       });
     })

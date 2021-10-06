@@ -2,7 +2,6 @@
 /// <reference types="cypress" />
 
 describe("Create employee tests", function () {
-  console.log(Cypress.env('urlSite'));
   beforeEach(() => {
     cy.loginDefaultUser();
     cy.visit(`${Cypress.env("urlSite")}/employee/create`);
