@@ -25,7 +25,9 @@ namespace Restaurante.Application.Users.Common.Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Sid, user.Id.ToString()),
-                    new Claim(ClaimTypes.Role, user.Type.ToString())
+                    new Claim(ClaimTypes.Role, user.Type.ToString()),
+                    new Claim("name", user.Name),
+                    new Claim("firstAccess", user.FirstAccess.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(TokenConfiguration.ValidTime),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

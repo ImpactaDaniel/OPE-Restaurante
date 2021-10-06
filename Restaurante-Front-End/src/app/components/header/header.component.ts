@@ -1,31 +1,47 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { TokenService } from 'src/app/services/token.service';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+} from "@angular/core";
+import { Router } from "@angular/router";
+import { TokenService } from "src/app/services/token.service";
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  selector: "app-header",
+  templateUrl: "./header.component.html",
+  styleUrls: ["./header.component.scss"],
 })
 export class HeaderComponent implements OnInit {
 
   @Output() public sidenavToggle = new EventEmitter();
 
-  userNameLogged: string;
+  userNameLogged = "";
 
-  constructor(private authService: TokenService, private router: Router) { }
+  constructor(
+    private authService: TokenService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
+    this.getUserName();
+    this.authService.userChanged.subscribe(() => {
+      this.getUserName();
+    });
+  }
 
+  private getUserName(){
+    this.userNameLogged = "";
+    if(this.authService.isAuthenticated())
+        this.userNameLogged = this.authService.getTokenData().name;
   }
 
   public onToggleSidenav = () => {
-    this.sidenavToggle.emit()
-  }
+    this.sidenavToggle.emit();
+  };
 
   logOut() {
     this.authService.logout();
-    this.router.navigate(['/employee/login']);
-    this.onToggleSidenav();
+    this.router.navigate(["/employee/login"]);
   }
 }

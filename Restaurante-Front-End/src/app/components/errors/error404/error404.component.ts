@@ -10,7 +10,6 @@ export class Error404Component {
   constructor(private router: Router) { }
 
   redirect() {
-    console.log('tete')
     this.router.navigate(['/employee/create'])
   }
 

@@ -21,12 +21,10 @@ export class CreateDeliverymanComponent implements OnInit {
 
   public registerDeliveryman(): void{
     let deliveryman = this.getDeiveryman();
-    console.log(deliveryman);
   }
 
   public async consultarCep() {
     let cep = this.form.get('address').get('cep');
-    console.log(cep);
     if (cep.invalid)
       return;
     var endereco = await this.consultaCepService.consultaCep(cep.value).toPromise();

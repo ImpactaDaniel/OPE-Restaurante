@@ -18,7 +18,6 @@ export class RequestInterceptor implements HttpInterceptor {
     if (this.tokenService.isAuthenticated() && !req.url.includes('viacep.com.br/ws/')) {
       let tokenResponse = this.tokenService.getToken();
       newReq = this.addToken(req, tokenResponse.token);
-      console.log(newReq);
     }
 
     return next.handle(newReq).pipe(catchError(error => {

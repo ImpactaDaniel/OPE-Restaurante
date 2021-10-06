@@ -1,10 +1,17 @@
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, Output, EventEmitter } from '@angular/core';
+import jwt_decode from 'jwt-decode';
 import { APIResponse } from '../models/common/apiResponse';
+import { ChangePasswordModel } from '../models/common/change-password.model';
+import { LoginModel } from '../models/common/login.model';
+import { TokenData } from '../models/common/token.data.model';
+import { TokenRespose } from '../models/common/token.response.model';
 @Injectable({
   providedIn: 'root'
 })
 export class TokenService {
+
+  @Output() public userChanged = new EventEmitter();
 
   chaveToken = btoa('tokenRequest');
   constructor(private httpClient: HttpClient, @Inject('BASE_URL') private url: string) { }
@@ -12,6 +19,21 @@ export class TokenService {
   public isAuthenticated(): boolean {
     let token = this.getToken();
     return token && token !== null;
+  }
+
+  public getTokenData(): TokenData {
+    return new TokenData(jwt_decode(this.getToken().token));
+  }
+
+  public async updatePassowrd(changePassword: ChangePasswordModel): Promise<APIResponse<any>> {
+    let response = await this.httpClient.post<APIResponse<any>>(this.url + 'Auth/ChangePassowrd', changePassword).toPromise();
+
+    if (response.success) {
+      this.saveToken(response.response.result);
+      this.userChanged.emit();
+    }
+
+    return response;
   }
 
   private saveToken(token: TokenRespose): void {
@@ -29,14 +51,17 @@ export class TokenService {
   public async authenticate(login: LoginModel): Promise<APIResponse<any>> {
     let response = await this.httpClient.post<APIResponse<any>>(this.url + 'Auth/Authenticate', login).toPromise();
 
-    if (response.success)
+    if (response.success) {
       this.saveToken(response.response.result);
+      this.userChanged.emit();
+    }
 
     return response;
   }
 
-  public logout(){
+  public logout() {
     localStorage.removeItem(this.chaveToken);
+    this.userChanged.emit();
   }
 
   public getToken(): TokenRespose {
@@ -52,15 +77,4 @@ export class TokenService {
       return value;
     return atob(value);
   }
-}
-
-export class TokenRespose {
-  token: string;
-  validTo: Date;
-  validFrom: Date;
-}
-
-export class LoginModel {
-  email: string;
-  password: string;
 }

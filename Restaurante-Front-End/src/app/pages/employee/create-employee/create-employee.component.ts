@@ -43,22 +43,21 @@ export class CreateEmployeeComponent implements OnInit {
         accountNumber: ["", [Validators.required, Validators.pattern(/\d+/g)]],
         digit: ["", [Validators.required, Validators.pattern(/\d+/g)]],
       }),
-      document: ["", [Validators.required, Validators.pattern(/\d+g/)]],
+      document: ["", [Validators.required, Validators.pattern(/\d+/g)]],
       birthDate: ["", Validators.required]
     });
   }
 
 
   async consultarCep() {
-    let cep = this.form.get('cep');
-    console.log(cep);
+    let cep = this.form.get('address').get('cep');
     if (cep.invalid)
       return;
     var endereco = await this.consultaCepService.consultaCep(cep.value).toPromise();
-    this.form.get('street').setValue(endereco.logradouro);
-    this.form.get('state').setValue(endereco.uf);
-    this.form.get('city').setValue(endereco.localidade);
-    this.form.get('district').setValue(endereco.bairro);
+    this.form.get('address').get('street').setValue(endereco.logradouro);
+    this.form.get('address').get('state').setValue(endereco.uf);
+    this.form.get('address').get('city').setValue(endereco.localidade);
+    this.form.get('address').get('district').setValue(endereco.bairro);
 
   }
 
@@ -69,8 +68,6 @@ export class CreateEmployeeComponent implements OnInit {
     this.funcionario = this.getEmployee();
 
     let retorno = await this.employeeService.createEmployee(this.funcionario).toPromise();
-
-    console.log(retorno);
   }
 
   private getEmployee(): Employee {
