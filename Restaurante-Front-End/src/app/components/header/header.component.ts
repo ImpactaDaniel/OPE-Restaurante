@@ -1,4 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +13,7 @@ export class HeaderComponent implements OnInit {
 
   userNameLogged: string;
 
-  constructor() { }
+  constructor(private authService: TokenService, private router: Router) { }
 
   ngOnInit() {
 
@@ -22,6 +24,8 @@ export class HeaderComponent implements OnInit {
   }
 
   logOut() {
-
+    this.authService.logout();
+    this.router.navigate(['/employee/login']);
+    this.onToggleSidenav();
   }
 }
