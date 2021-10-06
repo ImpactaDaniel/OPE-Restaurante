@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Restaurante.Application.Users.Employees.Requests.Create;
+using Restaurante.Application.Users.Employees.Requests.Get;
 using Restaurante.Application.Users.Employees.Requests.GetAll;
 using Restaurante.Domain.Common.Services.Interfaces;
     using System.Threading;
@@ -20,6 +21,13 @@ namespace Restaurante.Web.Controllers
         public async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
         {
             var resp = await _mediator.Send(new GetAllEmployeesRequest(), cancellationToken);
+            return GetResponse(resp.Result);
+        }
+
+        [Route("Get"), HttpGet, Authorize]
+        public async Task<IActionResult> Get(CancellationToken cancellationToken = default)
+        {
+            var resp = await _mediator.Send(new GetEmployeeRequest() { Id = GetLoggedUserId() }, cancellationToken);
             return GetResponse(resp.Result);
         }
 

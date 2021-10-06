@@ -52,6 +52,8 @@ namespace Restaurante.Infra.Users.Employees
                 .Include(e => e.Phones)
                 .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
 
+            entity.HidePassword();
+
             return entity;
         }
 
