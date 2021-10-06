@@ -7,7 +7,7 @@ import { Deliveryman } from 'src/app/models/deliveryman/deliveryman';
 @Component({
   selector: 'app-createDeliveryman',
   templateUrl: './create-deliveryman.component.html',
-  styleUrls: ['./create-deliveryman.component.css']
+  styleUrls: ['./create-deliveryman.component.scss']
 })
 export class CreateDeliverymanComponent implements OnInit {
 
