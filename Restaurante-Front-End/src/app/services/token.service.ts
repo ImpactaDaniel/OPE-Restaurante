@@ -35,6 +35,10 @@ export class TokenService {
     return response;
   }
 
+  public logout(){
+    localStorage.removeItem(this.chaveToken);
+  }
+
   public getToken(): TokenRespose {
     let json = this.returnFromLocalStorage(this.chaveToken);
     if (json === '' || !json)

@@ -5,10 +5,6 @@ const routes: Routes = [
   {
     path: 'create',
     component: CreateDeliverymanComponent
-  },
-  {
-    path: '**',
-    redirectTo: 'create'
   }
 ];
 
