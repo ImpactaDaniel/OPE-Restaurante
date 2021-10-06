@@ -53,6 +53,12 @@ namespace Restaurante.Domain.Users.Common.Models
             return this;
         }
 
+        public virtual User HidePassword()
+        {
+            Password = string.Empty;
+            return this;
+        }
+
         private void ValidateEmail(string email)
         {
             ValidateNullString(email, "E-mail");
