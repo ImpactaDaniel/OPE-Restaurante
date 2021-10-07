@@ -1,3 +1,4 @@
+import { GlobalErrorHandler } from './middlewares/GlobalErrorHandler';
 import { Error404Component } from './components/errors/error404/error404.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserModule } from '@angular/platform-browser';
@@ -9,7 +10,7 @@ import { RequestInterceptor } from './middlewares/TokenInterceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderModule } from './components/header/header.module';
 import { SideNavModule } from './components/side-nav/side-nav.module';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,10 @@ import { NgModule } from '@angular/core';
       provide: HTTP_INTERCEPTORS,
       useClass: RequestInterceptor,
       multi: true
+    },
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler
     }
   ],
   bootstrap: [AppComponent]

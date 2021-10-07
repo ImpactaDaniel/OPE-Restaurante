@@ -16,21 +16,24 @@
 
     <div class="col-md-6 row-md-auto box_login justify-content-center">
       <div class="row col-sm-auto justify-content-center">
-        <div class="row justify-content-center text_login">
+        <div class="row justify-content-center text_login mb-3">
           Preencha os dados abaixo.
         </div>
         <form [formGroup]="form" (ngSubmit)="cadastrarFuncionario()">
+          <mat-error *ngIf="error" class="text-center my-2">{{ erroMsg }}</mat-error>
           <div class="row">
             <div class="col-sm-6">
               <mat-form-field>
                 <mat-label>Nome</mat-label>
                 <input tabindex="1" type="text" matInput name="name" formControlName="name">
+                <mat-error>Nome é obrigatório</mat-error>
               </mat-form-field>
             </div>
             <div class="col-sm-6">
               <mat-form-field>
                 <mat-label>Sobrenome</mat-label>
                 <input tabindex="2" type="text" matInput name="lastName" formControlName="lastname">
+                <mat-error>Sobrenome é obrigatório</mat-error>
               </mat-form-field>
             </div>
           </div>
@@ -40,12 +43,14 @@
               <mat-form-field>
                 <mat-label>CPF</mat-label>
                 <input tabindex="3" mask="000.000.000-00" type="text" matInput formControlName="document" name="document">
+                <mat-error>CPF inválido</mat-error>
               </mat-form-field>
             </div>
             <div class="col-sm-6">
               <mat-form-field>
                 <mat-label>Data de Nascimento</mat-label>
                 <input tabindex="4" type="date" matInput formControlName="birthDate" name="birthDate">
+                <mat-error>Data de Nascimento inválida</mat-error>
               </mat-form-field>
             </div>
           </div>
@@ -56,12 +61,14 @@
                   <mat-label>CEP</mat-label>
                   <input tabindex="5" mask="00000-000" type="text" matInput (blur)="consultarCep()"
                     placeholder="000000-000" formControlName="cep" name="cep">
+                    <mat-error>CEP inválido</mat-error>
                 </mat-form-field>
               </div>
               <div class="col-sm-6">
                 <mat-form-field>
                   <mat-label>Número</mat-label>
                   <input tabindex="6" type="text" matInput formControlName="number" name="number">
+                  <mat-error>Número é obrigatório</mat-error>
                 </mat-form-field>
               </div>
             </div>
@@ -100,12 +107,14 @@
                 <mat-label>Email</mat-label>
                 <input tabindex="7" placeholder="Ex. test@example.com" type="text" matInput name="email"
                   formControlName="email">
+                <mat-error>E-mail inválido</mat-error>
               </mat-form-field>
             </div>
             <div class="col-sm-6">
               <mat-form-field>
                 <mat-label>Senha</mat-label>
                 <input tabindex="8" type="password" matInput name="password" formControlName="password">
+                <mat-error>Senha inválida</mat-error>
               </mat-form-field>
             </div>
           </div>
@@ -114,7 +123,8 @@
               <div class="col-sm-6">
                 <mat-form-field>
                   <mat-label>DDD</mat-label>
-                  <input tabindex="9" type="text" matInput formControlName="ddd" name="ddd">
+                  <input tabindex="9" mask="00" type="text" matInput formControlName="ddd" name="ddd">
+                  <mat-error></mat-error>
                 </mat-form-field>
               </div>
               <div class="col-sm-6">
@@ -122,6 +132,7 @@
                   <mat-label>Telefone</mat-label>
                   <input tabindex="10" mask="00000-0000" type="text" formControlName="phoneNumber" name="phoneNumber"
                     matInput>
+                  <mat-error>Telefone é obrigatório</mat-error>
                 </mat-form-field>
               </div>
             </div>
@@ -131,16 +142,18 @@
               <div formGroupName="bank" class="col-sm-6">
                 <mat-form-field>
                   <mat-label>Banco</mat-label>
-                  <mat-select formControlName="bankId" name="bankId" tabindex="9">
+                  <mat-select formControlName="bankId" name="bankId" tabindex="11">
                     <mat-option name="bd" [value]="1">Bradesco</mat-option>
                     <mat-option name="bb" [value]="2">Banco do Brasil</mat-option>
                   </mat-select>
+                  <mat-error>Banco é obrigatório</mat-error>
                 </mat-form-field>
               </div>
               <div class="col-sm-6">
                 <mat-form-field>
                   <mat-label>Agência</mat-label>
                   <input tabindex="11" type="text" formControlName="branch" name="branch" matInput>
+                  <mat-error>Agência é obrigatória</mat-error>
                 </mat-form-field>
               </div>
             </div>
@@ -150,12 +163,14 @@
                 <mat-form-field>
                   <mat-label>Conta</mat-label>
                   <input tabindex="12" type="text" matInput formControlName="accountNumber" name="accountNumber">
+                  <mat-error>Conta é obrigatória</mat-error>
                 </mat-form-field>
               </div>
               <div class="col-sm-6">
                 <mat-form-field>
                   <mat-label>Dígito</mat-label>
                   <input tabindex="13" type="text" matInput formControlName="digit" name="digit">
+                  <mat-error>Dígito é obrigatorio</mat-error>
                 </mat-form-field>
               </div>
             </div>
