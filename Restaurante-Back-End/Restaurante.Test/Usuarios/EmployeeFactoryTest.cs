@@ -31,7 +31,7 @@ namespace Restaurante.Test.Usuarios
                 .WithPhone(PhoneMock.GetDefault())
                 .WithName("Daniel")
                 .WithEmail(DataTest.EMAIL)
-                .WithPassword("123456");
+                .WithPassword(DataTest.PASSWORD);
 
             //Act
             var employee = _factory.Build();
@@ -55,7 +55,7 @@ namespace Restaurante.Test.Usuarios
                 .WithPhones(new List<Phone> { PhoneMock.GetDefault() })
                 .WithName("Daniel")
                 .WithEmail(DataTest.EMAIL)
-                .WithPassword("123456");
+                .WithPassword(DataTest.PASSWORD);
 
             //Act
             var employee = _factory.Build();
@@ -80,8 +80,7 @@ namespace Restaurante.Test.Usuarios
                     .WithPhones(new List<Phone> { PhoneMock.GetDefault() })
                     .WithName("Daniel")
                     .WithEmail(DataTest.EMAIL)
-                    .WithPassword("123456")
-
+                    .WithPassword(DataTest.PASSWORD)
             );
         }
     }

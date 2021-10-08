@@ -17,7 +17,7 @@ namespace Restaurante.Test.Domain.Entities
             //assert
             var ex = Assert.Throws<UserException>(() =>
             //act
-                new Employee("teste", DataTest.EMAIL, "teste", Restaurante.Domain.Users.Enums.EmployeesType.Deliver,
+                new Employee("teste", DataTest.EMAIL, DataTest.PASSWORD, EmployeesType.Deliver,
                                 null, new List<Phone>() { PhoneMock.GetDefault() }, AddressMock.GetDefault(), DataTest.CPF, DateTime.Now)
             );
 
@@ -31,7 +31,7 @@ namespace Restaurante.Test.Domain.Entities
             //assert
             var ex = Assert.Throws<UserException>(() =>
             //act
-                new Employee("teste", DataTest.EMAIL, "teste", EmployeesType.Deliver,
+                new Employee("teste", DataTest.EMAIL, DataTest.PASSWORD, EmployeesType.Deliver,
                                 AccountMock.GetDefault(), null, AddressMock.GetDefault(), DataTest.CPF, DateTime.Now)
             );
 
@@ -45,7 +45,7 @@ namespace Restaurante.Test.Domain.Entities
             //assert
             var ex = Assert.Throws<UserException>(() =>
             //act
-                new Employee("teste", DataTest.EMAIL, "teste", EmployeesType.Deliver,
+                new Employee("teste", DataTest.EMAIL, DataTest.PASSWORD, EmployeesType.Deliver,
                                 AccountMock.GetDefault(), new List<Phone>(), AddressMock.GetDefault(), DataTest.CPF, DateTime.Now)
             );
 
@@ -59,7 +59,7 @@ namespace Restaurante.Test.Domain.Entities
             //assert
             var ex = Assert.Throws<UserException>(() =>
             //act
-                new Employee("teste", DataTest.EMAIL, "teste", EmployeesType.Deliver,
+                new Employee("teste", DataTest.EMAIL, DataTest.PASSWORD, EmployeesType.Deliver,
                                 AccountMock.GetDefault(), new List<Phone> { PhoneMock.GetDefault() }, null, DataTest.CPF, DateTime.Now)
             );
 
@@ -126,17 +126,49 @@ namespace Restaurante.Test.Domain.Entities
         }
 
         [Fact]
+        public void ShouldNotUpdateEmailCorrectly()
+        {
+            //arrange
+            var employee = EmployeeMock.GetDefault();
+            var expectedEmail = "teste";
+
+            var ex = Assert.Throws<UserException>(() =>
+            //act
+                employee.UpdateEmail(expectedEmail)
+            );
+
+            //assert
+            Assert.Equal("E-mail não é válido!", ex.Message);
+        }
+
+        [Fact]
         public void ShouldUpdatePasswordCorrectly()
         {
             //arrange
             var employee = EmployeeMock.GetDefault();
-            var expectedPassword = "test update password";
+            var expectedPassword = DataTest.PASSWORD + "Teste";
 
             //act
             employee.UpdatePassword(expectedPassword);
 
             //assert
             Assert.Equal(expectedPassword, employee.Password);
+        }
+
+        [Fact]
+        public void ShouldNotUpdatePasswordCorrectly()
+        {
+            //arrange
+            var employee = EmployeeMock.GetDefault();
+            var expectedPassword = "Teste";
+
+            var ex = Assert.Throws<UserException>(() =>
+                //act
+                employee.UpdatePassword(expectedPassword)
+            );
+
+            //assert
+            Assert.Equal("Senha inválida!", ex.Message);
         }
 
         [Fact]
@@ -160,7 +192,7 @@ namespace Restaurante.Test.Domain.Entities
             var employee = EmployeeMock.GetDefault();
 
             //assert
-            var ex = Assert.Throws<UserException>(() => 
+            var ex = Assert.Throws<UserException>(() =>
 
                 //act
                 employee.UpdateAccount(null)
@@ -195,6 +227,47 @@ namespace Restaurante.Test.Domain.Entities
 
             //assert
             Assert.Equal(expectedDate.ToShortDateString(), employee.BirthDate.ToShortDateString());
+        }
+
+        [Fact]
+        public void ShouldUpdatePasswordHashCorrectly()
+        {
+            //arrange
+            var employee = EmployeeMock.GetDefault();
+            var expectedPasswordHash = "Restarante@gdgdagkag.com";
+
+            //act
+            employee.UpdatePassword("Restarante@123", expectedPasswordHash);
+
+            //assert
+            Assert.Equal(expectedPasswordHash, employee.Password);
+        }
+
+        [Fact]
+        public void ShouldNotUpdatePasswordHashCorrectly()
+        {
+            //arrange
+            var employee = EmployeeMock.GetDefault();
+            var expectedPasswordHash = "Restarante@gdgdagkag.com";
+
+            //act
+            employee.UpdatePassword(employee.Password, expectedPasswordHash);
+
+            //assert
+            Assert.Equal(employee.Password, employee.Password);
+        }
+
+        [Fact]
+        public void ShouldHidePassword()
+        {
+            //arrange
+            var employee = EmployeeMock.GetDefault();
+
+            //act
+            employee.HidePassword();
+
+            //assert
+            Assert.Equal(string.Empty, employee.Password);
         }
     }
 }

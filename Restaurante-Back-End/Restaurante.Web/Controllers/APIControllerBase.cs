@@ -22,7 +22,7 @@ namespace Restaurante.Web.Controllers
             if (!_notifier.HasNotifications())
                 return Ok(new DefaultApiResponse<T>(response: data));
             var notifications = _notifier.GetNotifications();
-            return BadRequest(new DefaultApiResponse<T>(notifications: notifications, success: false));
+            return Ok(new DefaultApiResponse<T>(notifications: notifications, success: false));
         }
 
         protected int GetLoggedUserId()

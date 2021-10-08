@@ -32,8 +32,8 @@ namespace Restaurante.Test.Application.Requests
             var request = new ChangePasswordFirstAccessRequest()
             {
                 Id = 1,
-                OldPassword = "haha",
-                Password = "teste"
+                OldPassword = DataTest.PASSWORD,
+                Password = DataTest.PASSWORD + "Teste"
             };
 
             //act
@@ -58,8 +58,8 @@ namespace Restaurante.Test.Application.Requests
             var request = new ChangePasswordFirstAccessRequest()
             {
                 Id = 1,
-                OldPassword = "haha",
-                Password = "teste"
+                OldPassword = DataTest.PASSWORD,
+                Password = DataTest.PASSWORD + "teste"
             };
 
             //act
@@ -84,8 +84,8 @@ namespace Restaurante.Test.Application.Requests
             var request = new ChangePasswordFirstAccessRequest()
             {
                 Id = 1,
-                OldPassword = "haha",
-                Password = "teste"
+                OldPassword = DataTest.PASSWORD,
+                Password = DataTest.PASSWORD + "teste"
             };
 
             //act
@@ -111,8 +111,8 @@ namespace Restaurante.Test.Application.Requests
             var request = new ChangePasswordFirstAccessRequest()
             {
                 Id = 1,
-                OldPassword = "haha",
-                Password = "teste"
+                OldPassword = DataTest.PASSWORD,
+                Password = DataTest.PASSWORD + "teste"
             };
 
             //act

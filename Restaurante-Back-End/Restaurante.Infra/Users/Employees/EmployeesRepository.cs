@@ -24,7 +24,7 @@ namespace Restaurante.Infra.Users.Employees
 
         public async Task<Employee> CreateEmployee(Employee funcionario, CancellationToken cancellationToken = default)
         {
-            funcionario.UpdatePassword(_passwordEncrypt.Encrypt(funcionario.Password));
+            funcionario.UpdatePassword(funcionario.Password, _passwordEncrypt.Encrypt(funcionario.Password));
             await Data.Employees.AddAsync(funcionario, cancellationToken);
             await Data.SaveChangesAsync(cancellationToken);
             return funcionario;
