@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from "@angular/common/http";
 import { ErrorHandler, Injectable } from "@angular/core";
 import { AlertService } from "../services/alert.service";
 
@@ -9,7 +8,6 @@ export class GlobalErrorHandler implements ErrorHandler {
 
   handleError(error: any): void {
     try {
-      console.log(typeof(error));
       if(error.status !== 400 && error.status !== 401){
         this.alertService.showError();
         return;

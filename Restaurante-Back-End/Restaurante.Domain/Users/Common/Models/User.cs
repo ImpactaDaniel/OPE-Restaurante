@@ -24,6 +24,7 @@ namespace Restaurante.Domain.Users.Common.Models
         {
             ValidateNullString(name, "Nome");
             ValidateEmail(email);
+            ValidatePassword(password);
             Name = name;
             Email = email;
             Password = password;
@@ -47,9 +48,17 @@ namespace Restaurante.Domain.Users.Common.Models
 
         public virtual User UpdatePassword(string password)
         {
-            ValidateNullString(password, "Senha");
+            ValidatePassword(password);
             if (password != Password)
                 Password = password;
+            return this;
+        }
+
+        public virtual User UpdatePassword(string password, string passwordHash)
+        {
+            ValidatePassword(password);
+            if (password != Password)
+                Password = passwordHash;
             return this;
         }
 
@@ -64,6 +73,13 @@ namespace Restaurante.Domain.Users.Common.Models
             ValidateNullString(email, "E-mail");
             if (!email.ValidEmail())
                 throw new UserException("E-mail não é válido!", NotificationKeys.InvalidEmail);
+        }
+
+        private void ValidatePassword(string password)
+        {
+            ValidateNullString(password, "Senha");
+            if (!password.ValidPassword())
+                throw new UserException("Senha inválida!", NotificationKeys.InvalidPassword);
         }
     }
 }

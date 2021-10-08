@@ -18,7 +18,7 @@ namespace Restaurante.Test.Usuarios.Mocks
         public static DeliveryPerson GetDefaulEntregador() =>
             Builder<DeliveryPerson>
             .CreateNew()
-            .WithFactory(() => new DeliveryPerson("Daniel", DataTest.EMAIL, "123456", GetDefaultVehicle(), AccountMock.GetDefault(), new List<Phone>() { PhoneMock.GetDefault() }, AddressMock.GetDefault(), DataTest.CPF, DateTime.Now))
+            .WithFactory(() => new DeliveryPerson("Daniel", DataTest.EMAIL, DataTest.PASSWORD, GetDefaultVehicle(), AccountMock.GetDefault(), new List<Phone>() { PhoneMock.GetDefault() }, AddressMock.GetDefault(), DataTest.CPF, DateTime.Now))
             .Build();
     }
 
@@ -29,11 +29,11 @@ namespace Restaurante.Test.Usuarios.Mocks
         {
             _data.Add(new object[]
             {
-                string.Empty, "danielcity1@gmail.com", "123456", EntregadorMock.GetDefaultVehicle(), "Nome precisa estar preenchido!"
+                string.Empty, "danielcity1@gmail.com", DataTest.PASSWORD, EntregadorMock.GetDefaultVehicle(), "Nome precisa estar preenchido!"
             });
             _data.Add(new object[]
             {
-                "Daniel", string.Empty, "123456", EntregadorMock.GetDefaultVehicle(), "E-mail precisa estar preenchido!"
+                "Daniel", string.Empty, DataTest.PASSWORD, EntregadorMock.GetDefaultVehicle(), "E-mail precisa estar preenchido!"
             });
             _data.Add(new object[]
             {
@@ -41,7 +41,7 @@ namespace Restaurante.Test.Usuarios.Mocks
             });
             _data.Add(new object[]
             {
-                "Daniel", "daniel@gmail.com", "123456", null, "Veículo inválido!"
+                "Daniel", "daniel@gmail.com", DataTest.PASSWORD, null, "Veículo inválido!"
             });
         }
         public IEnumerator<object[]> GetEnumerator()

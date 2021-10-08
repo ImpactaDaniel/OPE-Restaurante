@@ -52,5 +52,12 @@ namespace Restaurante.Domain.Helpers
 
             return regexEmail.IsMatch(email);
         }
+
+        public static bool ValidPassword(this string password)
+        {
+            var regexPassword = new Regex(RegexHelpers.RegexStrongPassword);
+
+            return regexPassword.IsMatch(password);
+        }
     }
 }
