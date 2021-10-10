@@ -5,7 +5,13 @@ namespace Restaurante.Domain.Products.Models
     public class ProductCategory : Entity<int>
     {
         public string Name { get; private set; }
+
+        private ProductCategory()
+        {
+        }
+
         public ProductCategory(string name)
+            : this()
         {
             ValidateNullString(name, "Nome da Categoria");
             Name = name;
