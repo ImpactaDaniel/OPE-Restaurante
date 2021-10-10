@@ -10,6 +10,7 @@ namespace Restaurante.Domain.Products.Models
         }
 
         public Photo(string path)
+            : this()
         {
             Path = path;
         }

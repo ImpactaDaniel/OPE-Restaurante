@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Common\Repositories\**" />
+    <EmbeddedResource Remove="Common\Repositories\**" />
+    <None Remove="Common\Repositories\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.9" />
@@ -29,7 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Repositories\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 
