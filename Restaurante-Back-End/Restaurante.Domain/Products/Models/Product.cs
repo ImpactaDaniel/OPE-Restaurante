@@ -24,38 +24,41 @@ namespace Restaurante.Domain.Products.Models
         {
         }
 
-        public Product(string name, string description, decimal price, int quantiyStock, ProductCategory category, string accompaniments, Photo photo)
-            : this(name, description, price, quantiyStock, category, accompaniments)
+        public Product(string name, string description, decimal price, int quantiyStock, ProductCategory category, Photo photo, string accompaniments, bool available = false)
+            : this(name, description, price, quantiyStock, category, accompaniments, available)
         {
-            Photo = photo;
+            Photo = photo ?? throw new BasicTableException("Foto não pode ser nula!", NotificationKeys.InvalidEntity);
         }
 
-        public Product(string name, string description, decimal price, int quantiyStock, ProductCategory category, string accompaniments, string photoPath)
-            : this(name, description, price, quantiyStock, category, accompaniments)
+        public Product(string name, string description, decimal price, int quantiyStock, ProductCategory category, string photoPath, string accompaniments, bool available = false)
+            : this(name, description, price, quantiyStock, category, accompaniments, available)
         {
             Photo = new Photo(photoPath);
         }
 
-        public Product(string name, string description, decimal price, int quantiyStock, ProductCategory category, string accompaniments)
-            : this(name, description, price, quantiyStock, category)
+        public Product(string name, string description, decimal price, int quantiyStock, ProductCategory category, string accompaniments, bool available = false)
+            : this(name, description, price, quantiyStock, category, available)
         {
             Accompaniments = accompaniments;
         }
 
-        public Product(string name, string description, decimal price, int quantityStock, ProductCategory category)
-            : this(name, description, price, quantityStock)
+        public Product(string name, string description, decimal price, int quantityStock, ProductCategory category, bool available = false)
+            : this(name, description, price, quantityStock, available)
         {
-            Category = category;
+            Category = category ?? throw new BasicTableException("Categoria não pode ser nula!", NotificationKeys.InvalidEntity);
         }
 
-        public Product(string name, string description, decimal price, int quantityStock)
-            : this(name, description, price)
+        public Product(string name, string description, decimal price, int quantityStock, bool available = false)
+            : this(name, description, price, available)
         {
             QuantityStock = quantityStock;
         }
 
         public Product(string name, string description, decimal price, bool available = false)
+            : this()
         {
+            ValidateNullString(name, "Nome do Produto");
+            ValidateNullString(description, "Descrição do Produto");
             Name = name;
             Description = description;
             Available = available;
@@ -106,8 +109,8 @@ namespace Restaurante.Domain.Products.Models
 
         public Product UpdatePhoto(Photo photo)
         {
-            photo = photo ?? throw new BasicTableException("Foto não pode ser nula!", NotificationKeys.InvalidEntity);
-            if (Photo.Id != photo.Id)
+            _ = photo ?? throw new BasicTableException("Foto não pode ser nula!", NotificationKeys.InvalidEntity);
+            if (Photo.Path != photo.Path)
             {
                 Photo = photo;
                 UpdatedOn = DateTime.Now;
@@ -148,7 +151,8 @@ namespace Restaurante.Domain.Products.Models
 
         public Product UpdateCategory(ProductCategory productCategory)
         {
-            if(Category != productCategory)
+            _ = productCategory ?? throw new BasicTableException("Categoria não pode ser nula!", NotificationKeys.InvalidEntity);
+            if(Category.Name != productCategory.Name)
             {
                 UpdatedOn = DateTime.Now;
                 Category = productCategory;
