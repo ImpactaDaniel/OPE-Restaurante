@@ -14,6 +14,9 @@ namespace Restaurante.Infra.Mappings
 
             builder.HasIndex(e => e.Email)
                 .IsUnique();
+
+            builder.HasIndex(e => e.Document)
+                .IsUnique();
         }
     }
 }
