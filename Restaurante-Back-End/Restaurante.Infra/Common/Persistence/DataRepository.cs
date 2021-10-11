@@ -20,7 +20,7 @@ namespace Restaurante.Infra.Common.Persistence
         }
         protected TDbContext Data { get; }
         protected IQueryable<TEntity> All() => Data.Set<TEntity>();
-        public async Task<TEntity> Get(Expression<Func<TEntity, bool>> condicao, CancellationToken cancellationToken = default)
+        public virtual async Task<TEntity> Get(Expression<Func<TEntity, bool>> condicao, CancellationToken cancellationToken = default)
         {
             var entity = await All().FirstOrDefaultAsync(condicao, cancellationToken);
             return entity;

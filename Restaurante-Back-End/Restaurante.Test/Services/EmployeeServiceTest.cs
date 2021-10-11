@@ -11,13 +11,13 @@ using Xunit;
 
 namespace Restaurante.Test.Services
 {
-    public class EmplyoeeServiceTest
+    public class EmployeeServiceTest
     {
         private readonly INotifier _notifier;
         private readonly IEmployeeDomainRepository<Employee> _repository;
         private readonly ILogger<EmployeeService<Employee>> _logger;
 
-        public EmplyoeeServiceTest()
+        public EmployeeServiceTest()
         {
             _notifier = Substitute.For<INotifier>();
             _repository = Substitute.For<IEmployeeDomainRepository<Employee>>();
