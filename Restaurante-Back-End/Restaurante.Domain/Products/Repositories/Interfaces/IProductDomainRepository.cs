@@ -1,0 +1,13 @@
+﻿using Restaurante.Domain.Common.Repositories.Interfaces;
+using Restaurante.Domain.Products.Models;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Restaurante.Domain.Products.Repositories.Interfaces
+{
+    public interface IProductDomainRepository : IDomainRepository<Product>
+    {
+        Task<bool> Update(Product entity, CancellationToken cancellationToken = default);
+        Task<bool> Delete(int id, CancellationToken cancellationToken = default);
+    }
+}
