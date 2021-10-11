@@ -24,7 +24,6 @@ namespace Restaurante.Test.Application
         private readonly IEmployeesService<Employee> _service;
         private readonly IMessageSenderService<EmailMessage> _emailService;
         private readonly INotifier _notifier;
-        private readonly ILogger<CreateEmployeeRequestHandler> _logger;
         private readonly IBasicEntitiesService _basicEntitiesService;
 
         public CreateFuncionarioRequestHandlerTest()
@@ -35,8 +34,6 @@ namespace Restaurante.Test.Application
             _service = Substitute.For<IEmployeesService<Employee>>();
 
             _emailService = Substitute.For<IMessageSenderService<EmailMessage>>();
-
-            _logger = Substitute.For<ILogger<CreateEmployeeRequestHandler>>();
 
             _basicEntitiesService = Substitute.For<IBasicEntitiesService>();
 
@@ -50,7 +47,7 @@ namespace Restaurante.Test.Application
         public async Task ShouldCreateNewFuncionario()
         {
             //Arrange
-            var handler = new CreateEmployeeRequestHandler(_factory, _service, _notifier, _logger, _emailService, _basicEntitiesService);
+            var handler = new CreateEmployeeRequestHandler(_factory, _service, _notifier, _emailService, _basicEntitiesService);
             var funcionarioDefault = EmployeeMock.GetDefault();
             var phones = new List<PhoneRequest>()
             {
@@ -107,7 +104,7 @@ namespace Restaurante.Test.Application
         public async Task ShouldNotCreateNewFuncionario()
         {
             //Arrange
-            var handler = new CreateEmployeeRequestHandler(_factory, _service, _notifier, _logger, _emailService, _basicEntitiesService);
+            var handler = new CreateEmployeeRequestHandler(_factory, _service, _notifier, _emailService, _basicEntitiesService);
             var funcionarioDefault = EmployeeMock.GetDefault();
             var phones = new List<PhoneRequest>()
             {

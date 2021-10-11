@@ -5,6 +5,7 @@ namespace Restaurante.Application.Products.Common.Models
     public class ProductRequest<TRequest> : EntityRequest<int>
         where TRequest : EntityRequest<int>
     {
+        public int CurrentUserId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int QuantityStock { get; set; }
@@ -22,6 +23,6 @@ namespace Restaurante.Application.Products.Common.Models
 
     public class ProductCategoryRequest
     {
-        public string Name { get; set; }
+        public int Id { get; set; }
     }
 }
