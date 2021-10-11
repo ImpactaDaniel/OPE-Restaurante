@@ -8,7 +8,7 @@ namespace Restaurante.Domain.Products.Repositories.Interfaces
 {
     public interface IProductDomainRepository : IDomainRepository<Product>
     {
-        Task<bool> Update(Product entity, CancellationToken cancellationToken = default);
+        Task<bool> Update(int id, Product entity, CancellationToken cancellationToken = default);
         Task<bool> Delete(int id, CancellationToken cancellationToken = default);
         Task<IEnumerable<Product>> GetAll(CancellationToken cancellationToken = default);
     }

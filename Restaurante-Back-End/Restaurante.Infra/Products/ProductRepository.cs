@@ -36,7 +36,7 @@ namespace Restaurante.Infra.Products
                 .ToListAsync(cancellationToken);
         }
 
-        public Task<bool> Update(Product entity, CancellationToken cancellationToken = default)
+        public Task<bool> Update(int id, Product entity, CancellationToken cancellationToken = default)
         {
             throw new System.NotImplementedException();
         }
