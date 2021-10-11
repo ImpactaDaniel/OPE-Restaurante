@@ -17,12 +17,6 @@ namespace Restaurante.Infra.Products
         {
         }
 
-        public override async Task<bool> Save(Product entity, CancellationToken cancellationToken = default)
-        {
-            entity.CreatedOn = DateTime.Now;
-            return await base.Save(entity, cancellationToken);
-        }
-
         public Task<bool> Delete(int id, CancellationToken cancellationToken = default)
         {
             throw new System.NotImplementedException();
