@@ -13,5 +13,6 @@ namespace Restaurante.Domain.Products.Factories.Interfaces
         IProductFactory WithDescription(string description);
         IProductFactory WithName(string name);
         IProductFactory WithPhoto(Photo photo);
+        IProductFactory WithPhoto(string photoPath);
     }
 }

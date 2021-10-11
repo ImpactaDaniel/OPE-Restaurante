@@ -9,6 +9,7 @@ using Restaurante.Application.Users.Common.Services;
 using Restaurante.Application.Users.Deliveries.Services;
 using Restaurante.Domain.BasicEntities.Services.Interfaces;
 using Restaurante.Domain.Common.Data.Mappers.Interfaces;
+using Restaurante.Domain.Common.Factories.Interfaces;
 using Restaurante.Domain.Common.Models.Integration;
 using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Domain.Users.Common.Models;
@@ -30,6 +31,7 @@ namespace Restaurante.Application
                 .AddNotifier()
                 .AddServices()
                 .AddMappers()
+                .AddFactories()
                 .AddIntegrationServices(configuration)
                 .AddTokenService(configuration);
 
@@ -63,6 +65,15 @@ namespace Restaurante.Application
                                     .AssignableTo(typeof(IMapper<,>)))
                                     .AsMatchingInterface()
                                     .AsImplementedInterfaces()
+                                    .WithTransientLifetime());
+
+        internal static IServiceCollection AddFactories(this IServiceCollection services) =>
+            services
+                .Scan(scan => scan
+                    .FromCallingAssembly()
+                    .AddClasses(classes => classes
+                                    .AssignableTo(typeof(IFactory<>)))
+                                    .AsMatchingInterface()
                                     .WithTransientLifetime());
 
         internal static IServiceCollection AddTokenService(this IServiceCollection services, IConfiguration configuration)
