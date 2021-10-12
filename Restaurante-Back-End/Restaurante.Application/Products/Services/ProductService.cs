@@ -64,7 +64,7 @@ namespace Restaurante.Application.Products.Services
             throw new System.NotImplementedException();
         }
 
-        public Task<Product> GetProduct(int id, CancellationToken cancellationToken = default)
+        public Task<Product> Get(int id, CancellationToken cancellationToken = default)
         {
             throw new System.NotImplementedException();
         }

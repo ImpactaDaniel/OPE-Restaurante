@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Restaurante.Application.Common;
 using Restaurante.Application.Common.Helper;
@@ -10,6 +11,8 @@ using Restaurante.Domain.Products.Factories.Interfaces;
 using Restaurante.Domain.Products.Models;
 using Restaurante.Domain.Products.Services.Interfaces;
 using System;
+using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,6 +20,7 @@ namespace Restaurante.Application.Products.Requests.Create
 {
     public class CreateProductRequest : ProductRequest<CreateProductRequest>, IRequest<Response<bool>>
     {
+        public PhotoRequest PhotoRequest { get; set; }
         internal class CreateProductRequestHandler : IRequestHandler<CreateProductRequest, Response<bool>>
         {
             private readonly IProductFactory _factory;
@@ -44,11 +48,13 @@ namespace Restaurante.Application.Products.Requests.Create
                         return new Response<bool>(false, false);
                     }
 
+                    var photoPath = SavePhoto(GetFile(request.PhotoRequest.PhotoB64), request.PhotoRequest.FileName);
+
                     var product = _factory
                                     .WithAccompaniments(request.Accompaniments)
                                     .WithAvailability(request.Available)
                                     .WithCategory(category)
-                                    .WithPhoto(request.Photo.PhotoPath)
+                                    .WithPhoto(photoPath)
                                     .WithPrice(request.Price)
                                     .WithName(request.Name)
                                     .WithDescription(request.Description)
@@ -67,6 +73,24 @@ namespace Restaurante.Application.Products.Requests.Create
                 {
                     throw;
                 }
+            }
+
+            private static byte[] GetFile(string b64)
+            {
+                return Convert.FromBase64String(b64);
+            }
+
+            private static string SavePhoto(byte[] photo, string fileName)
+            {                
+                var photoDirectory = $"{AppDomain.CurrentDomain.BaseDirectory}\\Product\\Photos";
+                if (!Directory.Exists(photoDirectory))
+                    Directory.CreateDirectory(photoDirectory);
+
+                var photoPath = $"{photoDirectory}\\{Guid.NewGuid() + fileName}";
+
+                File.WriteAllBytes($"{photoPath}", photo);
+
+                return photoPath;
             }
         }
     }
