@@ -36,7 +36,7 @@ namespace Restaurante.Application.Products.Services
                 var user = await _employeeRepository
                                     .Get(currentUserId, cancellationToken);
 
-                if(user is null)
+                if (user is null)
                 {
                     _notifier.AddNotification(NotificationHelper.EntityNotFound("Funcionário"));
                     return false;
@@ -59,9 +59,21 @@ namespace Restaurante.Application.Products.Services
             }
         }
 
-        public Task<IEnumerable<Product>> GetAll(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Product>> GetAll(CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                return await _productDomainRepository.GetAll(cancellationToken);
+            }
+            catch (BasicTableException e)
+            {
+                _notifier.AddNotification(NotificationHelper.FromException(e));
+                return null;
+            }catch(Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                throw new Exception("Houve um erro ao tentar recuperar os produtos!");
+            }
         }
 
         public Task<Product> Get(int id, CancellationToken cancellationToken = default)

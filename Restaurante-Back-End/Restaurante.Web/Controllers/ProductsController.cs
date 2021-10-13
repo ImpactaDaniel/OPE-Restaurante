@@ -1,7 +1,9 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 using Restaurante.Application.Products.Requests.Create;
+using Restaurante.Application.Products.Requests.Get;
 using Restaurante.Domain.Common.Services.Interfaces;
 using System;
 using System.Threading;
@@ -16,11 +18,18 @@ namespace Restaurante.Web.Controllers
         {
         }
 
-        [HttpPost, Route("Create")]
+        [HttpPost, Authorize, Route("Create")]
         public async Task<IActionResult> CreateNewProduct([FromBody] CreateProductRequest request, CancellationToken cancellationToken = default)
         {
             request.CurrentUserId = GetLoggedUserId();
             var response = await _mediator.Send(request, cancellationToken);
+            return GetResponse(response);
+        }
+
+        [HttpGet, Route("GetAll")]
+        public async Task<IActionResult> GetAllProducts(CancellationToken cancellationToken = default)
+        {
+            var response = await _mediator.Send(new GetAllProductsRequest(), cancellationToken);
             return GetResponse(response);
         }
 
