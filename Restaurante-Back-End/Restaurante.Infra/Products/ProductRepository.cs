@@ -6,6 +6,7 @@ using Restaurante.Infra.Common.Persistence.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -42,6 +43,15 @@ namespace Restaurante.Infra.Products
                                 .Include(p => p.Category)
                                 .FirstOrDefaultAsync(condicao, cancellationToken);
             return entity;
+        }
+
+        public async Task<IEnumerable<Product>> Search(string name, CancellationToken cancellationToken = default)
+        {
+            return await All()
+                .Where(p => EF.Functions.Like(p.Name, $"%{name}%"))
+                .Include(p => p.Photo)
+                .Include(p => p.Category)
+                .ToListAsync(cancellationToken);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Restaurante.Application.Common.Data.Mappers
     public class ProductDTOMapper : IMapper<Product, ProductResponseDTO>
     {
         public ProductResponseDTO Map(Product source, ProductResponseDTO dest = null) =>
-            new ProductResponseDTO
+            new()
             {
                 Name = source.Name,
                 Description = source.Description,

@@ -1,6 +1,8 @@
 ﻿using Restaurante.Domain.Common.Repositories.Interfaces;
 using Restaurante.Domain.Products.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,5 +13,6 @@ namespace Restaurante.Domain.Products.Repositories.Interfaces
         Task<bool> Update(int id, Product entity, CancellationToken cancellationToken = default);
         Task<bool> Delete(int id, CancellationToken cancellationToken = default);
         Task<IEnumerable<Product>> GetAll(CancellationToken cancellationToken = default);
+        Task<IEnumerable<Product>> Search(string name, CancellationToken cancellationToken = default);
     }
 }

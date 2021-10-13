@@ -104,5 +104,24 @@ namespace Restaurante.Application.Products.Services
         {
             throw new System.NotImplementedException();
         }
+
+        public async Task<IEnumerable<Product>> SearchProducts(string name, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var product = await _productDomainRepository.Search(name, cancellationToken);
+                return product;
+            }
+            catch (BasicTableException e)
+            {
+                _notifier.AddNotification(NotificationHelper.FromException(e));
+                return null;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                throw new Exception("Houve um erro ao tentar recuperar os produtos!");
+            }
+        }
     }
 }

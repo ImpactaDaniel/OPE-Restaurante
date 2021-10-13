@@ -40,6 +40,13 @@ namespace Restaurante.Web.Controllers
             return GetResponse(response);
         }
 
+        [HttpGet, Route("Search/{name}")]
+        public async Task<IActionResult> SearchByName(string name, CancellationToken cancellationToken = default)
+        {
+            var response = await _mediator.Send(new SearchProductsRequest() { Name = name }, cancellationToken);
+            return GetResponse(response);
+        }
+
         [HttpGet, Route("{fileName}")]
         public IActionResult GetPhoto(string fileName)
         {
