@@ -1,6 +1,4 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 using Restaurante.Application.Common;
 using Restaurante.Application.Common.Helper;
 using Restaurante.Application.Products.Common.Models;
@@ -12,7 +10,6 @@ using Restaurante.Domain.Products.Models;
 using Restaurante.Domain.Products.Services.Interfaces;
 using System;
 using System.IO;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -27,13 +24,20 @@ namespace Restaurante.Application.Products.Requests.Create
             private readonly IProductService _service;
             private readonly INotifier _notifier;
             private readonly IBasicEntitiesService _basicEntitiesService;
+            private readonly IProductPhotoUploadService _productUploadService;
 
-            public CreateProductRequestHandler(IProductFactory factory, IProductService service, INotifier notifier, IBasicEntitiesService basicEntitiesService)
+            public CreateProductRequestHandler(
+                IProductFactory factory,
+                IProductService service,
+                INotifier notifier,
+                IBasicEntitiesService basicEntitiesService,
+                IProductPhotoUploadService productPhotoUploadService)
             {
                 _factory = factory;
                 _service = service;
                 _notifier = notifier;
                 _basicEntitiesService = basicEntitiesService;
+                _productUploadService = productPhotoUploadService;
             }
 
             public async Task<Response<bool>> Handle(CreateProductRequest request, CancellationToken cancellationToken)
@@ -48,7 +52,7 @@ namespace Restaurante.Application.Products.Requests.Create
                         return new Response<bool>(false, false);
                     }
 
-                    var photoPath = SavePhoto(GetFile(request.PhotoRequest.PhotoB64), request.PhotoRequest.FileName);
+                    var photoPath = await _productUploadService.SaveProductPhoto(request.PhotoRequest.PhotoB64, request.PhotoRequest.FileName, cancellationToken);//SavePhoto(GetFile(request.PhotoRequest.PhotoB64), request.PhotoRequest.FileName);
 
                     var product = _factory
                                     .WithAccompaniments(request.Accompaniments)
@@ -73,24 +77,6 @@ namespace Restaurante.Application.Products.Requests.Create
                 {
                     throw;
                 }
-            }
-
-            private static byte[] GetFile(string b64)
-            {
-                return Convert.FromBase64String(b64);
-            }
-
-            private static string SavePhoto(byte[] photo, string fileName)
-            {                
-                var photoDirectory = $"{AppDomain.CurrentDomain.BaseDirectory}\\Product\\Photos";
-                if (!Directory.Exists(photoDirectory))
-                    Directory.CreateDirectory(photoDirectory);
-
-                var photoPath = $"{photoDirectory}\\{Guid.NewGuid() + fileName}";
-
-                File.WriteAllBytes($"{photoPath}", photo);
-
-                return photoPath;
             }
         }
     }
