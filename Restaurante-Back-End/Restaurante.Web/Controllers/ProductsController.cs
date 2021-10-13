@@ -33,6 +33,13 @@ namespace Restaurante.Web.Controllers
             return GetResponse(response);
         }
 
+        [HttpGet, Route("Get/{id}")]
+        public async Task<IActionResult> GetAllProducts(int id, CancellationToken cancellationToken = default)
+        {
+            var response = await _mediator.Send(new GetProductRequest() { Id = id }, cancellationToken);
+            return GetResponse(response);
+        }
+
         [HttpGet, Route("{fileName}")]
         public IActionResult GetPhoto(string fileName)
         {

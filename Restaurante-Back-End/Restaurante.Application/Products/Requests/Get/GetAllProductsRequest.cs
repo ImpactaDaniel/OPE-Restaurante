@@ -19,13 +19,11 @@ namespace Restaurante.Application.Products.Requests.Get
         internal class GetAllProductsRequestHandler : IRequestHandler<GetAllProductsRequest, Response<IEnumerable<ProductResponseDTO>>>
         {
             private readonly IProductService _productService;
-            private readonly ILogger<GetAllProductsRequestHandler> _logger;
             private readonly IMapper<Product, ProductResponseDTO> _mapper;
 
-            public GetAllProductsRequestHandler(IProductService productService, ILogger<GetAllProductsRequestHandler> logger, IMapper<Product, ProductResponseDTO> mapper)
+            public GetAllProductsRequestHandler(IProductService productService, IMapper<Product, ProductResponseDTO> mapper)
             {
                 _productService = productService;
-                _logger = logger;
                 _mapper = mapper;
             }
 

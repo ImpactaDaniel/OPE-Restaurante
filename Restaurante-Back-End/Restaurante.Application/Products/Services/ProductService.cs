@@ -76,9 +76,28 @@ namespace Restaurante.Application.Products.Services
             }
         }
 
-        public Task<Product> Get(int id, CancellationToken cancellationToken = default)
+        public async Task<Product> Get(int id, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                var product = await _productDomainRepository.Get(p => p.Id == id, cancellationToken);
+                if (product is null)
+                {
+                    _notifier.AddNotification(NotificationHelper.EntityNotFound("Produto"));
+                    return null;
+                }
+                return product;
+            }
+            catch (BasicTableException e)
+            {
+                _notifier.AddNotification(NotificationHelper.FromException(e));
+                return null;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                throw new Exception("Houve um erro ao tentar recuperar os produtos!");
+            }
         }
 
         public Task<bool> UpdateProduct(int id, Product product, int currentUserId, CancellationToken cancellationToken = default)
