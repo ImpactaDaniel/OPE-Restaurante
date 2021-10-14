@@ -33,14 +33,7 @@ namespace Restaurante.Application.Products.Services
         {
             try
             {
-                var user = await _employeeRepository
-                                    .Get(currentUserId, cancellationToken);
-
-                if (user is null)
-                {
-                    _notifier.AddNotification(NotificationHelper.EntityNotFound("Funcionário"));
-                    return false;
-                }
+                var user = await GetEmployee(currentUserId, cancellationToken);
 
                 product.CreatedBy = currentUserId;
                 product.CreatedOn = DateTime.Now;
@@ -69,7 +62,8 @@ namespace Restaurante.Application.Products.Services
             {
                 _notifier.AddNotification(NotificationHelper.FromException(e));
                 return null;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 _logger.LogError(e, e.Message);
                 throw new Exception("Houve um erro ao tentar recuperar os produtos!");
@@ -80,12 +74,7 @@ namespace Restaurante.Application.Products.Services
         {
             try
             {
-                var product = await _productDomainRepository.Get(p => p.Id == id, cancellationToken);
-                if (product is null)
-                {
-                    _notifier.AddNotification(NotificationHelper.EntityNotFound("Produto"));
-                    return null;
-                }
+                var product = await GetProduct(id, cancellationToken);
                 return product;
             }
             catch (BasicTableException e)
@@ -100,9 +89,38 @@ namespace Restaurante.Application.Products.Services
             }
         }
 
-        public Task<bool> UpdateProduct(int id, Product product, int currentUserId, CancellationToken cancellationToken = default)
+        public async Task<bool> UpdateProduct(int id, Product product, int currentUserId, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                var user = await GetEmployee(currentUserId, cancellationToken);
+
+                var currentProduct = await GetProduct(id, cancellationToken);
+
+                currentProduct
+                    .UpdateName(product.Name)
+                    .UpdateDescription(product.Description)
+                    .UpdateCategory(product.Category)
+                    .UpdatePrice(product.Price)
+                    .UpdateAvailable(product.Available)
+                    .UpdatePhoto(product.Photo)
+                    .AddQuantity(product.QuantityStock)
+                    .UpdateAccompaniments(product.Accompaniments);
+
+                currentProduct.UpdatedBy = currentUserId;
+
+                return await _productDomainRepository.Update(currentProduct, cancellationToken);
+            }
+            catch (BasicTableException e)
+            {
+                _notifier.AddNotification(NotificationHelper.FromException(e));
+                return false;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                throw new Exception("Houve um erro ao tentar atualizar o produto!");
+            }
         }
 
         public async Task<IEnumerable<Product>> SearchProducts(string name, CancellationToken cancellationToken = default)
@@ -122,6 +140,31 @@ namespace Restaurante.Application.Products.Services
                 _logger.LogError(e, e.Message);
                 throw new Exception("Houve um erro ao tentar recuperar os produtos!");
             }
+        }
+
+        public Task<bool> DeleteProduct(int id, int currentUserId, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        private async Task<Employee> GetEmployee(int currentUserId, CancellationToken cancellationToken = default)
+        {
+            var user = await _employeeRepository
+                                     .Get(currentUserId, cancellationToken);
+
+            if (user is null)
+                throw new BasicTableException("Funcionário não encontrado!", Domain.Common.Enums.NotificationKeys.EntityNotFound);
+
+            return user;
+        }
+
+        private async Task<Product> GetProduct(int id, CancellationToken cancellationToken = default)
+        {
+            var product = await _productDomainRepository.Get(p => p.Id == id, cancellationToken);
+            if (product is null)
+                throw new BasicTableException("Produto não encontrado!", Domain.Common.Enums.NotificationKeys.EntityNotFound);
+
+            return product;
         }
     }
 }
