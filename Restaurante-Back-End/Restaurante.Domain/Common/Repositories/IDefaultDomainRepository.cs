@@ -12,5 +12,6 @@ namespace Restaurante.Domain.Common.Repositories.Interfaces
         Task<TEntity> Get<TEntity>(Expression<Func<TEntity, bool>> condicao, CancellationToken cancellationToken = default) where TEntity : class, IEntity;
         Task<TEntity> Create<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class, IEntity;
         Task<IEnumerable<TEntity>> GetAll<TEntity>(CancellationToken cancellationToken = default) where TEntity : class, IEntity;
+        Task<bool> Delete<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class, IEntity;
     }
 }

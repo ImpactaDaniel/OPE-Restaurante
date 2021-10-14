@@ -27,7 +27,7 @@ namespace Restaurante.Web.Controllers
             return GetResponse(response);
         }
 
-        [HttpPost, Authorize, Route("Update/{id}")]
+        [HttpPut, Authorize, Route("Update/{id}")]
         public async Task<IActionResult> UpdateProduct(int id, [FromBody] UpdateProductRequest request, CancellationToken cancellationToken = default)
         {
             request.CurrentUserId = GetLoggedUserId();

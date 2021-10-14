@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using Restaurante.Application.Common.Helper;
 using Restaurante.Domain.BasicEntities.Exception;
+using Restaurante.Domain.BasicEntities.Services.Interfaces;
+using Restaurante.Domain.Common.Repositories.Interfaces;
 using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Domain.Products.Models;
 using Restaurante.Domain.Products.Repositories.Interfaces;
@@ -18,15 +20,22 @@ namespace Restaurante.Application.Products.Services
     {
         private readonly IProductDomainRepository _productDomainRepository;
         private readonly IEmployeeDomainRepository<Employee> _employeeRepository;
+        private readonly IBasicEntitiesService _basicEntitiesService;
         private readonly INotifier _notifier;
         private readonly ILogger<ProductService> _logger;
 
-        public ProductService(IProductDomainRepository productDomainRepository, INotifier notifier, ILogger<ProductService> logger, IEmployeeDomainRepository<Employee> employeeRepository)
+        public ProductService(
+            IProductDomainRepository productDomainRepository,
+            INotifier notifier,
+            ILogger<ProductService> logger,
+            IEmployeeDomainRepository<Employee> employeeRepository,
+            IBasicEntitiesService basicEntitiesService)
         {
             _productDomainRepository = productDomainRepository;
             _notifier = notifier;
             _logger = logger;
             _employeeRepository = employeeRepository;
+            _basicEntitiesService = basicEntitiesService;
         }
 
         public async Task<bool> CreateProduct(Product product, int currentUserId, CancellationToken cancellationToken = default)
@@ -96,6 +105,11 @@ namespace Restaurante.Application.Products.Services
                 var user = await GetEmployee(currentUserId, cancellationToken);
 
                 var currentProduct = await GetProduct(id, cancellationToken);
+
+                var photoDeleted = await _basicEntitiesService.DeleteEntity(currentProduct.Photo, cancellationToken);
+
+                if (!photoDeleted)
+                    throw new BasicTableException("Houve um erro ao tentar atualizar o produto!", Domain.Common.Enums.NotificationKeys.Error);
 
                 currentProduct
                     .UpdateName(product.Name)

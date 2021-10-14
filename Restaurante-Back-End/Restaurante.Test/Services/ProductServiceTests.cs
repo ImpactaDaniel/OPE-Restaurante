@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Restaurante.Application.Products.Services;
+using Restaurante.Domain.BasicEntities.Services.Interfaces;
 using Restaurante.Domain.Common.Models;
 using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Domain.Products.Models;
@@ -19,6 +20,7 @@ namespace Restaurante.Test.Services
         private readonly IProductService _service;
         private readonly IProductDomainRepository _repository;
         private readonly IEmployeeDomainRepository<Employee> _employeeDomainRepository;
+        private readonly IBasicEntitiesService _basicEntitiesService;
         private readonly INotifier _notifier;
 
         public ProductServiceTests()
@@ -26,9 +28,10 @@ namespace Restaurante.Test.Services
             _repository = Substitute.For<IProductDomainRepository>();
             _employeeDomainRepository = Substitute.For<IEmployeeDomainRepository<Employee>>();
             _notifier = Substitute.For<INotifier>();
+            _basicEntitiesService = Substitute.For<IBasicEntitiesService>();
             var logger = Substitute.For<ILogger<ProductService>>();
 
-            _service = new ProductService(_repository, _notifier, logger, _employeeDomainRepository);
+            _service = new ProductService(_repository, _notifier, logger, _employeeDomainRepository, _basicEntitiesService);
         }
 
         [Fact]

@@ -45,5 +45,15 @@ namespace Restaurante.Infra.Common.Persistence
                 .Set<TEntity>()
                 .ToListAsync(cancellationToken);
         }
+
+        public async Task<bool> Delete<TEntity>(TEntity entity, CancellationToken cancellationToken)
+            where TEntity : class, IEntity
+        {
+            _context
+                .Set<TEntity>()
+                .Remove(entity);
+
+            return await _context.SaveChangesAsync(cancellationToken) > 0;
+        }
     }
 }
