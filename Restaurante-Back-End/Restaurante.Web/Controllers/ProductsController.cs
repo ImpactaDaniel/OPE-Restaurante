@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 using Restaurante.Application.Products.Requests.Create;
 using Restaurante.Application.Products.Requests.Get;
+using Restaurante.Application.Products.Requests.Update;
 using Restaurante.Domain.Common.Services.Interfaces;
 using System;
 using System.Threading;
@@ -26,6 +27,15 @@ namespace Restaurante.Web.Controllers
             return GetResponse(response);
         }
 
+        [HttpPost, Authorize, Route("Update/{id}")]
+        public async Task<IActionResult> UpdateProduct(int id, [FromBody] UpdateProductRequest request, CancellationToken cancellationToken = default)
+        {
+            request.CurrentUserId = GetLoggedUserId();
+            request.Id = id;
+            var response = await _mediator.Send(request, cancellationToken);
+            return GetResponse(response);
+        }
+
         [HttpGet, Route("GetAll")]
         public async Task<IActionResult> GetAllProducts(CancellationToken cancellationToken = default)
         {
@@ -34,7 +44,7 @@ namespace Restaurante.Web.Controllers
         }
 
         [HttpGet, Route("Get/{id}")]
-        public async Task<IActionResult> GetAllProducts(int id, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> GetProduct(int id, CancellationToken cancellationToken = default)
         {
             var response = await _mediator.Send(new GetProductRequest() { Id = id }, cancellationToken);
             return GetResponse(response);

@@ -8,6 +8,7 @@ namespace Restaurante.Application.Common.Data.Mappers
         public override ProductResponseDTO Map(Product source) =>
             new()
             {
+                Id = source.Id,
                 Name = source.Name,
                 Description = source.Description,
                 Category = new ProductCategoryResponseDTO
