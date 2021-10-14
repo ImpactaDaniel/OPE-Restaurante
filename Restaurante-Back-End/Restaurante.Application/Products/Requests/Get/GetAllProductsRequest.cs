@@ -33,19 +33,13 @@ namespace Restaurante.Application.Products.Requests.Get
                 {
                     var products = await _productService.GetAll(cancellationToken);
                     if (products.Any())
-                        return new Response<IEnumerable<ProductResponseDTO>>(true, Map(products));
+                        return new Response<IEnumerable<ProductResponseDTO>>(true, _mapper.Map(products));
                     return new Response<IEnumerable<ProductResponseDTO>>(true, null);
                 }
                 catch (Exception)
                 {
                     throw;
                 }
-            }
-
-            private IEnumerable<ProductResponseDTO> Map(IEnumerable<Product> products)
-            {
-                foreach (var product in products)
-                    yield return _mapper.Map(product);
             }
         }
     }

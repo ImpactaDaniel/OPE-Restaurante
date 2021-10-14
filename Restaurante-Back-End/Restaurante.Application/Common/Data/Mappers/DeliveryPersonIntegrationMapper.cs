@@ -1,13 +1,12 @@
-﻿using Restaurante.Domain.Common.Data.Mappers.Interfaces;
-using Restaurante.Domain.Common.Models.Integration;
+﻿using Restaurante.Domain.Common.Models.Integration;
 using Restaurante.Domain.Users.Entregadores.Models;
 using System.Linq;
 
 namespace Restaurante.Application.Common.Data.Mappers
 {
-    public class DeliveryPersonIntegrationMapper : IMapper<DeliveryPerson, DeliveryPersonIntegration>
+    public class DeliveryPersonIntegrationMapper : Mapper<DeliveryPerson, DeliveryPersonIntegration>
     {
-        public DeliveryPersonIntegration Map(DeliveryPerson source, DeliveryPersonIntegration dest = null) =>
+        public override DeliveryPersonIntegration Map(DeliveryPerson source) =>
             new DeliveryPersonIntegration
             {
                 Motorcycle = new Motocycle

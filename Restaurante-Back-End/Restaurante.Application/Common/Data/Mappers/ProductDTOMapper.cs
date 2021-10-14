@@ -1,12 +1,11 @@
 ﻿using Restaurante.Application.Common.Models;
-using Restaurante.Domain.Common.Data.Mappers.Interfaces;
 using Restaurante.Domain.Products.Models;
 
 namespace Restaurante.Application.Common.Data.Mappers
 {
-    public class ProductDTOMapper : IMapper<Product, ProductResponseDTO>
+    public class ProductDTOMapper : Mapper<Product, ProductResponseDTO>
     {
-        public ProductResponseDTO Map(Product source, ProductResponseDTO dest = null) =>
+        public override ProductResponseDTO Map(Product source) =>
             new()
             {
                 Name = source.Name,
