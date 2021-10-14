@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 using Restaurante.Application.Products.Requests.Create;
+using Restaurante.Application.Products.Requests.Delete;
 using Restaurante.Application.Products.Requests.Get;
 using Restaurante.Application.Products.Requests.Update;
 using Restaurante.Domain.Common.Services.Interfaces;
@@ -40,6 +41,13 @@ namespace Restaurante.Web.Controllers
         public async Task<IActionResult> GetAllProducts(CancellationToken cancellationToken = default)
         {
             var response = await _mediator.Send(new GetAllProductsRequest(), cancellationToken);
+            return GetResponse(response);
+        }
+
+        [HttpDelete, Route("Delete/{id}"), Authorize]
+        public async Task<IActionResult> DeleteProduct(int id, CancellationToken cancellationToken = default)
+        {
+            var response = await _mediator.Send(new DeleteProductRequest { Id = id, CurrentUserId = GetLoggedUserId() }, cancellationToken);
             return GetResponse(response);
         }
 

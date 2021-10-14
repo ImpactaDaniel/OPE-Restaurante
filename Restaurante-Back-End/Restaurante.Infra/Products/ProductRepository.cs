@@ -20,7 +20,6 @@ namespace Restaurante.Infra.Products
 
         public async Task<bool> Delete(Product product, CancellationToken cancellationToken = default)
         {
-            Data.Photos.Remove(product.Photo);
             Data.Products.Remove(product);
             return await Data.SaveChangesAsync(cancellationToken) > 0;
         }

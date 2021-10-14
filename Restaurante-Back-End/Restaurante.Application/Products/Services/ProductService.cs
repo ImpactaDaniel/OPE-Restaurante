@@ -156,9 +156,31 @@ namespace Restaurante.Application.Products.Services
             }
         }
 
-        public Task<bool> DeleteProduct(int id, int currentUserId, CancellationToken cancellationToken = default)
+        public async Task<bool> DeleteProduct(int id, int currentUserId, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var user = await GetEmployee(currentUserId, cancellationToken);
+
+                var currentProduct = await GetProduct(id, cancellationToken);
+
+                var photoDeleted = await _basicEntitiesService.DeleteEntity(currentProduct.Photo, cancellationToken);
+
+                if (!photoDeleted)
+                    throw new BasicTableException("Houve um erro ao tentar deletar o produto!", Domain.Common.Enums.NotificationKeys.Error);
+
+                return await _productDomainRepository.Delete(currentProduct, cancellationToken);
+            }
+            catch (BasicTableException e)
+            {
+                _notifier.AddNotification(NotificationHelper.FromException(e));
+                return false;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                throw new Exception("Houve um erro ao tentar remover o produto!");
+            }
         }
 
         private async Task<Employee> GetEmployee(int currentUserId, CancellationToken cancellationToken = default)
