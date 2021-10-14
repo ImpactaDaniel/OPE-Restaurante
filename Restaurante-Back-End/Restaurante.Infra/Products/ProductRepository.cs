@@ -18,9 +18,11 @@ namespace Restaurante.Infra.Products
         {
         }
 
-        public Task<bool> Delete(int id, CancellationToken cancellationToken = default)
+        public async Task<bool> Delete(Product product, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            Data.Photos.Remove(product.Photo);
+            Data.Products.Remove(product);
+            return await Data.SaveChangesAsync(cancellationToken) > 0;
         }
 
         public async Task<IEnumerable<Product>> GetAll(CancellationToken cancellationToken = default)
@@ -31,9 +33,10 @@ namespace Restaurante.Infra.Products
                 .ToListAsync(cancellationToken);
         }
 
-        public Task<bool> Update(int id, Product entity, CancellationToken cancellationToken = default)
+        public async Task<bool> Update(Product entity, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            Data.Products.Update(entity);
+            return await Data.SaveChangesAsync(cancellationToken) > 0;
         }
 
         public override async Task<Product> Get(Expression<Func<Product, bool>> condicao, CancellationToken cancellationToken = default)

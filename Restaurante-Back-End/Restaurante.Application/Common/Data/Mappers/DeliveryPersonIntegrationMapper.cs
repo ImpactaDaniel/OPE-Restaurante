@@ -7,7 +7,7 @@ namespace Restaurante.Application.Common.Data.Mappers
     public class DeliveryPersonIntegrationMapper : Mapper<DeliveryPerson, DeliveryPersonIntegration>
     {
         public override DeliveryPersonIntegration Map(DeliveryPerson source) =>
-            new DeliveryPersonIntegration
+            new()
             {
                 Motorcycle = new Motocycle
                 {
