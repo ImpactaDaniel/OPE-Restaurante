@@ -22,7 +22,7 @@ namespace Restaurante.Infra.Common.Persistence
             _db.Database.EnsureCreated();
 
             if(!_db.Employees.Any())
-                _repository.CreateEmployee(new Employee("Admin", "admin@admin.com", "12346", Domain.Users.Enums.EmployeesType.Manager, new Account(new Bank("Teste"), "teste", "teste", 1),
+                _repository.CreateEmployee(new Employee("Admin", "admin@admin.com", "Restaurante@1234", Domain.Users.Enums.EmployeesType.Manager, new Account(new Bank("Teste"), "teste", "teste", 1),
                     new List<Phone> { new Phone("11", "000000000") }, new Address("Angelo", "112", "Pirituba", "00000000", "SP", "são paulo"), "121.085.900-99", DateTime.Now));
         }
     }

@@ -84,5 +84,24 @@ namespace Restaurante.Application.BasicEntities.Services
                 return null;
             }
         }
+
+        public async Task<bool> DeleteEntity<TEntity>(TEntity entity, CancellationToken cancellationToken)
+            where TEntity : class, IBasicEntity
+        {
+            try
+            {
+                return await _basicEntityRepository.Delete(entity, cancellationToken);
+            }
+            catch (BasicTableException e)
+            {
+                _notifier.AddNotification(NotificationHelper.FromException(e));
+                return false;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                return false;
+            }
+        }
     }
 }

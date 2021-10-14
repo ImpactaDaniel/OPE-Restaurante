@@ -57,8 +57,7 @@ namespace Restaurante.Domain.Users.Common.Models
         public virtual User UpdatePassword(string password, string passwordHash)
         {
             ValidatePassword(password);
-            if (password != Password)
-                Password = passwordHash;
+            Password = passwordHash;
             return this;
         }
 

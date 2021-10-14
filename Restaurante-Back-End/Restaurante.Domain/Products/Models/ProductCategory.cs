@@ -1,8 +1,9 @@
-﻿using Restaurante.Domain.Common.Models;
+﻿using Restaurante.Domain.BasicEntities.Common.Interfaces;
+using Restaurante.Domain.Common.Models;
 
 namespace Restaurante.Domain.Products.Models
 {
-    public class ProductCategory : Entity<int>
+    public class ProductCategory : Entity<int>, IBasicEntity
     {
         public string Name { get; private set; }
 

@@ -1,8 +1,9 @@
-﻿using Restaurante.Domain.Common.Models;
+﻿using Restaurante.Domain.BasicEntities.Common.Interfaces;
+using Restaurante.Domain.Common.Models;
 
 namespace Restaurante.Domain.Products.Models
 {
-    public class Photo : Entity<int>
+    public class Photo : Entity<int>, IBasicEntity
     {
         public string Path { get; private set; }
         private Photo()

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Restaurante.Application.Users.Deliveries.Requests.Create;
 using Restaurante.Domain.Common.Services.Interfaces;
@@ -14,7 +15,7 @@ namespace Restaurante.Web.Controllers
             : base(notifier, mediatr)
         {
         }
-        [Route("Create"), HttpPost]
+        [Route("Create"), HttpPost, Authorize]
         public async Task<IActionResult> CreateNew([FromBody] CreateDeliverymanRequest request, CancellationToken cancellationToken = default)
         {
             var resp = await _mediator.Send(request, cancellationToken);

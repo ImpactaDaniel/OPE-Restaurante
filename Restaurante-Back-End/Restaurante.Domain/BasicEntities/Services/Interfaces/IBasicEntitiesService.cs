@@ -17,5 +17,8 @@ namespace Restaurante.Domain.BasicEntities.Services.Interfaces
 
         Task<IEnumerable<TEntity>> GetEntities<TEntity>(CancellationToken cancellationToken = default)
             where TEntity : class, IBasicEntity;
+
+        Task<bool> DeleteEntity<TEntity>(TEntity entity, CancellationToken cancellationToken = default)
+            where TEntity : class, IBasicEntity;
     }
 }

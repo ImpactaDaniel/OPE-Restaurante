@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.Extensions.Logging;
 using Restaurante.Application.Common;
 using Restaurante.Application.Common.Helper;
 using Restaurante.Application.Common.Models;
@@ -31,20 +30,17 @@ namespace Restaurante.Application.Users.Employees.Requests.Create
             private readonly IEmployeesService<Employee> _service;
             private readonly IBasicEntitiesService _basicEntitiesService;
             private readonly INotifier _notifier;
-            private readonly ILogger<CreateEmployeeRequestHandler> _logger;
             private readonly IMessageSenderService<EmailMessage> _emailService;
 
             public CreateEmployeeRequestHandler(IEmployeeFactory factory,
                                                    IEmployeesService<Employee> service,
                                                    INotifier notifier,
-                                                   ILogger<CreateEmployeeRequestHandler> logger,
                                                    IMessageSenderService<EmailMessage> emailService,
                                                    IBasicEntitiesService basicEntitiesService)
             {
                 _factory = factory;
                 _service = service;
                 _notifier = notifier;
-                _logger = logger;
                 _basicEntitiesService = basicEntitiesService;
                 _emailService = emailService;
             }
@@ -95,10 +91,9 @@ namespace Restaurante.Application.Users.Employees.Requests.Create
                     _notifier.AddNotification(NotificationHelper.FromException(e));
                     return new Response<bool>(false, false);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    _logger.LogError(e, e.Message);
-                    throw new Exception("Houve um erro ao tentar criar o funcionário!", e);
+                    throw;
                 }
 
             }

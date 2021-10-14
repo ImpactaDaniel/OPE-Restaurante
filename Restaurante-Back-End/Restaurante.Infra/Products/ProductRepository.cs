@@ -6,6 +6,7 @@ using Restaurante.Infra.Common.Persistence.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,15 +18,10 @@ namespace Restaurante.Infra.Products
         {
         }
 
-        public override async Task<bool> Save(Product entity, CancellationToken cancellationToken = default)
+        public async Task<bool> Delete(Product product, CancellationToken cancellationToken = default)
         {
-            entity.CreatedOn = DateTime.Now;
-            return await base.Save(entity, cancellationToken);
-        }
-
-        public Task<bool> Delete(int id, CancellationToken cancellationToken = default)
-        {
-            throw new System.NotImplementedException();
+            Data.Products.Remove(product);
+            return await Data.SaveChangesAsync(cancellationToken) > 0;
         }
 
         public async Task<IEnumerable<Product>> GetAll(CancellationToken cancellationToken = default)
@@ -36,9 +32,10 @@ namespace Restaurante.Infra.Products
                 .ToListAsync(cancellationToken);
         }
 
-        public Task<bool> Update(Product entity, CancellationToken cancellationToken = default)
+        public async Task<bool> Update(Product entity, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            Data.Products.Update(entity);
+            return await Data.SaveChangesAsync(cancellationToken) > 0;
         }
 
         public override async Task<Product> Get(Expression<Func<Product, bool>> condicao, CancellationToken cancellationToken = default)
@@ -48,6 +45,15 @@ namespace Restaurante.Infra.Products
                                 .Include(p => p.Category)
                                 .FirstOrDefaultAsync(condicao, cancellationToken);
             return entity;
+        }
+
+        public async Task<IEnumerable<Product>> Search(string name, CancellationToken cancellationToken = default)
+        {
+            return await All()
+                .Where(p => EF.Functions.Like(p.Name, $"%{name}%"))
+                .Include(p => p.Photo)
+                .Include(p => p.Category)
+                .ToListAsync(cancellationToken);
         }
     }
 }

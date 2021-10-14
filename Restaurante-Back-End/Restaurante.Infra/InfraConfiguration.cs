@@ -22,6 +22,7 @@ namespace Restaurante.Infra
                 .AddContext(configuration)
                 .AddPasswordEncrypt()
                 .AddRepositories()
+                .AddFileUploadServices()
                 .AddMessageServices(configuration);
 
         internal static IServiceCollection AddMessageServices(this IServiceCollection services, IConfiguration configuration) =>
@@ -58,6 +59,15 @@ namespace Restaurante.Infra
         internal static IServiceCollection AddPasswordEncrypt(this IServiceCollection services) =>
             services
                 .AddSingleton<IPasswordEncrypt, PasswordEncrypt>();
+
+        internal static IServiceCollection AddFileUploadServices(this IServiceCollection services) =>
+            services
+               .Scan(scan => scan
+                   .FromCallingAssembly()
+                   .AddClasses(classes => classes
+                                   .AssignableTo<IFileUploadService>())
+                                   .AsImplementedInterfaces()
+                                   .WithTransientLifetime());
 
         internal static IServiceCollection AddContext(this IServiceCollection services, IConfiguration configuration) =>
             services
