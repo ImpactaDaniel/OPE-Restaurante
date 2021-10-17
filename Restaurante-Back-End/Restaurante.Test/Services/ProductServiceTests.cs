@@ -99,10 +99,10 @@ namespace Restaurante.Test.Services
         {
             //arrange
             var productExpected = new Product("test", "test", 10m);
-            _repository.GetAll().ReturnsForAnyArgs(Builder<Product>.CreateListOfSize(2).All().WithFactory(() => new Product("test", "test", 10m)).Build());
+            _repository.GetAll(Arg.Any<int>(), Arg.Any<int>()).ReturnsForAnyArgs(Builder<Product>.CreateListOfSize(2).All().WithFactory(() => new Product("test", "test", 10m)).Build());
 
             //act
-            var products = await _service.GetAll();
+            var products = await _service.GetAll(1);
 
             //assert
             Assert.NotNull(products);
@@ -113,10 +113,10 @@ namespace Restaurante.Test.Services
         public async Task ShouldNotifyWhenBasicExceptionOccurs()
         {
             //arrange
-            _repository.When(p => p.GetAll()).Throw(new BasicTableException("test", Restaurante.Domain.Common.Enums.NotificationKeys.Error));
+            _repository.When(p => p.GetAll(Arg.Any<int>(), Arg.Any<int>())).Throw(new BasicTableException("test", Restaurante.Domain.Common.Enums.NotificationKeys.Error));
 
             //act
-            var products = await _service.GetAll();
+            var products = await _service.GetAll(1);
 
             //assert
             Assert.Null(products);
@@ -127,12 +127,12 @@ namespace Restaurante.Test.Services
         public async Task ShouldThrowExceptionWhenExceptionIsThrownGetAll()
         {
             //arrange
-            _repository.When(p => p.GetAll()).Throw(new Exception("test"));
+            _repository.When(p => p.GetAll(Arg.Any<int>(), Arg.Any<int>())).Throw(new Exception("test"));
 
             //assert
             var ex = await Assert.ThrowsAsync<Exception>(() =>
                 //act
-                _service.GetAll()
+                _service.GetAll(1)
             );
 
             Assert.Equal("Houve um erro ao tentar recuperar os produtos!", ex.Message);

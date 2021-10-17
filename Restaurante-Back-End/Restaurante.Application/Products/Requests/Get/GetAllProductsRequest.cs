@@ -16,6 +16,8 @@ namespace Restaurante.Application.Products.Requests.Get
 {
     public class GetAllProductsRequest : ProductRequest<GetAllProductsRequest>, IRequest<Response<IEnumerable<ProductResponseDTO>>>
     {
+        public int Length { get; set; }
+        public int Page { get; set; }
         internal class GetAllProductsRequestHandler : IRequestHandler<GetAllProductsRequest, Response<IEnumerable<ProductResponseDTO>>>
         {
             private readonly IProductService _productService;
@@ -31,7 +33,7 @@ namespace Restaurante.Application.Products.Requests.Get
             {
                 try
                 {
-                    var products = await _productService.GetAll(cancellationToken);
+                    var products = await _productService.GetAll(request.Page, request.Length, cancellationToken);
                     if (products.Any())
                         return new Response<IEnumerable<ProductResponseDTO>>(true, _mapper.Map(products));
                     return new Response<IEnumerable<ProductResponseDTO>>(true, null);

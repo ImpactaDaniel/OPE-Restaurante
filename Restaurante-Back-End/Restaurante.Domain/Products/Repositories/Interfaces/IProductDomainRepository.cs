@@ -10,7 +10,7 @@ namespace Restaurante.Domain.Products.Repositories.Interfaces
     {
         Task<bool> Update(Product entity, CancellationToken cancellationToken = default);
         Task<bool> Delete(Product entity, CancellationToken cancellationToken = default);
-        Task<IEnumerable<Product>> GetAll(CancellationToken cancellationToken = default);
+        Task<IEnumerable<Product>> GetAll(int start, int length, CancellationToken cancellationToken = default);
         Task<IEnumerable<Product>> Search(string name, CancellationToken cancellationToken = default);
     }
 }

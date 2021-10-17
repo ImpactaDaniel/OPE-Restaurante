@@ -61,11 +61,11 @@ namespace Restaurante.Application.Products.Services
             }
         }
 
-        public async Task<IEnumerable<Product>> GetAll(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Product>> GetAll(int page, int length = 20, CancellationToken cancellationToken = default)
         {
             try
             {
-                return await _productDomainRepository.GetAll(cancellationToken);
+                return await _productDomainRepository.GetAll(page * length, length, cancellationToken);
             }
             catch (RestauranteException e)
             {
