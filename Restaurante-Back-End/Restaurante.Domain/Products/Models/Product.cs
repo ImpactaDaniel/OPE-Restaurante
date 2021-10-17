@@ -110,7 +110,7 @@ namespace Restaurante.Domain.Products.Models
         public Product UpdatePhoto(Photo photo)
         {
             _ = photo ?? throw new BasicTableException("Foto não pode ser nula!", NotificationKeys.InvalidEntity);
-            if (Photo.Path != photo.Path)
+            if (Photo?.Path != photo.Path)
             {
                 Photo = photo;
                 UpdatedOn = DateTime.Now;
@@ -121,7 +121,7 @@ namespace Restaurante.Domain.Products.Models
         public Product UpdatePhoto(string photo)
         {
             ValidateNullString(photo, "Caminho da foto");
-            if (Photo.Path != photo)
+            if (Photo?.Path != photo)
             {
                 Photo.UpdatePath(photo);
                 UpdatedOn = DateTime.Now;
@@ -152,7 +152,7 @@ namespace Restaurante.Domain.Products.Models
         public Product UpdateCategory(ProductCategory productCategory)
         {
             _ = productCategory ?? throw new BasicTableException("Categoria não pode ser nula!", NotificationKeys.InvalidEntity);
-            if(Category.Name != productCategory.Name)
+            if(Category?.Name != productCategory.Name)
             {
                 UpdatedOn = DateTime.Now;
                 Category = productCategory;
