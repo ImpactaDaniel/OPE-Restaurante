@@ -9,16 +9,16 @@ namespace Restaurante.Domain.Products.Models
     {
         public string Name { get; private set; }
         public string Description { get; private set; }
-        public int QuantityStock { get; private set; }
+        public int? QuantityStock { get; private set; }
         public Photo Photo { get; private set; }
         public ProductCategory Category { get; private set; }
         public string Accompaniments { get; private set; }
         public decimal Price { get; private set; }
         public bool Available { get; private set; }
         public DateTime? UpdatedOn { get; private set; }
-        public DateTime? CreatedOn { get; set; }
+        public DateTime CreatedOn { get; set; }
         public int CreatedBy { get; set; }
-        public int UpdatedBy { get; set; }
+        public int? UpdatedBy { get; set; }
 
         private Product()
         {
@@ -87,7 +87,7 @@ namespace Restaurante.Domain.Products.Models
             return this;
         }
 
-        public Product AddQuantity(int quantity)
+        public Product AddQuantity(int? quantity)
         {
             if (quantity > 0)
             {
