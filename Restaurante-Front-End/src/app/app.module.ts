@@ -11,10 +11,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderModule } from './components/header/header.module';
 import { SideNavModule } from './components/side-nav/side-nav.module';
 import { ErrorHandler, NgModule } from '@angular/core';
+import { BankComponent } from './pages/bank/bank/bank.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    BankComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
