@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Restaurante.Application.BasicEntities.Requests.Banks.Models;
 using Restaurante.Application.BasicEntities.Requests.Common;
 using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Domain.Users.Employees.Models;
@@ -17,7 +18,7 @@ namespace Restaurante.Web.Controllers
         }
 
         [HttpPost, Route("Create"), Authorize]
-        public async Task<IActionResult> Create([FromBody] CreateEntityRequest<Bank> request, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> Create([FromBody] CreateEntityRequest<CreateBankRequest, Bank> request, CancellationToken cancellationToken = default)
         {
             var res = await _mediator.Send(request, cancellationToken);
             return GetResponse(res);

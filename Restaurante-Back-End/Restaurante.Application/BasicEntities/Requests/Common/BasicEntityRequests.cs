@@ -12,17 +12,18 @@ using System.Threading.Tasks;
 
 namespace Restaurante.Application.BasicEntities.Requests.Common
 {
-    public class CreateEntityRequest<TEntity> : BasicEntityRequest<TEntity, CreateEntityRequest<TEntity>, int>, IRequest<Response<bool>>
+    public class CreateEntityRequest<TRequest, TEntity> : BasicEntityRequest<TEntity, CreateEntityRequest<TRequest, TEntity>, int>, IRequest<Response<bool>>
         where TEntity : class, IBasicEntity
     {
+        public TRequest EntityRequest { get; set; }
     }
 
-    public class GetAllEntitiesRequest<TEntity> : BasicEntityRequest<TEntity, CreateEntityRequest<TEntity>, int>, IRequest<Response<IEnumerable<TEntity>>>
+    public class GetAllEntitiesRequest<TEntity> : BasicEntityRequest<TEntity, GetAllEntitiesRequest<TEntity>, int>, IRequest<Response<IEnumerable<TEntity>>>
         where TEntity : class, IBasicEntity
     {
     }
-    internal abstract class BasicEntityRequestsHandler<TEntity> :
-        IRequestHandler<CreateEntityRequest<TEntity>, Response<bool>>,
+    internal abstract class BasicEntityRequestsHandler<TRequest, TEntity> :
+        IRequestHandler<CreateEntityRequest<TRequest, TEntity>, Response<bool>>,
         IRequestHandler<GetAllEntitiesRequest<TEntity>, Response<IEnumerable<TEntity>>>
         where TEntity : class, IBasicEntity
     {
@@ -35,7 +36,7 @@ namespace Restaurante.Application.BasicEntities.Requests.Common
             _notifier = notifier;
         }
 
-        public async Task<Response<bool>> Handle(CreateEntityRequest<TEntity> request, CancellationToken cancellationToken)
+        public virtual async Task<Response<bool>> Handle(CreateEntityRequest<TRequest, TEntity> request, CancellationToken cancellationToken)
         {
             try
             {
