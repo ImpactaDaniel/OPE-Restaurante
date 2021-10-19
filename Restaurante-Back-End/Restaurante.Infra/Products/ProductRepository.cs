@@ -24,11 +24,13 @@ namespace Restaurante.Infra.Products
             return await Data.SaveChangesAsync(cancellationToken) > 0;
         }
 
-        public async Task<IEnumerable<Product>> GetAll(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Product>> GetAll(int start, int length, CancellationToken cancellationToken = default)
         {
             return await All()
                 .Include(p => p.Photo)
                 .Include(p => p.Category)
+                .Skip(start)
+                .Take(length)
                 .ToListAsync(cancellationToken);
         }
 

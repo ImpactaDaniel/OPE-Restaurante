@@ -37,7 +37,7 @@ namespace Restaurante.Application.Users.Funcionarios.Services
                 var user = await _repository
                     .Get(currentUserId, cancellationToken);
 
-                var employeeExist = await _repository.Get(e => e.Email == funcionario.Email, cancellationToken);
+                var employeeExist = await _repository.Get(e => e.Email == funcionario.Email || e.Document == funcionario.Document, cancellationToken);
 
                 if (user is null)
                 {

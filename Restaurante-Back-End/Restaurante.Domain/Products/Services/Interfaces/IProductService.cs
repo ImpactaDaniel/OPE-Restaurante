@@ -8,7 +8,7 @@ namespace Restaurante.Domain.Products.Services.Interfaces
 {
     public interface IProductService : IEntityService<Product>
     {
-        Task<IEnumerable<Product>> GetAll(CancellationToken cancellationToken = default);
+        Task<IEnumerable<Product>> GetAll(int page, int length = 20, CancellationToken cancellationToken = default);
         Task<bool> CreateProduct(Product product, int currentUserId, CancellationToken cancellationToken = default);
         Task<bool> UpdateProduct(int id, Product product, int currentUserId, CancellationToken cancellationToken = default);
         Task<IEnumerable<Product>> SearchProducts(string name, CancellationToken cancellationToken = default);

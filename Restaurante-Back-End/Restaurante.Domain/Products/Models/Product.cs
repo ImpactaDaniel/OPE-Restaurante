@@ -9,16 +9,16 @@ namespace Restaurante.Domain.Products.Models
     {
         public string Name { get; private set; }
         public string Description { get; private set; }
-        public int QuantityStock { get; private set; }
+        public int? QuantityStock { get; private set; }
         public Photo Photo { get; private set; }
         public ProductCategory Category { get; private set; }
         public string Accompaniments { get; private set; }
         public decimal Price { get; private set; }
         public bool Available { get; private set; }
         public DateTime? UpdatedOn { get; private set; }
-        public DateTime? CreatedOn { get; set; }
+        public DateTime CreatedOn { get; set; }
         public int CreatedBy { get; set; }
-        public int UpdatedBy { get; set; }
+        public int? UpdatedBy { get; set; }
 
         private Product()
         {
@@ -87,7 +87,7 @@ namespace Restaurante.Domain.Products.Models
             return this;
         }
 
-        public Product AddQuantity(int quantity)
+        public Product AddQuantity(int? quantity)
         {
             if (quantity > 0)
             {
@@ -110,7 +110,7 @@ namespace Restaurante.Domain.Products.Models
         public Product UpdatePhoto(Photo photo)
         {
             _ = photo ?? throw new BasicTableException("Foto não pode ser nula!", NotificationKeys.InvalidEntity);
-            if (Photo.Path != photo.Path)
+            if (Photo?.Path != photo.Path)
             {
                 Photo = photo;
                 UpdatedOn = DateTime.Now;
@@ -121,7 +121,7 @@ namespace Restaurante.Domain.Products.Models
         public Product UpdatePhoto(string photo)
         {
             ValidateNullString(photo, "Caminho da foto");
-            if (Photo.Path != photo)
+            if (Photo?.Path != photo)
             {
                 Photo.UpdatePath(photo);
                 UpdatedOn = DateTime.Now;
@@ -152,7 +152,7 @@ namespace Restaurante.Domain.Products.Models
         public Product UpdateCategory(ProductCategory productCategory)
         {
             _ = productCategory ?? throw new BasicTableException("Categoria não pode ser nula!", NotificationKeys.InvalidEntity);
-            if(Category.Name != productCategory.Name)
+            if(Category?.Name != productCategory.Name)
             {
                 UpdatedOn = DateTime.Now;
                 Category = productCategory;

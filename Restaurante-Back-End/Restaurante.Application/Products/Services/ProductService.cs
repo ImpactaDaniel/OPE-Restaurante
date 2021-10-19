@@ -2,7 +2,7 @@
 using Restaurante.Application.Common.Helper;
 using Restaurante.Domain.BasicEntities.Exception;
 using Restaurante.Domain.BasicEntities.Services.Interfaces;
-using Restaurante.Domain.Common.Repositories.Interfaces;
+using Restaurante.Domain.Common.Exceptions;
 using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Domain.Products.Models;
 using Restaurante.Domain.Products.Repositories.Interfaces;
@@ -49,7 +49,7 @@ namespace Restaurante.Application.Products.Services
 
                 return await _productDomainRepository.Save(product, cancellationToken);
             }
-            catch (BasicTableException e)
+            catch (RestauranteException e)
             {
                 _notifier.AddNotification(NotificationHelper.FromException(e));
                 return false;
@@ -61,13 +61,13 @@ namespace Restaurante.Application.Products.Services
             }
         }
 
-        public async Task<IEnumerable<Product>> GetAll(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Product>> GetAll(int page, int length = 20, CancellationToken cancellationToken = default)
         {
             try
             {
-                return await _productDomainRepository.GetAll(cancellationToken);
+                return await _productDomainRepository.GetAll(page * length, length, cancellationToken);
             }
-            catch (BasicTableException e)
+            catch (RestauranteException e)
             {
                 _notifier.AddNotification(NotificationHelper.FromException(e));
                 return null;
@@ -86,7 +86,7 @@ namespace Restaurante.Application.Products.Services
                 var product = await GetProduct(id, cancellationToken);
                 return product;
             }
-            catch (BasicTableException e)
+            catch (RestauranteException e)
             {
                 _notifier.AddNotification(NotificationHelper.FromException(e));
                 return null;
@@ -94,7 +94,7 @@ namespace Restaurante.Application.Products.Services
             catch (Exception e)
             {
                 _logger.LogError(e, e.Message);
-                throw new Exception("Houve um erro ao tentar recuperar os produtos!");
+                throw new Exception("Houve um erro ao tentar recuperar o produto!");
             }
         }
 
@@ -106,11 +106,8 @@ namespace Restaurante.Application.Products.Services
 
                 var currentProduct = await GetProduct(id, cancellationToken);
 
-                var photoDeleted = await _basicEntitiesService.DeleteEntity(currentProduct.Photo, cancellationToken);
-
-                if (!photoDeleted)
-                    throw new BasicTableException("Houve um erro ao tentar atualizar o produto!", Domain.Common.Enums.NotificationKeys.Error);
-
+                await DeletePhoto(currentProduct.Photo, cancellationToken);
+                
                 currentProduct
                     .UpdateName(product.Name)
                     .UpdateDescription(product.Description)
@@ -125,7 +122,7 @@ namespace Restaurante.Application.Products.Services
 
                 return await _productDomainRepository.Update(currentProduct, cancellationToken);
             }
-            catch (BasicTableException e)
+            catch (RestauranteException e)
             {
                 _notifier.AddNotification(NotificationHelper.FromException(e));
                 return false;
@@ -144,7 +141,7 @@ namespace Restaurante.Application.Products.Services
                 var product = await _productDomainRepository.Search(name, cancellationToken);
                 return product;
             }
-            catch (BasicTableException e)
+            catch (RestauranteException e)
             {
                 _notifier.AddNotification(NotificationHelper.FromException(e));
                 return null;
@@ -164,14 +161,11 @@ namespace Restaurante.Application.Products.Services
 
                 var currentProduct = await GetProduct(id, cancellationToken);
 
-                var photoDeleted = await _basicEntitiesService.DeleteEntity(currentProduct.Photo, cancellationToken);
-
-                if (!photoDeleted)
-                    throw new BasicTableException("Houve um erro ao tentar deletar o produto!", Domain.Common.Enums.NotificationKeys.Error);
+                await DeletePhoto(currentProduct.Photo, cancellationToken);
 
                 return await _productDomainRepository.Delete(currentProduct, cancellationToken);
             }
-            catch (BasicTableException e)
+            catch (RestauranteException e)
             {
                 _notifier.AddNotification(NotificationHelper.FromException(e));
                 return false;
@@ -201,6 +195,14 @@ namespace Restaurante.Application.Products.Services
                 throw new BasicTableException("Produto não encontrado!", Domain.Common.Enums.NotificationKeys.EntityNotFound);
 
             return product;
+        }
+
+        private async Task DeletePhoto(Photo photo, CancellationToken cancellationToken = default)
+        {
+            var photoDeleted = await _basicEntitiesService.DeleteEntity(photo, cancellationToken);
+
+            if (!photoDeleted)
+                throw new BasicTableException("Houve um erro ao tentar atualizar o produto!", Domain.Common.Enums.NotificationKeys.Error);
         }
     }
 }

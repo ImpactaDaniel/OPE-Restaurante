@@ -7,7 +7,7 @@ namespace Restaurante.Application.Common.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public int QuantityStock { get; set; }
+        public int? QuantityStock { get; set; }
         public PhotoResponseDTO Photo { get; set; }
         public ProductCategoryResponseDTO Category { get; set; }
         public string Accompaniments { get; set; }
@@ -16,7 +16,7 @@ namespace Restaurante.Application.Common.Models
         public DateTime? UpdatedOn { get; set; }
         public DateTime? CreatedOn { get; set; }
         public int CreatedBy { get; set; }
-        public int UpdatedBy { get; set; }
+        public int? UpdatedBy { get; set; }
     }
 
     public class PhotoResponseDTO
