@@ -15,6 +15,14 @@ export class BasicentitiesService {
   }
 
   public getAll(basicEntity: any): Observable<APIResponse<any>> {
-    return this.httpClient.get<APIResponse<any>>(`${this.url}${basicEntity.url}/GetAll`);
+    return this.httpClient.get<APIResponse<any>>(`${this.url}${basicEntity.url}/GetAll?page=${basicEntity.page}&size=${basicEntity.pageSize}`);
+  }
+
+  public search(basicEntityQuery: any): Observable<APIResponse<any>> {
+    return this.httpClient.get<APIResponse<any>>(`${this.url}${basicEntityQuery.url}/Search?field=${basicEntityQuery.field}&value=${basicEntityQuery.value}&page=${basicEntityQuery.page}&size=${basicEntityQuery.pageSize}`);
+  }
+
+  public get(basicEntityQuery: any): Observable<APIResponse<any>> {
+    return this.httpClient.get<APIResponse<any>>(`${this.url}${basicEntityQuery.url}/Get/id=${basicEntityQuery.id}}`);
   }
 }

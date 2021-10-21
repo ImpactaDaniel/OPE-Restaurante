@@ -3,6 +3,7 @@ using Restaurante.Application.Common.Helper;
 using Restaurante.Domain.BasicEntities.Common.Interfaces;
 using Restaurante.Domain.BasicEntities.Exception;
 using Restaurante.Domain.BasicEntities.Services.Interfaces;
+using Restaurante.Domain.Common.Data.Models;
 using Restaurante.Domain.Common.Models.Interfaces;
 using Restaurante.Domain.Common.Repositories.Interfaces;
 using Restaurante.Domain.Common.Services.Interfaces;
@@ -101,6 +102,44 @@ namespace Restaurante.Application.BasicEntities.Services
             {
                 _logger.LogError(e, e.Message);
                 return false;
+            }
+        }
+
+        public async Task<PaginationInfo<TEntity>> GetEntities<TEntity>(int start, int limit, CancellationToken cancellationToken)
+            where TEntity : class, IBasicEntity
+        {
+            try
+            {
+                return await _basicEntityRepository.GetAll<TEntity>(start, limit, cancellationToken);
+            }
+            catch (BasicTableException e)
+            {
+                _notifier.AddNotification(NotificationHelper.FromException(e));
+                return null;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                return null;
+            }
+        }
+
+        public async Task<PaginationInfo<TEntity>> GetEntities<TEntity>(Expression<Func<TEntity, bool>> condition, int start, int limit, CancellationToken cancellationToken)
+            where TEntity : class, IBasicEntity
+        {
+            try
+            {
+                return await _basicEntityRepository.Search(condition, start, limit, cancellationToken);
+            }
+            catch (BasicTableException e)
+            {
+                _notifier.AddNotification(NotificationHelper.FromException(e));
+                return null;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                return null;
             }
         }
     }

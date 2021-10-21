@@ -1,3 +1,5 @@
+import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -5,6 +7,7 @@ import { ListBankComponent } from './list-bank.component';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule, Routes } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 const routes: Routes = [
   {
@@ -20,6 +23,9 @@ const routes: Routes = [
     CommonModule,
     MatTableModule,
     MatIconModule,
+    FormsModule,
+    MatInputModule,
+    MatPaginatorModule,
     MatCardModule,
     RouterModule.forChild(routes)
   ]

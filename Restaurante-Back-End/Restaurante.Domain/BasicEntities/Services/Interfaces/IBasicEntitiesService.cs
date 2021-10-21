@@ -1,4 +1,5 @@
 ﻿using Restaurante.Domain.BasicEntities.Common.Interfaces;
+using Restaurante.Domain.Common.Data.Models;
 using Restaurante.Domain.Common.Models.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,12 @@ namespace Restaurante.Domain.BasicEntities.Services.Interfaces
             where TEntity : class, IBasicEntity;
 
         Task<IEnumerable<TEntity>> GetEntities<TEntity>(CancellationToken cancellationToken = default)
+            where TEntity : class, IBasicEntity;
+
+        Task<PaginationInfo<TEntity>> GetEntities<TEntity>(int start, int limit, CancellationToken cancellationToken = default)
+            where TEntity : class, IBasicEntity;
+
+        Task<PaginationInfo<TEntity>> GetEntities<TEntity>(Expression<Func<TEntity, bool>> condition, int start, int limit, CancellationToken cancellationToken = default)
             where TEntity : class, IBasicEntity;
 
         Task<bool> DeleteEntity<TEntity>(TEntity entity, CancellationToken cancellationToken = default)

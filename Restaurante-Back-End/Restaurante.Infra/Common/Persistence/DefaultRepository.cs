@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Restaurante.Domain.Common.Data.Models;
 using Restaurante.Domain.Common.Models.Interfaces;
 using Restaurante.Domain.Common.Repositories.Interfaces;
 using Restaurante.Infra.Common.Persistence.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -54,6 +56,40 @@ namespace Restaurante.Infra.Common.Persistence
                 .Remove(entity);
 
             return await _context.SaveChangesAsync(cancellationToken) > 0;
+        }
+
+        public async Task<PaginationInfo<TEntity>> GetAll<TEntity>(int start, int limit, CancellationToken cancellationToken)
+            where TEntity : class, IEntity
+        {
+            var list = await _context
+                .Set<TEntity>()
+                .Skip(start)
+                .Take(limit)                
+                .ToListAsync(cancellationToken);
+
+            var count = await _context
+                .Set<TEntity>()
+                .CountAsync(cancellationToken);
+
+            return new PaginationInfo<TEntity> { Entities = list, Size = count };
+        }
+
+        public async Task<PaginationInfo<TEntity>> Search<TEntity>(Expression<Func<TEntity, bool>> condicao, int start, int limit, CancellationToken cancellationToken)
+            where TEntity : class, IEntity
+        {
+            var list = await _context
+                .Set<TEntity>()
+                .Where(condicao)
+                .Skip(start)
+                .Take(limit)
+                .ToListAsync(cancellationToken);
+
+            var count = await _context
+                .Set<TEntity>()
+                .Where(condicao)
+                .CountAsync(cancellationToken);
+
+            return new PaginationInfo<TEntity> { Entities = list, Size = count };
         }
     }
 }
