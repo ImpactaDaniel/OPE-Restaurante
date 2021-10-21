@@ -2,11 +2,9 @@
 using Restaurante.Application.Common;
 using Restaurante.Application.Common.Helper;
 using Restaurante.Application.Products.Common.Models;
-using Restaurante.Domain.BasicEntities.Services.Interfaces;
 using Restaurante.Domain.Common.Exceptions;
 using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Domain.Products.Factories.Interfaces;
-using Restaurante.Domain.Products.Models;
 using Restaurante.Domain.Products.Services.Interfaces;
 using System;
 using System.Threading;
@@ -18,16 +16,13 @@ namespace Restaurante.Application.Products.Requests.Delete
     {
         internal class DeleteProductRequestHandler : IRequestHandler<DeleteProductRequest, Response<bool>>
         {
-            private readonly IProductFactory _factory;
             private readonly IProductService _service;
             private readonly INotifier _notifier;
 
             public DeleteProductRequestHandler(
-                IProductFactory factory,
                 IProductService service,
                 INotifier notifier)
             {
-                _factory = factory;
                 _service = service;
                 _notifier = notifier;
             }

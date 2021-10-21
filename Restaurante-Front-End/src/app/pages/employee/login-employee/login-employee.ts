@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/services/alert.service';
 import { TokenService } from 'src/app/services/token.service';
 import { LoginModel } from 'src/app/models/common/login.model';
@@ -13,7 +13,8 @@ import { LoginModel } from 'src/app/models/common/login.model';
 
 export class LoginEmployeeComponent {
   form: FormGroup;
-
+  error: boolean;
+  erroMsg = "";
   constructor(private formbuilder: FormBuilder,
               private tokenservice: TokenService,
               private router: Router,
@@ -21,8 +22,8 @@ export class LoginEmployeeComponent {
 
   ngOnInit(): void {
     this.form = this.formbuilder.group({
-      email: [""],
-      password: [""]
+      email: ["", [Validators.required]],
+      password: ["", [Validators.required]]
     })
   }
 
@@ -34,6 +35,8 @@ export class LoginEmployeeComponent {
   }
 
   authentication() {
+    if(!this.form.valid) return;
+    this.erroMsg = "";
     let loginmodel = this.getInfoLogin();
     this.tokenservice.authenticate(loginmodel).then((response) => {
       if(!response.success)
@@ -42,7 +45,8 @@ export class LoginEmployeeComponent {
         response.notifications.map(not => {
           message += not.message;
         });
-        this.alertService.showError(null, message);
+        this.erroMsg = message;
+        this.error = true;
         return;
       }
       if(this.tokenservice.getTokenData().firstAccess === 'True')
