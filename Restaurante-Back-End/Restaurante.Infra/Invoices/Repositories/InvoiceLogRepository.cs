@@ -4,7 +4,9 @@ using Restaurante.Infra.Common.Persistence;
 using Restaurante.Infra.Common.Persistence.Interfaces;
 using System.Collections.Generic;
 using System.Threading;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Restaurante.Infra.Invoices.Repositories
 {
@@ -14,24 +16,29 @@ namespace Restaurante.Infra.Invoices.Repositories
         {
         }
 
-        public Task<InvoiceLog> CreateLog(InvoiceLog employee, CancellationToken cancellationToken = default)
+        public async Task<InvoiceLog> CreateLog(InvoiceLog log, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            await Data.InvoiceLogs.AddAsync(log, cancellationToken);
+            await Data.SaveChangesAsync(cancellationToken);
+            return log;
         }
 
-        public Task<bool> Delete(int id, CancellationToken cancellationToken = default)
+        public async Task<bool> Delete(int id, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            var log = await Data.InvoiceLogs.FirstAsync(l => l.Id == id, cancellationToken);
+            Data.InvoiceLogs.Remove(log);
+            return await Data.SaveChangesAsync(cancellationToken) > 0;
         }
 
-        public Task<IList<InvoiceLog>> GetAll(CancellationToken cancellationToken = default)
-        {
-            throw new System.NotImplementedException();
-        }
+        public async Task<IList<InvoiceLog>> GetAll(CancellationToken cancellationToken = default) =>
+            await All()
+                    .Include(l => l.Invoice)
+                .ToListAsync(cancellationToken);
 
-        public Task<IList<InvoiceLog>> GetAllByInvoice(Invoice invoice, CancellationToken cancellationToken = default)
-        {
-            throw new System.NotImplementedException();
-        }
+        public async Task<IList<InvoiceLog>> GetAllByInvoice(Invoice invoice, CancellationToken cancellationToken = default) =>
+             await All()
+                    .Include(l => l.Invoice)
+                .Where(l => l.Invoice == invoice)
+                .ToListAsync(cancellationToken);
     }
 }
