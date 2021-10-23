@@ -24,7 +24,7 @@ export class AppComponent {
   async showMenuEvent(): Promise<boolean> {
     return new Promise((s, f) => {
       this.router.events.pipe(filter(ev => ev instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
-        s(event.url.indexOf('login') < 0);
+        s(event.url.indexOf('login') < 0 && event.url !== '');
       });
     })
   }

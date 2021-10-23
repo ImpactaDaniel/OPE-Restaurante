@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { HeaderComponent } from './header.component';
 import { MatToolbarModule } from '@angular/material/toolbar'
+import {MatButtonModule} from '@angular/material/button';
 
 
 
@@ -13,7 +14,8 @@ import { MatToolbarModule } from '@angular/material/toolbar'
   imports: [
     CommonModule,
     MatIconModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatButtonModule
   ],
   exports: [
     HeaderComponent
