@@ -5,6 +5,7 @@ using Restaurante.Infra.Common.Persistence.Interfaces;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Restaurante.Infra.Invoices.Repositories
 {
@@ -14,14 +15,16 @@ namespace Restaurante.Infra.Invoices.Repositories
         {
         }
 
-        public Task<Payment> CreatePayment(Payment payment, CancellationToken cancellationToken = default)
+        public async Task<Payment> CreatePayment(Payment payment, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            await Data.Payments.AddAsync(payment, cancellationToken);
+            await Data.SaveChangesAsync(cancellationToken);
+            return payment;
         }
 
-        public Task<IList<Payment>> GetAll(CancellationToken cancellationToken = default)
-        {
-            throw new System.NotImplementedException();
-        }
+        public async Task<IList<Payment>> GetAll(CancellationToken cancellationToken = default) =>
+            await All()
+                    .Include(p => p.Customer)
+                  .ToListAsync(cancellationToken);
     }
 }
