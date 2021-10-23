@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Restaurante.Domain.Invoices.Models;
 using Restaurante.Domain.Products.Models;
+using Restaurante.Domain.Users.Customers.Models;
 using Restaurante.Domain.Users.Employees.Models;
 using Restaurante.Infra.Common.Persistence.Interfaces;
 using Restaurante.Infra.Mappings;
@@ -26,6 +28,16 @@ namespace Restaurante.Infra.Common.Persistence
         public DbSet<ProductCategory> ProductCategories { get; set; }
 
         public DbSet<Photo> Photos { get; set; }
+
+        public DbSet<Invoice> Invoices { get; set; }
+
+        public DbSet<InvoiceLog> InvoiceLogs { get; set; }
+
+        public DbSet<InvoiceLine> InvoiceLines { get; set; }
+
+        public DbSet<Customer> Customers { get; set; }
+
+        public DbSet<Payment> Payments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
