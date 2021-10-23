@@ -5,8 +5,7 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-      <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
-
+      <app-header *ngIf="showMenu" (sidenavToggle)="sidenav.toggle()"></app-header>
       <main>
         <router-outlet></router-outlet>
       </main>
