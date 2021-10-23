@@ -2,5 +2,5 @@
 
 namespace Restaurante.Application.Invoices.Common.Models.Delegates
 {
-    public delegate Task InvoiceCreatedEventHandler(object sender, InvoiceCreatedEventArgs e);
+    public delegate Task InvoiceCreatedEventHandler(object sender, InvoiceEventArgs e);
 }

@@ -3,7 +3,7 @@ using System;
 
 namespace Restaurante.Application.Invoices.Common.Models
 {
-    public class InvoiceCreatedEventArgs : EventArgs
+    public class InvoiceEventArgs : EventArgs
     {
         public Invoice Invoice { get; set; }
     }

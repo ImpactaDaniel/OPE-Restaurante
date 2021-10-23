@@ -67,7 +67,7 @@ namespace Restaurante.Application.Invoices.Requests.Create
 
                     _ = await _invoiceRespository.CreateInvoice(invoice, cancellationToken);
 
-                    await request.InvoiceCreated?.Invoke(this, new InvoiceCreatedEventArgs { Invoice = invoice });
+                    await request.InvoiceCreated?.Invoke(this, new InvoiceEventArgs { Invoice = invoice });
 
                     return new Response<Invoice>(true, invoice);
 
