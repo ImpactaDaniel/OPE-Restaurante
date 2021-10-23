@@ -23,7 +23,7 @@ namespace Restaurante.Web.Controllers
             return GetResponse(response);
         }
 
-        public async Task InvoiceCreated(object sender, InvoiceCreatedEventArgs e)
+        private async Task InvoiceCreated(object sender, InvoiceCreatedEventArgs e)
         {
 
         }
