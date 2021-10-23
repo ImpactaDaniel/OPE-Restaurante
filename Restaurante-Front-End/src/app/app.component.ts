@@ -10,19 +10,21 @@ import { filter } from 'rxjs/operators';
 })
 export class AppComponent {
   title = 'app';
-
+  showMenu: Boolean;
   /**
    *
    */
   constructor(private router: Router) {
-
-
   }
 
-  async mostrarMenu(): Promise<boolean> {
+  async ngAfterContentChecked(){
+    this.showMenu = await this.showMenuEvent()
+  }
+
+  async showMenuEvent(): Promise<boolean> {
     return new Promise((s, f) => {
       this.router.events.pipe(filter(ev => ev instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
-        s(event.url.indexOf('login') < 0 && event.url.indexOf('signup') < 0);
+        s(event.url.indexOf('login') < 0);
       });
     })
   }
