@@ -2,7 +2,7 @@
 
 namespace Restaurante.Application.Products.Common.Models
 {
-    public class ProductRequest<TRequest> : EntityRequest<int>
+    public abstract class ProductRequest<TRequest> : EntityRequest<int>
         where TRequest : EntityRequest<int>
     {
         public int CurrentUserId { get; set; }
