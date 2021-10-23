@@ -3,13 +3,13 @@ using Microsoft.Extensions.Logging;
 using Restaurante.Application.Common;
 using Restaurante.Application.Common.Helper;
 using Restaurante.Application.Invoices.Common.Models;
+using Restaurante.Application.Invoices.Common.Models.Delegates;
 using Restaurante.Domain.BasicEntities.Exception;
 using Restaurante.Domain.Common.Enums;
 using Restaurante.Domain.Common.Exceptions;
 using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Domain.Invoices.Models;
 using Restaurante.Domain.Invoices.Repositories.Interfaces;
-using Restaurante.Domain.Products.Models;
 using Restaurante.Domain.Products.Services.Interfaces;
 using Restaurante.Domain.Users.Customers.Repositories.Interfaces;
 using System;
@@ -22,6 +22,8 @@ namespace Restaurante.Application.Invoices.Requests.Create
 {
     public class CreateInvoiceRequest : InvoiceRequest<CreateInvoiceRequest>, IRequest<Response<Invoice>>
     {
+        public event InvoiceCreatedEventHandler InvoiceCreated;
+
         internal class CreateInvoiceRequestHandler : IRequestHandler<CreateInvoiceRequest, Response<Invoice>>
         {
             private readonly INotifier _notifier;
@@ -63,7 +65,9 @@ namespace Restaurante.Application.Invoices.Requests.Create
                         Status = Domain.Invoices.Models.Enum.InvoiceStatus.Created
                     };
 
-                    await _invoiceRespository.CreateInvoice(invoice, cancellationToken);
+                    _ = await _invoiceRespository.CreateInvoice(invoice, cancellationToken);
+
+                    await request.InvoiceCreated?.Invoke(this, new InvoiceCreatedEventArgs { Invoice = invoice });
 
                     return new Response<Invoice>(true, invoice);
 
