@@ -1,11 +1,12 @@
-﻿using Restaurante.Domain.Invoices.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Restaurante.Domain.Invoices.Models;
 using Restaurante.Domain.Invoices.Repositories.Interfaces;
 using Restaurante.Domain.Users.Customers.Models;
 using Restaurante.Infra.Common.Persistence;
 using Restaurante.Infra.Common.Persistence.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Restaurante.Infra.Invoices.Repositories
@@ -16,24 +17,38 @@ namespace Restaurante.Infra.Invoices.Repositories
         {
         }
 
-        public Task<Invoice> CreateInvoice(Invoice invoice, CancellationToken cancellationToken = default)
+        public async Task<Invoice> CreateInvoice(Invoice invoice, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            await Data.Invoices.AddAsync(invoice, cancellationToken);
+            await Data.SaveChangesAsync(cancellationToken);
+            return invoice;
         }
 
-        public Task<bool> Delete(Invoice invoice, CancellationToken cancellationToken = default)
+        public async Task<bool> Delete(Invoice invoice, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            Data.Invoices.Remove(invoice);
+            return await Data.SaveChangesAsync(cancellationToken) > 0;
         }
 
-        public Task<IList<Invoice>> GetAll(CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<IList<Invoice>> GetAll(CancellationToken cancellationToken = default) =>
+            await All()
+                    .AsNoTrackingWithIdentityResolution()
+                    .Include(i => i.Products)
+                        .ThenInclude(p => p.Product)
+                    .Include(i => i.Address)
+                    .Include(i => i.Customer)
+                    .Include(i => i.Payment)
+                  .ToListAsync(cancellationToken);
 
-        public Task<IList<Invoice>> GetAll(Customer customer, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<IList<Invoice>> GetAll(Customer customer, CancellationToken cancellationToken = default) =>
+            await All()
+                    .Include(i => i.Products)
+                        .ThenInclude(p => p.Product)
+                    .Include(i => i.Address)
+                    .Include(i => i.Customer)
+                    .Include(i => i.Payment)
+                    .Where(i => i.Customer == customer)
+                    .ToListAsync(cancellationToken);
+
     }
 }
