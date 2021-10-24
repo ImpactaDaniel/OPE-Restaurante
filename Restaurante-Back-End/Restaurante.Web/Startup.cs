@@ -9,6 +9,9 @@ using Restaurante.Application;
 using Restaurante.Domain;
 using Restaurante.Infra;
 using Restaurante.Web.Middlewares;
+using Microsoft.AspNetCore.SignalR;
+using Restaurante.Application.Hubs;
+using System;
 
 namespace Restaurante.Web
 {
@@ -53,7 +56,7 @@ namespace Restaurante.Web
                                     Id = "Bearer"
                                 }
                             },
-                            new string[] { }
+                            Array.Empty<string>()
                         }
                     });
                 })
@@ -91,6 +94,7 @@ namespace Restaurante.Web
                 .UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllers();
+                    endpoints.MapHub<InvoiceHub>("/invoice-notification-hub");
                 })
                 .Initialize();
         }

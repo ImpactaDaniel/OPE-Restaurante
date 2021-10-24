@@ -18,14 +18,8 @@ namespace Restaurante.Web.Controllers
         [HttpPost, Route("Create")]
         public async Task<IActionResult> CreateNewInvoice([FromBody] CreateInvoiceRequest request, CancellationToken cancellationToken = default)
         {
-            request.InvoiceCreated += InvoiceCreated;
             var response = await _mediator.Send(request, cancellationToken);
             return GetResponse(response);
-        }
-
-        private async Task InvoiceCreated(object sender, InvoiceEventArgs e)
-        {
-
         }
     }
 }

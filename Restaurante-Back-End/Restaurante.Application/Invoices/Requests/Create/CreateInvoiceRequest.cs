@@ -4,6 +4,7 @@ using Restaurante.Application.Common;
 using Restaurante.Application.Common.Helper;
 using Restaurante.Application.Invoices.Common.Models;
 using Restaurante.Application.Invoices.Common.Models.Delegates;
+using Restaurante.Application.Invoices.Notifications;
 using Restaurante.Domain.BasicEntities.Exception;
 using Restaurante.Domain.Common.Enums;
 using Restaurante.Domain.Common.Exceptions;
@@ -22,8 +23,6 @@ namespace Restaurante.Application.Invoices.Requests.Create
 {
     public class CreateInvoiceRequest : InvoiceRequest<CreateInvoiceRequest>, IRequest<Response<Invoice>>
     {
-        public event InvoiceCreatedEventHandler InvoiceCreated;
-
         internal class CreateInvoiceRequestHandler : IRequestHandler<CreateInvoiceRequest, Response<Invoice>>
         {
             private readonly INotifier _notifier;
@@ -31,14 +30,16 @@ namespace Restaurante.Application.Invoices.Requests.Create
             private readonly ICustomersDomainRepository _customersDomainRepository;
             private readonly IProductService _productService;
             private readonly ILogger<CreateInvoiceRequestHandler> _logger;
+            private readonly IMediator _mediator;
 
-            public CreateInvoiceRequestHandler(INotifier notifier, IInvoiceDomainRepository invoiceRespository, ICustomersDomainRepository customersDomainRepository, IProductService productService, ILogger<CreateInvoiceRequestHandler> logger)
+            public CreateInvoiceRequestHandler(INotifier notifier, IInvoiceDomainRepository invoiceRespository, ICustomersDomainRepository customersDomainRepository, IProductService productService, ILogger<CreateInvoiceRequestHandler> logger, IMediator mediator)
             {
                 _notifier = notifier;
                 _invoiceRespository = invoiceRespository;
                 _customersDomainRepository = customersDomainRepository;
                 _productService = productService;
                 _logger = logger;
+                _mediator = mediator;
             }
 
             public async Task<Response<Invoice>> Handle(CreateInvoiceRequest request, CancellationToken cancellationToken)
@@ -67,7 +68,11 @@ namespace Restaurante.Application.Invoices.Requests.Create
 
                     _ = await _invoiceRespository.CreateInvoice(invoice, cancellationToken);
 
-                    await request.InvoiceCreated?.Invoke(this, new InvoiceEventArgs { Invoice = invoice });
+                    await _mediator.Publish(new InvoiceNotification
+                    {
+                        Invoice = invoice,
+                        NotificationType = Common.Models.Enums.InvoiceNotificationType.Updated
+                    }, cancellationToken);
 
                     return new Response<Invoice>(true, invoice);
 
