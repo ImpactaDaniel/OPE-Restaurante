@@ -35,6 +35,11 @@ export class SideNavComponent implements OnInit {
     this.onSidenavClose()
   }
 
+  public toInvoices(): void {
+    this.router.navigate(['invoice/list'])
+    this.onSidenavClose()
+  }
+
   public logout() {
     this.authService.logout();
     this.router.navigate(['/employee/login']);

@@ -11,9 +11,9 @@ export class InvoiceService {
   constructor(@Inject("BASE_URL") private url: string) { }
 
   public init() {
-    this.buildConnection();
-    this.startConnection();
-    this.registerOnServerEvents();
+    // this.buildConnection();
+    // this.startConnection();
+    // this.registerOnServerEvents();
   }
 
   private buildConnection() {
