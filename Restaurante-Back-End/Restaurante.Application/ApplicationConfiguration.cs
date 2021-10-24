@@ -33,8 +33,6 @@ namespace Restaurante.Application
                 .AddMappers()
                 .AddFactories()
                 .AddIntegrationServices(configuration)
-                .AddSignalR()
-                .Services
                 .AddTokenService(configuration);
 
         internal static IServiceCollection AddServices(this IServiceCollection services) =>

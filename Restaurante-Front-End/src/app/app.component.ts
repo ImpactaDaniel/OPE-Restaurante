@@ -1,5 +1,6 @@
+import { InvoiceService } from './pages/invoice/services/invoice.service';
 import { ThrowStmt } from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
+import { AfterContentChecked, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
@@ -8,13 +9,17 @@ import { filter } from 'rxjs/operators';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit, AfterContentChecked {
   title = 'app';
   showMenu: Boolean;
   /**
    *
    */
-  constructor(private router: Router) {
+  constructor(private router: Router, private invoiceService: InvoiceService) {
+  }
+
+  ngOnInit(){
+    this.invoiceService.init();
   }
 
   async ngAfterContentChecked(){
