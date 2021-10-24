@@ -62,9 +62,12 @@ namespace Restaurante.Web
                 })
                 .AddCors(cors => cors
                                     .AddPolicy(CORS_NAME, policy => policy
-                                                                    .AllowAnyOrigin()
+                                                                    .WithOrigins("http://localhost:4200")
                                                                     .AllowAnyMethod()
+                                                                    .AllowCredentials()
                                                                     .AllowAnyHeader()))
+                .AddSignalR()
+                .Services
                 .AddControllersWithViews();
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
