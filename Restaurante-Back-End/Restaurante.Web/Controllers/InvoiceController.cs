@@ -1,8 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Restaurante.Application.Invoices.Common.Models;
 using Restaurante.Application.Invoices.Requests.Create;
+using Restaurante.Application.Invoices.Requests.Update;
 using Restaurante.Domain.Common.Services.Interfaces;
+using Restaurante.Domain.Invoices.Models.Enum;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,14 +19,15 @@ namespace Restaurante.Web.Controllers
         [HttpPost, Route("Create")]
         public async Task<IActionResult> CreateNewInvoice([FromBody] CreateInvoiceRequest request, CancellationToken cancellationToken = default)
         {
-            request.InvoiceCreated += InvoiceCreated;
             var response = await _mediator.Send(request, cancellationToken);
             return GetResponse(response);
         }
 
-        private async Task InvoiceCreated(object sender, InvoiceEventArgs e)
+        [HttpPatch, Route("UpdateStatus/{id}")]
+        public async Task<IActionResult> UpdateInvoiceStatus(int id, InvoiceStatus status, CancellationToken cancellationToken = default)
         {
-
+            var response = await _mediator.Send(new UpdateInvoiceStatusRequest { Id = id, Status = status }, cancellationToken);
+            return GetResponse(response);
         }
     }
 }
