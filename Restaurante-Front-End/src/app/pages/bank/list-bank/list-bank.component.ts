@@ -1,6 +1,7 @@
 import { BasicentitiesService } from './../../../services/entities/basicentities.service';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-bank',
@@ -19,7 +20,10 @@ export class ListBankComponent implements OnInit {
 
   public displayedColumns = ['id', 'name', 'edit', 'remove']
 
-  constructor(private basicEntitiesService: BasicentitiesService) { }
+  constructor(
+    private basicEntitiesService: BasicentitiesService,
+    private router: Router
+    ) { }
 
   ngOnInit() {
     this.loadTable();
@@ -66,6 +70,10 @@ export class ListBankComponent implements OnInit {
     }
 
     this.search()
+  }
+
+  public toNewBank(): void {
+    this.router.navigate(['bank/create'])
   }
 
 }
