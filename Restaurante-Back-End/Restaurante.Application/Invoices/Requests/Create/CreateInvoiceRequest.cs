@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using Restaurante.Application.Common;
 using Restaurante.Application.Common.Helper;
 using Restaurante.Application.Invoices.Common.Models;
-using Restaurante.Application.Invoices.Common.Models.Delegates;
 using Restaurante.Application.Invoices.Notifications;
 using Restaurante.Domain.BasicEntities.Exception;
 using Restaurante.Domain.Common.Enums;
