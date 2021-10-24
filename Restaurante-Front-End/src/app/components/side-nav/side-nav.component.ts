@@ -20,6 +20,11 @@ export class SideNavComponent implements OnInit {
     this.sidenavClose.emit()
   }
 
+  public toBanks(): void {
+    this.router.navigate(['bank/list'])
+    this.onSidenavClose()
+  }
+
   public logout() {
     this.authService.logout();
     this.router.navigate(['/employee/login']);

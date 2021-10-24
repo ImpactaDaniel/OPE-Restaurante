@@ -3,6 +3,7 @@ import { BasicentitiesService } from './../../../services/entities/basicentities
 import { Component, OnInit } from '@angular/core';
 import { Bank } from 'src/app/models/funcionario/employee';
 import { AlertService } from 'src/app/services/alert.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create',
@@ -14,7 +15,7 @@ export class CreateComponent implements OnInit {
   private bankUrl = "Banks";
   public fg: FormGroup;
 
-  constructor(private basicEntitiesService: BasicentitiesService, private fb: FormBuilder, private alertService: AlertService) { }
+  constructor(private basicEntitiesService: BasicentitiesService, private fb: FormBuilder, private alertService: AlertService, private router: Router) { }
 
   ngOnInit() {
     this.fg = this.fb.group({
@@ -38,6 +39,10 @@ export class CreateComponent implements OnInit {
 
     });
 
+  }
+
+  public toBanks(): void {
+    this.router.navigate(['bank/list'])
   }
 
 }

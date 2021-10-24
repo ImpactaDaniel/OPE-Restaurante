@@ -30,13 +30,18 @@
                 <mat-error>Nome do banco é obrigatório</mat-error>
               </mat-form-field>
             </div>
+            <div class="col-md-12 text-center">
+              <button type="submit" class="btn btn-primary">
+                Salvar
+              </button>
+            </div>
           </div>
         </div>
         <div class="row justify-content-center">
           <div class="form-group">
-            <div class="col-md-12">
-              <button type="submit" class="btn btn-primary">
-                Salvar
+            <div class="col-md-12 my-5">
+              <button type="button" class="btn btn-light" (click)="toBanks()">
+                Retornar a lista de Bancos
               </button>
             </div>
           </div>

@@ -8,6 +8,7 @@ import { MatTableModule } from '@angular/material/table';
 import { RouterModule, Routes } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import {MatButtonModule} from '@angular/material/button';
 
 const routes: Routes = [
   {
@@ -27,6 +28,7 @@ const routes: Routes = [
     MatInputModule,
     MatPaginatorModule,
     MatCardModule,
+    MatButtonModule,
     RouterModule.forChild(routes)
   ]
 })
