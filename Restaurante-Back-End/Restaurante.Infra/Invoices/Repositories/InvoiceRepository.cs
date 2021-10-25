@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Linq.Expressions;
+using System;
+using Restaurante.Domain.Common.Data.Models;
 
 namespace Restaurante.Infra.Invoices.Repositories
 {
@@ -23,6 +26,16 @@ namespace Restaurante.Infra.Invoices.Repositories
             await Data.SaveChangesAsync(cancellationToken);
             return invoice;
         }
+
+        public override async Task<Invoice> Get(Expression<Func<Invoice, bool>> condicao, CancellationToken cancellationToken = default) =>
+            await All()
+                    .AsNoTrackingWithIdentityResolution()
+                    .Include(i => i.Products)
+                        .ThenInclude(p => p.Product)
+                    .Include(i => i.Address)
+                    .Include(i => i.Customer)
+                    .Include(i => i.Payment)
+                  .FirstOrDefaultAsync(condicao, cancellationToken);
 
         public async Task<bool> Delete(Invoice invoice, CancellationToken cancellationToken = default)
         {
@@ -42,13 +55,78 @@ namespace Restaurante.Infra.Invoices.Repositories
 
         public async Task<IList<Invoice>> GetAll(Customer customer, CancellationToken cancellationToken = default) =>
             await All()
-                    .Include(i => i.Products)
-                        .ThenInclude(p => p.Product)
-                    .Include(i => i.Address)
-                    .Include(i => i.Customer)
-                    .Include(i => i.Payment)
+                        .Include(i => i.Products)
+                            .ThenInclude(p => p.Product)
+                        .Include(i => i.Address)
+                        .Include(i => i.Customer)
+                        .Include(i => i.Payment)
                     .Where(i => i.Customer == customer)
                     .ToListAsync(cancellationToken);
 
+        public async Task<IList<Invoice>> GetAll(Expression<Func<Invoice, bool>> condition, CancellationToken cancellationToken = default) =>
+             await All()
+                        .Include(i => i.Products)
+                            .ThenInclude(p => p.Product)
+                        .Include(i => i.Address)
+                        .Include(i => i.Customer)
+                        .Include(i => i.Payment)
+                    .Where(condition)
+                    .ToListAsync(cancellationToken);
+
+        public async Task<PaginationInfo<Invoice>> GetAll(int page, int limit, CancellationToken cancellationToken = default)
+        {
+            var invoices = await All()
+                        .Include(i => i.Products)
+                            .ThenInclude(p => p.Product)
+                        .Include(i => i.Address)
+                        .Include(i => i.Customer)
+                        .Include(i => i.Payment)
+                    .Skip(page * limit)
+                    .Take(limit)
+                    .ToListAsync(cancellationToken);
+
+            var count = await All()
+                        .Include(i => i.Products)
+                            .ThenInclude(p => p.Product)
+                        .Include(i => i.Address)
+                        .Include(i => i.Customer)
+                        .Include(i => i.Payment)
+                    .CountAsync(cancellationToken);
+
+            return new PaginationInfo<Invoice>
+            {
+                Entities = invoices,
+                Size = count
+            };
+        }
+
+        public async Task<PaginationInfo<Invoice>> GetAll(Expression<Func<Invoice, bool>> condition, int page, int limit, CancellationToken cancellationToken = default)
+        {
+            var invoices = await All()
+                        .Include(i => i.Products)
+                            .ThenInclude(p => p.Product)
+                        .Include(i => i.Address)
+                        .Include(i => i.Customer)
+                        .Include(i => i.Payment)
+                    .Where(condition)
+                    .Skip(page * limit)
+                    .Take(limit)
+                    .ToListAsync(cancellationToken);
+
+            var count = await All()
+                        .Include(i => i.Products)
+                            .ThenInclude(p => p.Product)
+                        .Include(i => i.Address)
+                        .Include(i => i.Customer)
+                        .Include(i => i.Payment)
+                    .Where(condition)
+                    .CountAsync(cancellationToken);
+
+            return new PaginationInfo<Invoice>
+            {
+                Entities = invoices,
+                Size = count
+            };
+        }
     }
 }
