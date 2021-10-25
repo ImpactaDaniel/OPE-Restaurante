@@ -1,6 +1,8 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Restaurante.Application.Invoices.Requests.Create;
+using Restaurante.Application.Invoices.Requests.Get;
 using Restaurante.Application.Invoices.Requests.Update;
 using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Domain.Invoices.Models.Enum;
@@ -23,7 +25,31 @@ namespace Restaurante.Web.Controllers
             return GetResponse(response);
         }
 
-        [HttpPatch, Route("UpdateStatus/{id}")]
+        [HttpGet, Route("GetAll"), Authorize]
+        public async Task<IActionResult> GetAllInvoices(int page, int limit, CancellationToken cancellationToken = default)
+        {
+            var response = await _mediator.Send(new GetAllInvoicesRequest { CurrentUserId = GetLoggedUserId(), Page = page, Limit = limit }, cancellationToken);
+
+            return GetResponse(response);
+        }
+
+        [HttpGet, Route("Search"), Authorize]
+        public async Task<IActionResult> SearchInvoicesByStatus(int page, int limit, InvoiceStatus status, CancellationToken cancellationToken = default)
+        {
+            var response = await _mediator.Send(new SearchInvoicesRequest { CurrentUserId = GetLoggedUserId(), Status = status, Page = page, Limit = limit}, cancellationToken);
+
+            return GetResponse(response);
+        }
+
+        [HttpGet, Route("Get/{id}"), Authorize]
+        public async Task<IActionResult> Get(int id, CancellationToken cancellationToken = default)
+        {
+            var response = await _mediator.Send(new GetInvoiceRequest { CurrentUserId = GetLoggedUserId(), Id = id }, cancellationToken);
+
+            return GetResponse(response);
+        }
+
+        [HttpPatch, Route("UpdateStatus/{id}"), Authorize]
         public async Task<IActionResult> UpdateInvoiceStatus(int id, InvoiceStatus status, CancellationToken cancellationToken = default)
         {
             var response = await _mediator.Send(new UpdateInvoiceStatusRequest { Id = id, Status = status }, cancellationToken);
