@@ -31,6 +31,10 @@ import { ErrorHandler, NgModule } from '@angular/core';
         loadChildren: () => import('./pages/bank/bank.module').then(m => m.BankModule)
       },
       {
+        path: 'invoice',
+        loadChildren: () => import('./pages/invoice/invoice.module').then(m => m.InvoiceModule)
+      },
+      {
         path: '**',
         component: Error404Component
       },
