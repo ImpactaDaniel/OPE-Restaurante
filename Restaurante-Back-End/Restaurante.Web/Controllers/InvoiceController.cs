@@ -1,6 +1,8 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Restaurante.Application.Invoices.Requests.Create;
+using Restaurante.Application.Invoices.Requests.Get;
 using Restaurante.Application.Invoices.Requests.Update;
 using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Domain.Invoices.Models.Enum;
@@ -23,7 +25,15 @@ namespace Restaurante.Web.Controllers
             return GetResponse(response);
         }
 
-        [HttpPatch, Route("UpdateStatus/{id}")]
+        [HttpGet, Route("GetAll"), Authorize]
+        public async Task<IActionResult> GetAllInvoices(CancellationToken cancellationToken = default)
+        {
+            var response = await _mediator.Send(new GetAllInvoicesRequest { CurrentUserId = GetLoggedUserId() }, cancellationToken);
+
+            return GetResponse(response);
+        }
+
+        [HttpPatch, Route("UpdateStatus/{id}"), Authorize]
         public async Task<IActionResult> UpdateInvoiceStatus(int id, InvoiceStatus status, CancellationToken cancellationToken = default)
         {
             var response = await _mediator.Send(new UpdateInvoiceStatusRequest { Id = id, Status = status }, cancellationToken);
