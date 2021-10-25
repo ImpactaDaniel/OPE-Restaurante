@@ -350,3 +350,4 @@ MigrationBackup/
 /Restaurante.Test/test.settings.local.json
 kubectl/*
 *[Dd]ocker*
+/Restaurante-Back-End/.idea/.idea.Restaurante/.idea
