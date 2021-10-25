@@ -24,13 +24,13 @@ namespace Restaurante.Web.Middlewares
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            if (context.User.Identity.IsAuthenticated)
+            if (context.User.Identity?.IsAuthenticated == true)
             {
                 var id = context.User.Claims.First(c => c.Type == ClaimTypes.Sid)?.Value;
                 if (!string.IsNullOrEmpty(id))
                 {
                     var user = await _service.Get(int.Parse(id));
-                    if (user.FirstAccess && !context.Request.Path.Value.Contains("ChangePasswordFirstAccess"))
+                    if (user.FirstAccess && !context.Request.Path.Value?.Contains("ChangePasswordFirstAccess") == true)
                     {
                         context.Response.Clear();
                         context.Response.StatusCode = StatusCodes.Status400BadRequest;
