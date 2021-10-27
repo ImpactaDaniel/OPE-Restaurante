@@ -21,8 +21,6 @@ namespace Restaurante.Infra.Common.Persistence
 
         public DbSet<Phone> Phones { get; set; }
 
-        public DbSet<Address> Addresses { get; set; }
-
         public DbSet<Product> Products { get; set; }
 
         public DbSet<ProductCategory> ProductCategories { get; set; }

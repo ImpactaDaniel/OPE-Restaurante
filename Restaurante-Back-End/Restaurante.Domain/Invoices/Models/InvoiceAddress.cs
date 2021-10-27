@@ -3,21 +3,22 @@ using Restaurante.Domain.Common.Models;
 using Restaurante.Domain.Users.Exceptions;
 using System.Linq;
 
-namespace Restaurante.Domain.Users.Employees.Models
+namespace Restaurante.Domain.Invoices.Models
 {
-    public class Address : Entity<int>
+    public class InvoiceAddress : Entity<int>
     {
+        private InvoiceAddress()
+        {
+        }
+
         public string Street { get; private set; }
         public string Number { get; private set; }
         public string District { get; private set; }
         public string CEP { get; private set; }
         public string State { get; private set; }
         public string City { get; private set; }
-        protected Address()
-        {
-        }
 
-        public Address(string street, string number, string district, string cep, string state, string city)
+        public InvoiceAddress(string street, string number, string district, string cep, string state, string city)
             : this()
         {
             ValidateNullString(street, "Rua");
@@ -33,7 +34,7 @@ namespace Restaurante.Domain.Users.Employees.Models
             CEP = cep;
         }
 
-        public Address UpdateStreet(string street)
+        public InvoiceAddress UpdateStreet(string street)
         {
             ValidateNullString(street, "Rua");
             if (Street != street)
@@ -41,14 +42,14 @@ namespace Restaurante.Domain.Users.Employees.Models
             return this;
         }
 
-        public Address UpdateNumber(string number)
+        public InvoiceAddress UpdateNumber(string number)
         {
             ValidateNullString(number, "Número");
             if (Number != number)
                 Number = number;
             return this;
         }
-        public Address UpdateDistrict(string district)
+        public InvoiceAddress UpdateDistrict(string district)
         {
             ValidateNullString(district, "Bairro");
             if (District != district)
@@ -56,7 +57,7 @@ namespace Restaurante.Domain.Users.Employees.Models
             return this;
         }
 
-        public Address UpdateCEP(string cep)
+        public InvoiceAddress UpdateCEP(string cep)
         {
             ValidateNullString(cep, "CEP");
             ValidateCEP(cep);
@@ -65,7 +66,7 @@ namespace Restaurante.Domain.Users.Employees.Models
             return this;
         }
 
-        public Address UpdateCity(string city)
+        public InvoiceAddress UpdateCity(string city)
         {
             ValidateNullString(city, "Cidade");
             if (City != city)
@@ -73,7 +74,7 @@ namespace Restaurante.Domain.Users.Employees.Models
             return this;
         }
 
-        public Address UpdateState(string state)
+        public InvoiceAddress UpdateState(string state)
         {
             ValidateNullString(state, "Estado");
             if (State != state)

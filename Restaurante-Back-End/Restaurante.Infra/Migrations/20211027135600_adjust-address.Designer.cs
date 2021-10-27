@@ -9,14 +9,149 @@ using Restaurante.Infra.Common.Persistence;
 namespace Restaurante.Infra.Migrations
 {
     [DbContext(typeof(RestauranteDbContext))]
-    [Migration("20211010030342_adding-product")]
-    partial class addingproduct
+    [Migration("20211027135600_adjust-address")]
+    partial class adjustaddress
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.9");
+                .HasAnnotation("ProductVersion", "5.0.11");
+
+            modelBuilder.Entity("Restaurante.Domain.Invoices.Models.Invoice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("AddressId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("PaymentId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("PaymentId");
+
+                    b.ToTable("Invoices");
+                });
+
+            modelBuilder.Entity("Restaurante.Domain.Invoices.Models.InvoiceAddress", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CEP")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("City")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("District")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Number")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("State")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Street")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InvoiceAddresses");
+                });
+
+            modelBuilder.Entity("Restaurante.Domain.Invoices.Models.InvoiceLine", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("InvoiceId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Obs")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InvoiceId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("InvoiceLines");
+                });
+
+            modelBuilder.Entity("Restaurante.Domain.Invoices.Models.InvoiceLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("InvoiceId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InvoiceId");
+
+                    b.ToTable("InvoiceLogs");
+                });
+
+            modelBuilder.Entity("Restaurante.Domain.Invoices.Models.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("PaymentTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("PaymentType")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("Payments");
+                });
 
             modelBuilder.Entity("Restaurante.Domain.Products.Models.Photo", b =>
                 {
@@ -50,7 +185,7 @@ namespace Restaurante.Infra.Migrations
                     b.Property<int>("CreatedBy")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime?>("CreatedOn")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
@@ -65,10 +200,10 @@ namespace Restaurante.Infra.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("QuantityStock")
+                    b.Property<int?>("QuantityStock")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("UpdatedBy")
+                    b.Property<int?>("UpdatedBy")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("UpdatedOn")
@@ -95,6 +230,72 @@ namespace Restaurante.Infra.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProductCategories");
+                });
+
+            modelBuilder.Entity("Restaurante.Domain.Users.Customers.Models.Customer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("FirstAccess")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("Restaurante.Domain.Users.Customers.Models.CustomerAddress", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CEP")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("City")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("District")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Number")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("State")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Street")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("CustomerAddresses");
                 });
 
             modelBuilder.Entity("Restaurante.Domain.Users.Employees.Models.Account", b =>
@@ -241,6 +442,58 @@ namespace Restaurante.Infra.Migrations
                     b.ToTable("Phones");
                 });
 
+            modelBuilder.Entity("Restaurante.Domain.Invoices.Models.Invoice", b =>
+                {
+                    b.HasOne("Restaurante.Domain.Invoices.Models.InvoiceAddress", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
+
+                    b.HasOne("Restaurante.Domain.Users.Customers.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId");
+
+                    b.HasOne("Restaurante.Domain.Invoices.Models.Payment", "Payment")
+                        .WithMany()
+                        .HasForeignKey("PaymentId");
+
+                    b.Navigation("Address");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Payment");
+                });
+
+            modelBuilder.Entity("Restaurante.Domain.Invoices.Models.InvoiceLine", b =>
+                {
+                    b.HasOne("Restaurante.Domain.Invoices.Models.Invoice", null)
+                        .WithMany("Products")
+                        .HasForeignKey("InvoiceId");
+
+                    b.HasOne("Restaurante.Domain.Products.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Restaurante.Domain.Invoices.Models.InvoiceLog", b =>
+                {
+                    b.HasOne("Restaurante.Domain.Invoices.Models.Invoice", "Invoice")
+                        .WithMany()
+                        .HasForeignKey("InvoiceId");
+
+                    b.Navigation("Invoice");
+                });
+
+            modelBuilder.Entity("Restaurante.Domain.Invoices.Models.Payment", b =>
+                {
+                    b.HasOne("Restaurante.Domain.Users.Customers.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId");
+
+                    b.Navigation("Customer");
+                });
+
             modelBuilder.Entity("Restaurante.Domain.Products.Models.Product", b =>
                 {
                     b.HasOne("Restaurante.Domain.Products.Models.ProductCategory", "Category")
@@ -254,6 +507,15 @@ namespace Restaurante.Infra.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("Photo");
+                });
+
+            modelBuilder.Entity("Restaurante.Domain.Users.Customers.Models.CustomerAddress", b =>
+                {
+                    b.HasOne("Restaurante.Domain.Users.Customers.Models.Customer", "Customer")
+                        .WithMany("Addresses")
+                        .HasForeignKey("CustomerId");
+
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("Restaurante.Domain.Users.Employees.Models.Account", b =>
@@ -285,6 +547,16 @@ namespace Restaurante.Infra.Migrations
                     b.HasOne("Restaurante.Domain.Users.Employees.Models.Employee", null)
                         .WithMany("Phones")
                         .HasForeignKey("EmployeeId");
+                });
+
+            modelBuilder.Entity("Restaurante.Domain.Invoices.Models.Invoice", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("Restaurante.Domain.Users.Customers.Models.Customer", b =>
+                {
+                    b.Navigation("Addresses");
                 });
 
             modelBuilder.Entity("Restaurante.Domain.Users.Employees.Models.Employee", b =>

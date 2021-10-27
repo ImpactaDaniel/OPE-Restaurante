@@ -53,7 +53,7 @@ namespace Restaurante.Application.Invoices.Requests.Update
                         {
                             Invoice = invoice,
                             NotificationType = Common.Models.Enums.InvoiceNotificationType.Updated
-                        });
+                        }, cancellationToken);
 
                     return new Response<Invoice>(updated, invoice);
 

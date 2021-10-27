@@ -15,6 +15,8 @@ namespace Restaurante.Application.Products.Requests.Get
 {
     public class SearchProductsRequest : ProductRequest<SearchProductsRequest>, IRequest<Response<IEnumerable<ProductResponseDTO>>>
     {
+        public int Page { get; set; }
+        public int Limit { get; set; }
         internal class SearchProductsRequestHandler : IRequestHandler<SearchProductsRequest, Response<IEnumerable<ProductResponseDTO>>>
         {
             private readonly IProductService _productService;
@@ -30,7 +32,7 @@ namespace Restaurante.Application.Products.Requests.Get
             {
                 try
                 {
-                    var products = await _productService.SearchProducts(request.Name, cancellationToken);
+                    var products = await _productService.SearchProducts(request.Name, request.Page, request.Limit, cancellationToken);
                     if (products.Any())
                         return new Response<IEnumerable<ProductResponseDTO>>(true, _mapper.Map(products));
                     return new Response<IEnumerable<ProductResponseDTO>>(true, null);
