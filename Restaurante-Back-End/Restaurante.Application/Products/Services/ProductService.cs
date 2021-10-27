@@ -134,11 +134,11 @@ namespace Restaurante.Application.Products.Services
             }
         }
 
-        public async Task<IEnumerable<Product>> SearchProducts(string name, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Product>> SearchProducts(string name, int page, int limit, CancellationToken cancellationToken = default)
         {
             try
             {
-                var product = await _productDomainRepository.Search(name, cancellationToken);
+                var product = await _productDomainRepository.Search(name, page, limit, cancellationToken);
                 return product;
             }
             catch (RestauranteException e)

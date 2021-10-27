@@ -49,10 +49,12 @@ namespace Restaurante.Infra.Products
             return entity;
         }
 
-        public async Task<IEnumerable<Product>> Search(string name, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Product>> Search(string name, int page, int limit, CancellationToken cancellationToken = default)
         {
             return await All()
                 .Where(p => EF.Functions.Like(p.Name, $"%{name}%"))
+                .Skip(page * limit)
+                .Take(limit)
                 .Include(p => p.Photo)
                 .Include(p => p.Category)
                 .ToListAsync(cancellationToken);
