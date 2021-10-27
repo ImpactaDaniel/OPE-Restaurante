@@ -11,7 +11,6 @@ namespace Restaurante.Infra.Common.Persistence.Interfaces
         DbSet<Employee> Employees { get; }
         DbSet<Account> Accounts { get; }
         DbSet<Phone> Phones { get; }
-        DbSet<Address> Addresses { get; }
         DbSet<Bank> Banks { get; }
         DbSet<Product> Products { get; }
         DbSet<Photo> Photos { get; }

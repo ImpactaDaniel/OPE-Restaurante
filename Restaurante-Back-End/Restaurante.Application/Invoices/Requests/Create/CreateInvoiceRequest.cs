@@ -59,7 +59,7 @@ namespace Restaurante.Application.Invoices.Requests.Create
 
                     var invoice = new Invoice
                     {
-                        Address = address,
+                        Address = new InvoiceAddress(address.Street, address.Number, address.District, address.CEP, address.State, address.City),
                         Customer = customer,
                         Products = lines.ToList(),
                         Status = Domain.Invoices.Models.Enum.InvoiceStatus.Created
