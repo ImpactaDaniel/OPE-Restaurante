@@ -14,7 +14,7 @@ namespace Restaurante.Infra.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.9");
+                .HasAnnotation("ProductVersion", "5.0.11");
 
             modelBuilder.Entity("Restaurante.Domain.Invoices.Models.Invoice", b =>
                 {
@@ -43,6 +43,35 @@ namespace Restaurante.Infra.Migrations
                     b.HasIndex("PaymentId");
 
                     b.ToTable("Invoices");
+                });
+
+            modelBuilder.Entity("Restaurante.Domain.Invoices.Models.InvoiceAddress", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CEP")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("City")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("District")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Number")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("State")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Street")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InvoiceAddresses");
                 });
 
             modelBuilder.Entity("Restaurante.Domain.Invoices.Models.InvoiceLine", b =>
@@ -233,6 +262,40 @@ namespace Restaurante.Infra.Migrations
                     b.ToTable("Customers");
                 });
 
+            modelBuilder.Entity("Restaurante.Domain.Users.Customers.Models.CustomerAddress", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CEP")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("City")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("District")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Number")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("State")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Street")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("CustomerAddresses");
+                });
+
             modelBuilder.Entity("Restaurante.Domain.Users.Employees.Models.Account", b =>
                 {
                     b.Property<int>("Id")
@@ -270,9 +333,6 @@ namespace Restaurante.Infra.Migrations
                     b.Property<string>("City")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("CustomerId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("District")
                         .HasColumnType("TEXT");
 
@@ -286,8 +346,6 @@ namespace Restaurante.Infra.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
 
                     b.ToTable("Addresses");
                 });
@@ -384,7 +442,7 @@ namespace Restaurante.Infra.Migrations
 
             modelBuilder.Entity("Restaurante.Domain.Invoices.Models.Invoice", b =>
                 {
-                    b.HasOne("Restaurante.Domain.Users.Employees.Models.Address", "Address")
+                    b.HasOne("Restaurante.Domain.Invoices.Models.InvoiceAddress", "Address")
                         .WithMany()
                         .HasForeignKey("AddressId");
 
@@ -449,6 +507,15 @@ namespace Restaurante.Infra.Migrations
                     b.Navigation("Photo");
                 });
 
+            modelBuilder.Entity("Restaurante.Domain.Users.Customers.Models.CustomerAddress", b =>
+                {
+                    b.HasOne("Restaurante.Domain.Users.Customers.Models.Customer", "Customer")
+                        .WithMany("Addresses")
+                        .HasForeignKey("CustomerId");
+
+                    b.Navigation("Customer");
+                });
+
             modelBuilder.Entity("Restaurante.Domain.Users.Employees.Models.Account", b =>
                 {
                     b.HasOne("Restaurante.Domain.Users.Employees.Models.Bank", "Bank")
@@ -456,13 +523,6 @@ namespace Restaurante.Infra.Migrations
                         .HasForeignKey("BankId");
 
                     b.Navigation("Bank");
-                });
-
-            modelBuilder.Entity("Restaurante.Domain.Users.Employees.Models.Address", b =>
-                {
-                    b.HasOne("Restaurante.Domain.Users.Customers.Models.Customer", null)
-                        .WithMany("Addresses")
-                        .HasForeignKey("CustomerId");
                 });
 
             modelBuilder.Entity("Restaurante.Domain.Users.Employees.Models.Employee", b =>
