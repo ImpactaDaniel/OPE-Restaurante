@@ -1,0 +1,74 @@
+<div class="container-fluid min-vh-100">
+  <div class="row overflow-hidden vh-100">
+    <div class="col-md-6 p-0">
+      <app-logo></app-logo>
+    </div>
+    <div class="col-md-6 justify-content-center">
+      <div class="row justify-content-center">
+        <h2>
+          Preencha os dados abaixo
+        </h2>
+      </div>
+      <div>
+        <form>
+          <div class="row justify-content-center">
+            <div class="form-group">
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <mat-form-field>
+                      <mat-label>Nome</mat-label>
+                      <input tabindex="1" type="text" matInput name="name" formControlName="name">
+                      <mat-error>Nome do produto é obrigatório</mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-sm-6">
+                    <mat-form-field>
+                      <mat-label>Preço</mat-label>
+                      <input tabindex="1" type="text" mask="0*,00" matInput name="preco" formControlName="price">
+                      <mat-error>Preço do produto é obrigatório</mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <mat-form-field>
+                      <mat-label>Descrição</mat-label>
+                      <textarea tabindex="1" type="text" matInput name="descricao"
+                        formControlName="description"></textarea>
+                      <mat-error>Descrição do produto é obrigatório</mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-sm-6">
+                    <mat-form-field>
+                      <mat-label>Acompanhamentos</mat-label>
+                      <textarea tabindex="1" type="text" matInput name="accompaniments"
+                        formControlName="accompaniments"></textarea>
+                      <mat-error>Acompanhamentos do produto é obrigatório</mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <mat-form-field>
+                      <mat-label>Quantidade no estoque</mat-label>
+                      <input tabindex="1" type="text" mask="0*" matInput name="quantityStock"
+                        formControlName="quantityStock">
+                      <mat-error>Quantidade no estoque do produto é obrigatório</mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-sm-6">
+                    <mat-slide-toggle>Disponível</mat-slide-toggle>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 text-center">
+            <button class="btn btn-primary">Salvar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

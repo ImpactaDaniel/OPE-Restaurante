@@ -23,6 +23,7 @@ export class CreateEmployeeComponent implements OnInit {
   erroMsg = "";
   funcionario: Employee;
   form: FormGroup;
+  banks: any;
 
   constructor(
     private formbuilder: FormBuilder,

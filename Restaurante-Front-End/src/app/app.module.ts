@@ -1,3 +1,4 @@
+import { LogoModule } from './components/logo/logo.module';
 import { GlobalErrorHandler } from './middlewares/GlobalErrorHandler';
 import { Error404Component } from './components/errors/error404/error404.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -11,12 +12,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderModule } from './components/header/header.module';
 import { SideNavModule } from './components/side-nav/side-nav.module';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { ProductsComponent } from './pages/products/products/products.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ProductsComponent
+    AppComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -35,6 +34,10 @@ import { ProductsComponent } from './pages/products/products/products.component'
       {
         path: 'invoice',
         loadChildren: () => import('./pages/invoice/invoice.module').then(m => m.InvoiceModule)
+      },
+      {
+        path: 'products',
+        loadChildren: () => import('./pages/products/products.module').then(m => m.ProductsModule)
       },
       {
         path: '**',
