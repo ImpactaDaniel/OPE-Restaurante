@@ -135,8 +135,7 @@
                   <mat-form-field>
                     <mat-label>Banco</mat-label>
                     <mat-select formControlName="bankId" name="bankId" tabindex="11">
-                      <mat-option name="bd" [value]="1">Bradesco</mat-option>
-                      <mat-option name="bb" [value]="2">Banco do Brasil</mat-option>
+                      <mat-option *ngFor="let bank of banks" [value]="bank.id">{{ bank.name }}</mat-option>
                     </mat-select>
                     <mat-error>Banco é obrigatório</mat-error>
                   </mat-form-field>
