@@ -10,6 +10,7 @@ export class GlobalErrorHandler implements ErrorHandler {
     try {
       if(error.status !== 400 && error.status !== 401){
         this.alertService.showError();
+        console.error(error);
         return;
       }
       console.error(error);

@@ -7,6 +7,7 @@ import {
 } from "@angular/forms";
 import { AlertService } from "src/app/services/alert.service";
 import { ConsultaCepService } from "src/app/services/consulta-cep.service";
+import { BasicentitiesService } from "src/app/services/entities/basicentities.service";
 import {
   Employee,
   Phone,
@@ -23,15 +24,22 @@ export class CreateEmployeeComponent implements OnInit {
   erroMsg = "";
   funcionario: Employee;
   form: FormGroup;
+  banks: any;
 
   constructor(
     private formbuilder: FormBuilder,
     private employeeService: EmployeeService,
     private consultaCepService: ConsultaCepService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private basicEntitiesService: BasicentitiesService
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.buildForm();
+    await this.getBanks();
+  }
+
+  private buildForm(): void {
     this.form = this.formbuilder.group({
       name: ["", Validators.required],
       lastname: ["", Validators.required],
@@ -87,6 +95,12 @@ export class CreateEmployeeComponent implements OnInit {
       document: ["", [Validators.required, Validators.pattern(/\d+/g)]],
       birthDate: ["", Validators.required],
     });
+  }
+
+  private async getBanks() {
+    let response = await this.basicEntitiesService.getAll({ url: "Banks", page: 0, pageSize: 50 }).toPromise();
+    this.banks = response.response.result.entities;
+    console.log(this.banks);
   }
 
   async consultarCep() {

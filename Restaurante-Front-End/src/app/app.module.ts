@@ -1,3 +1,4 @@
+import { LogoModule } from './components/logo/logo.module';
 import { GlobalErrorHandler } from './middlewares/GlobalErrorHandler';
 import { Error404Component } from './components/errors/error404/error404.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -33,6 +34,10 @@ import { ErrorHandler, NgModule } from '@angular/core';
       {
         path: 'invoice',
         loadChildren: () => import('./pages/invoice/invoice.module').then(m => m.InvoiceModule)
+      },
+      {
+        path: 'products',
+        loadChildren: () => import('./pages/products/products.module').then(m => m.ProductsModule)
       },
       {
         path: '**',

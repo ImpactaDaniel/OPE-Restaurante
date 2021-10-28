@@ -1,3 +1,4 @@
+import { LogoModule } from './../../../components/logo/logo.module';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -17,7 +18,8 @@ const routes: Routes = [
     CommonModule,
     ReactiveFormsModule,
     MatInputModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    LogoModule
   ],
   declarations: [CreateComponent]
 })
