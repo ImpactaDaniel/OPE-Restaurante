@@ -1,11 +1,13 @@
+import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { LogoModule } from './../../../components/logo/logo.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CreateProductComponent } from './create-product.component';
 import { RouterModule, Routes } from '@angular/router';
-import { NgxMaskModule } from 'ngx-mask';
+import { IConfig, NgxMaskModule } from 'ngx-mask';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -14,6 +16,10 @@ const routes: Routes = [
   }
 ]
 
+const maskConfig: Partial<IConfig> = {
+  dropSpecialCharacters: false
+}
+
 @NgModule({
   imports: [
     CommonModule,
@@ -21,7 +27,9 @@ const routes: Routes = [
     LogoModule,
     MatInputModule,
     MatSlideToggleModule,
-    NgxMaskModule.forRoot(),
+    NgxMaskModule.forRoot(maskConfig),
+    ReactiveFormsModule,
+    MatSelectModule
   ],
   declarations: [CreateProductComponent]
 })

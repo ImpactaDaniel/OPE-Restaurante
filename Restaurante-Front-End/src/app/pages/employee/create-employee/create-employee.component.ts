@@ -34,9 +34,9 @@ export class CreateEmployeeComponent implements OnInit {
     private basicEntitiesService: BasicentitiesService
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.buildForm();
-    this.getBanks();
+    await this.getBanks();
   }
 
   private buildForm(): void {
