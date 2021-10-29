@@ -30,14 +30,16 @@ namespace Restaurante.Application.Invoices.Requests.Create
             private readonly IProductService _productService;
             private readonly ILogger<CreateInvoiceRequestHandler> _logger;
             private readonly IMediator _mediator;
+            private readonly IInvoiceLogDomainRepository _logRepository;
 
-            public CreateInvoiceRequestHandler(INotifier notifier, IInvoiceDomainRepository invoiceRespository, ICustomersDomainRepository customersDomainRepository, IProductService productService, ILogger<CreateInvoiceRequestHandler> logger, IMediator mediator)
+            public CreateInvoiceRequestHandler(INotifier notifier, IInvoiceDomainRepository invoiceRespository, ICustomersDomainRepository customersDomainRepository, IProductService productService, ILogger<CreateInvoiceRequestHandler> logger, IMediator mediator, IInvoiceLogDomainRepository logRepository)
             {
                 _notifier = notifier;
                 _invoiceRespository = invoiceRespository;
                 _customersDomainRepository = customersDomainRepository;
                 _productService = productService;
                 _logger = logger;
+                _logRepository = logRepository;
                 _mediator = mediator;
             }
 
@@ -66,6 +68,14 @@ namespace Restaurante.Application.Invoices.Requests.Create
                     };
 
                     _ = await _invoiceRespository.CreateInvoice(invoice, cancellationToken);
+
+                    await _logRepository.CreateLog(new InvoiceLog
+                    {
+                        Date = DateTime.Now,
+                        Invoice = invoice,
+                        Message = $"Pedido {invoice.Id} criado.",
+                        Type = Domain.Invoices.Models.Enum.InvoiceLogType.Created
+                    }, cancellationToken);
 
                     await _mediator.Publish(new InvoiceNotification
                     {
