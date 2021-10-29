@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Linq.Expressions;
 using System;
 using Restaurante.Domain.Common.Data.Models;
+using Restaurante.Domain.Invoices.Models.Enum;
 
 namespace Restaurante.Infra.Invoices.Repositories
 {
@@ -33,6 +34,7 @@ namespace Restaurante.Infra.Invoices.Repositories
                     .Include(i => i.Products)
                         .ThenInclude(p => p.Product)
                     .Include(i => i.Address)
+                    .Include(i => i.Logs)
                     .Include(i => i.Customer)
                     .Include(i => i.Payment)
                   .FirstOrDefaultAsync(condicao, cancellationToken);
@@ -49,8 +51,9 @@ namespace Restaurante.Infra.Invoices.Repositories
                     .Include(i => i.Products)
                         .ThenInclude(p => p.Product)
                     .Include(i => i.Address)
+                    .Include(i => i.Logs.Where(l => l.Type == InvoiceLogType.Created))
                     .Include(i => i.Customer)
-                    .Include(i => i.Payment)
+                    .Include(i => i.Payment)                  
                   .ToListAsync(cancellationToken);
 
         public async Task<IList<Invoice>> GetAll(Customer customer, CancellationToken cancellationToken = default) =>
@@ -59,6 +62,7 @@ namespace Restaurante.Infra.Invoices.Repositories
                             .ThenInclude(p => p.Product)
                         .Include(i => i.Address)
                         .Include(i => i.Customer)
+                        .Include(i => i.Logs.Where(l => l.Type == InvoiceLogType.Created))
                         .Include(i => i.Payment)
                     .Where(i => i.Customer == customer)
                     .ToListAsync(cancellationToken);
@@ -68,6 +72,7 @@ namespace Restaurante.Infra.Invoices.Repositories
                         .Include(i => i.Products)
                             .ThenInclude(p => p.Product)
                         .Include(i => i.Address)
+                        .Include(i => i.Logs.Where(l => l.Type == InvoiceLogType.Created))
                         .Include(i => i.Customer)
                         .Include(i => i.Payment)
                     .Where(condition)
@@ -79,6 +84,7 @@ namespace Restaurante.Infra.Invoices.Repositories
                         .Include(i => i.Products)
                             .ThenInclude(p => p.Product)
                         .Include(i => i.Address)
+                        .Include(i => i.Logs.Where(l => l.Type == InvoiceLogType.Created))
                         .Include(i => i.Customer)
                         .Include(i => i.Payment)
                     .Skip(page * limit)
@@ -86,11 +92,6 @@ namespace Restaurante.Infra.Invoices.Repositories
                     .ToListAsync(cancellationToken);
 
             var count = await All()
-                        .Include(i => i.Products)
-                            .ThenInclude(p => p.Product)
-                        .Include(i => i.Address)
-                        .Include(i => i.Customer)
-                        .Include(i => i.Payment)
                     .CountAsync(cancellationToken);
 
             return new PaginationInfo<Invoice>
@@ -108,17 +109,13 @@ namespace Restaurante.Infra.Invoices.Repositories
                         .Include(i => i.Address)
                         .Include(i => i.Customer)
                         .Include(i => i.Payment)
+                        .Include(i => i.Logs.Where(l => l.Type == InvoiceLogType.Created))
                     .Where(condition)
                     .Skip(page * limit)
                     .Take(limit)
                     .ToListAsync(cancellationToken);
 
             var count = await All()
-                        .Include(i => i.Products)
-                            .ThenInclude(p => p.Product)
-                        .Include(i => i.Address)
-                        .Include(i => i.Customer)
-                        .Include(i => i.Payment)
                     .Where(condition)
                     .CountAsync(cancellationToken);
 

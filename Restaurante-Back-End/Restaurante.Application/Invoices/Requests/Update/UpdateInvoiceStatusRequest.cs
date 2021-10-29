@@ -26,13 +26,15 @@ namespace Restaurante.Application.Invoices.Requests.Update
             private readonly IInvoiceDomainRepository _invoiceRespository;
             private readonly ILogger<UpdateInvoiceStatusRequestHandler> _logger;
             private readonly IMediator _mediator;
+            private readonly IInvoiceLogDomainRepository _logRepository;
 
-            public UpdateInvoiceStatusRequestHandler(INotifier notifier, IInvoiceDomainRepository invoiceRespository, ILogger<UpdateInvoiceStatusRequestHandler> logger, IMediator mediator)
+            public UpdateInvoiceStatusRequestHandler(INotifier notifier, IInvoiceDomainRepository invoiceRespository, ILogger<UpdateInvoiceStatusRequestHandler> logger, IMediator mediator, IInvoiceLogDomainRepository logRepository)
             {
                 _notifier = notifier;
                 _invoiceRespository = invoiceRespository;
                 _logger = logger;
                 _mediator = mediator;
+                _logRepository = logRepository;
             }
 
             public async Task<Response<Invoice>> Handle(UpdateInvoiceStatusRequest request, CancellationToken cancellationToken)
@@ -49,11 +51,21 @@ namespace Restaurante.Application.Invoices.Requests.Update
                     var updated = await _invoiceRespository.Save(invoice, cancellationToken);
 
                     if (updated)
+                    {
+                        await _logRepository.CreateLog(new InvoiceLog
+                        {
+                            Date = DateTime.Now,
+                            Invoice = invoice,
+                            Message = $"Pedido {invoice.Id} atualizado.",
+                            Type = InvoiceLogType.Updated
+                        }, cancellationToken);
+
                         await _mediator.Publish(new InvoiceNotification
                         {
                             Invoice = invoice,
                             NotificationType = Common.Models.Enums.InvoiceNotificationType.Updated
                         }, cancellationToken);
+                    }
 
                     return new Response<Invoice>(updated, invoice);
 
