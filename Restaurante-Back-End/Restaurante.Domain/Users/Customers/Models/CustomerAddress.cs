@@ -7,7 +7,6 @@ namespace Restaurante.Domain.Users.Customers.Models
 {
     public class CustomerAddress : Entity<int>
     {
-        public Customer Customer { get; set; }
         private CustomerAddress() { 
         }
         public string Street { get; private set; }

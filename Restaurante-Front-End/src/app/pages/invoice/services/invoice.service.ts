@@ -1,5 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
+import { Observable } from 'rxjs';
+import { APIResponse } from 'src/app/models/common/apiResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -7,13 +10,30 @@ import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 export class InvoiceService {
 
   private hubConnection: HubConnection;
+  private urlInvoices: string = 'Invoice'
 
-  constructor(@Inject("BASE_URL") private url: string) { }
+  constructor(@Inject("BASE_URL") private url: string, private httpClient: HttpClient) { }
 
   public init() {
-    // this.buildConnection();
-    // this.startConnection();
-    // this.registerOnServerEvents();
+    this.buildConnection();
+    this.startConnection();
+    this.registerOnServerEvents();
+  }
+
+  public getAll(pagination: any): any {
+    return this.httpClient.get<any>(
+      `${this.url}${this.urlInvoices}/GetAll?page=${pagination.page}&limit=${pagination.limit}`
+      );
+  }
+
+  public search(pagination: any): any {
+    return this.httpClient.get<APIResponse<any>>(
+      `${this.url}${this.urlInvoices}/
+      Search?field=${pagination.field}&
+      value=${pagination.value}&
+      page=${pagination.page}&
+      size=${pagination.limit}`
+      );
   }
 
   private buildConnection() {
@@ -45,4 +65,5 @@ export class InvoiceService {
     });
   }
 
+ 
 }

@@ -11,10 +11,6 @@ namespace Restaurante.Infra.Mappings
             builder
                 .ToTable("CustomerAddresses")
                 .HasKey(ca => ca.Id);
-
-            builder
-                .HasOne(ca => ca.Customer)
-                .WithMany(c => c.Addresses);
         }
     }
 }

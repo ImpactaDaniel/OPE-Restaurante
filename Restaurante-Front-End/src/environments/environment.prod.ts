@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  urlService: 'http://localhost:44334/'
+  urlService: 'https://localhost:44334/'
 };
