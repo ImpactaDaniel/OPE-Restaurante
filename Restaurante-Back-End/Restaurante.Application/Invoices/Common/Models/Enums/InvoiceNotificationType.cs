@@ -2,6 +2,7 @@
 {
     public enum InvoiceNotificationType
     {
+        Created,
         Accepted,
         Updated,
         Rejected
