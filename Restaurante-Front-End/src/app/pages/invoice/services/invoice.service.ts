@@ -36,6 +36,12 @@ export class InvoiceService {
       );
   }
 
+  public invoiceStatusChange(statusChange: any) {
+    return this.httpClient.patch<any>(
+      `${this.url}${this.urlInvoices}/UpdateStatus/${statusChange.id}?status=${statusChange.status}`, statusChange
+    )
+  }
+
   private buildConnection() {
     this.hubConnection = new HubConnectionBuilder()
                               .withUrl(`${this.url}invoice-notification-hub`)

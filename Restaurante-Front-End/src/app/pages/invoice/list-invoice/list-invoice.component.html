@@ -10,15 +10,20 @@
     </div>
 
     <div class="row justify-content-center">
-      <div class="col-md-6">
+      <div class="col-md-10">
         <table mat-table [dataSource]="invoices" class="w-100 ">
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef> ID </th>
+          <ng-container matColumnDef="invoiceId">
+            <th mat-header-cell *matHeaderCellDef> Pedido ID </th>
             <td mat-cell *matCellDef="let invoice"> {{ invoice.id }} </td>
           </ng-container>
 
+          <ng-container matColumnDef="customerId">
+            <th mat-header-cell *matHeaderCellDef> Cliente ID </th>
+            <td mat-cell *matCellDef="let invoice"> {{ invoice.customer.id }} </td>
+          </ng-container>
+
           <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Nome </th>
+            <th mat-header-cell *matHeaderCellDef> Nome do Cliente </th>
             <td mat-cell *matCellDef="let invoice"> {{ invoice.customer.name }} </td>
           </ng-container>
 
@@ -42,6 +47,11 @@
             <td mat-cell *matCellDef="let invoice"> {{ invoice.product.id }} </td>
           </ng-container>
 
+          <ng-container matColumnDef="payment">
+            <th mat-header-cell *matHeaderCellDef> Tipo Pagamento </th>
+            <td mat-cell *matCellDef="let invoice"> {{ paymentTypeDescription[invoice.payment.paymentType] }} </td>
+          </ng-container>
+
           <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef>Status</th>
             <td mat-cell *matCellDef="let invoice">
@@ -56,9 +66,11 @@
             </td>
           </ng-container>
 
-          <ng-container matColumnDef="payment">
-            <th mat-header-cell *matHeaderCellDef> Tipo Pagamento </th>
-            <td mat-cell *matCellDef="let invoice"> {{ paymentTypeDescription[invoice.payment.paymentType] }} </td>
+          <ng-container matColumnDef="changeStatus">
+            <th mat-header-cell *matHeaderCellDef> Mudar Status </th>
+            <td mat-cell *matCellDef="let row; columns: displayedColumns">
+              <button mat-icon-button (click)="invoiceStatusChange(row.id, row.status)" ><mat-icon>update</mat-icon></button>
+            <td>
           </ng-container>
 
           <ng-container matColumnDef="remove">
@@ -70,6 +82,8 @@
             <th mat-header-cell *matHeaderCellDef> Detalhes </th>
             <td mat-cell *matCellDef="let invoice"><a (click)="details(invoice.id)" href="javascript:void(0);"><mat-icon>more</mat-icon></a><td>
           </ng-container>
+
+          
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>

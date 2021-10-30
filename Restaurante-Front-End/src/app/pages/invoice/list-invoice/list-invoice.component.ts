@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/alert.service';
-import { BasicentitiesService } from 'src/app/services/entities/basicentities.service';
 import { InvoiceService } from '../services/invoice.service';
 
 @Component({
@@ -22,7 +21,7 @@ export class ListInvoiceComponent implements OnInit {
   public invoiceStatusDescription = ['Criado','Aceito', 'Rejeitado', 'Pagamento Pendente', 'Pago', 'Enviado', 'Entregue', 'Fechado']
   public paymentTypeDescription = ['Débito', 'Crédito']
 
-  public displayedColumns = ['id', 'name', 'street', 'number', 'cep', 'status', 'payment', 'remove', 'details']
+  public displayedColumns = ['invoiceId', 'name', 'customerId', 'street', 'number', 'cep', 'payment', 'status', 'changeStatus', 'remove', 'details']
 
   constructor(
     private invoiceService: InvoiceService,
@@ -66,6 +65,16 @@ export class ListInvoiceComponent implements OnInit {
       },
       err => {
         console.log(err)
+      }
+    )
+  }
+
+  public invoiceStatusChange(invoiceId: any, statusCode: any) {
+    console.log(invoiceId)
+    console.log(statusCode)
+    this.invoiceService.invoiceStatusChange({ id: invoiceId, status: statusCode }).subscribe(
+      r => {
+        console.log(r)
       }
     )
   }
