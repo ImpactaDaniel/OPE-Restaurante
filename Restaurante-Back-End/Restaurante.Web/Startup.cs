@@ -9,11 +9,8 @@ using Restaurante.Application;
 using Restaurante.Domain;
 using Restaurante.Infra;
 using Restaurante.Web.Middlewares;
-using Newtonsoft.Json;
-using Microsoft.AspNetCore.SignalR;
 using Restaurante.Application.Hubs;
 using System;
-using System.Text.Json.Serialization;
 
 namespace Restaurante.Web
 {
@@ -71,7 +68,8 @@ namespace Restaurante.Web
                 .AddSignalR()
                 .Services
                 .AddControllers()
-                .AddJsonOptions(o => o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+                .AddNewtonsoftJson(o => o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+                //.AddJsonOptions(o => o.JsonSerializerOptions.ReferenceHandler = new ReferenceResolver);
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
