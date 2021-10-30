@@ -1,9 +1,10 @@
-import { LogoModule } from './components/logo/logo.module';
+import { NewInvoiceDialogModule } from './components/dialogs/new-invoice-dialog/new-invoice-dialog.module';
 import { GlobalErrorHandler } from './middlewares/GlobalErrorHandler';
 import { Error404Component } from './components/errors/error404/error404.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -48,7 +49,9 @@ import { ErrorHandler, NgModule } from '@angular/core';
     BrowserAnimationsModule,
     SideNavModule,
     HeaderModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatDialogModule,
+    NewInvoiceDialogModule
   ],
   providers: [
     {
