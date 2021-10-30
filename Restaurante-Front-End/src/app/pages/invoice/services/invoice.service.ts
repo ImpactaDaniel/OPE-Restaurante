@@ -3,6 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { Observable } from 'rxjs';
 import { APIResponse } from 'src/app/models/common/apiResponse';
+import { EventEmitter } from 'events';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,9 @@ export class InvoiceService {
   private hubConnection: HubConnection;
   private urlInvoices: string = 'Invoice'
 
+  public emmiter = new EventEmitter();
   constructor(@Inject("BASE_URL") private url: string, private httpClient: HttpClient) { }
-
+  
   public init() {
     this.buildConnection();
     this.startConnection();
@@ -58,7 +60,8 @@ export class InvoiceService {
         .then(() => {
           console.log('Hub connected!');
         })
-        .catch(() => {
+        .catch(error => {
+          console.log(error);
           setTimeout(() => {
             this.startConnection();
           }, 5000);
@@ -66,8 +69,14 @@ export class InvoiceService {
   }
 
   private registerOnServerEvents() {
-    this.hubConnection.on('NewInvoiceNotification', (invoice, type) => {
-      console.log(invoice, type);
+    this.hubConnection.onclose( error => {
+      console.error(error);
+      setTimeout(() => {
+        this.startConnection();
+      }, 5000);
+    })
+    this.hubConnection.on('newInvoiceNotification', (invoice, type) => {
+      this.emmiter.emit('newInvoice', invoice, type);
     });
   }
 

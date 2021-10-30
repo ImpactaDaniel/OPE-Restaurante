@@ -80,7 +80,7 @@ namespace Restaurante.Application.Invoices.Requests.Create
                     await _mediator.Publish(new InvoiceNotification
                     {
                         Invoice = invoice,
-                        NotificationType = Common.Models.Enums.InvoiceNotificationType.Updated
+                        NotificationType = Common.Models.Enums.InvoiceNotificationType.Created
                     }, cancellationToken);
 
                     return new Response<Invoice>(true, invoice);

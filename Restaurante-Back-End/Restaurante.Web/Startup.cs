@@ -65,10 +65,19 @@ namespace Restaurante.Web
                                                                     .AllowAnyMethod()
                                                                     .AllowCredentials()
                                                                     .AllowAnyHeader()))
-                .AddSignalR()
-                .Services
                 .AddControllers()
-                .AddNewtonsoftJson(o => o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+                .AddNewtonsoftJson(o => o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
+                .Services
+                .AddSignalR(o => { 
+                    o.EnableDetailedErrors = true;                    
+                })
+                .AddJsonProtocol(p =>
+                {
+                    p.PayloadSerializerOptions = new System.Text.Json.JsonSerializerOptions
+                    {
+                        ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve
+                    };
+                });
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

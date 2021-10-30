@@ -3,6 +3,8 @@ import { ThrowStmt } from '@angular/compiler';
 import { AfterContentChecked, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { NewInvoiceDialogComponent } from './components/dialogs/new-invoice-dialog/new-invoice-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -15,11 +17,25 @@ export class AppComponent implements OnInit, AfterContentChecked {
   /**
    *
    */
-  constructor(private router: Router, private invoiceService: InvoiceService) {
+  constructor(private router: Router, private invoiceService: InvoiceService, private dialog: MatDialog) {
   }
 
   ngOnInit(){
     this.invoiceService.init();
+
+    this.invoiceService.emmiter.on('newInvoice', (invoice, type) => {
+      if(type === 0)
+        this.newInvoiceNotification(invoice, type);
+    });
+  }
+
+  private newInvoiceNotification(invoice, type) {
+    this.dialog.open(NewInvoiceDialogComponent, {
+      maxWidth: '70%',
+      data: {
+        invoice
+      }
+    });
   }
 
   async ngAfterContentChecked(){
