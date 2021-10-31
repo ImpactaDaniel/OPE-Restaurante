@@ -50,7 +50,6 @@ export class LoginEmployeeComponent {
         return;
       }
       if(this.tokenservice.getTokenData().firstAccess === 'True')
-        console.log('haa');
       this.router.navigate(['/']);
     }).catch(e => {
       var message = '';

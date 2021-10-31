@@ -2,6 +2,7 @@
 using Restaurante.Application.Common.Helper;
 using Restaurante.Domain.BasicEntities.Exception;
 using Restaurante.Domain.BasicEntities.Services.Interfaces;
+using Restaurante.Domain.Common.Data.Models;
 using Restaurante.Domain.Common.Exceptions;
 using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Domain.Products.Models;
@@ -11,6 +12,7 @@ using Restaurante.Domain.Users.Employees.Models;
 using Restaurante.Domain.Users.Employees.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -61,7 +63,7 @@ namespace Restaurante.Application.Products.Services
             }
         }
 
-        public async Task<IEnumerable<Product>> GetAll(int page, int length = 20, CancellationToken cancellationToken = default)
+        public async Task<PaginationInfo<Product>> GetAll(int page, int length = 20, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -134,11 +136,11 @@ namespace Restaurante.Application.Products.Services
             }
         }
 
-        public async Task<IEnumerable<Product>> SearchProducts(string name, int page, int limit, CancellationToken cancellationToken = default)
+        public async Task<PaginationInfo<Product>> SearchProducts(Expression<Func<Product, bool>> condition, int page, int limit, CancellationToken cancellationToken = default)
         {
             try
             {
-                var product = await _productDomainRepository.Search(name, page, limit, cancellationToken);
+                var product = await _productDomainRepository.Search(condition, page, limit, cancellationToken);
                 return product;
             }
             catch (RestauranteException e)

@@ -4,11 +4,11 @@ using Restaurante.Domain.Products.Repositories.Interfaces;
 using Restaurante.Infra.Common.Persistence;
 using Restaurante.Infra.Common.Persistence.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Restaurante.Domain.Common.Data.Models;
 
 namespace Restaurante.Infra.Products
 {
@@ -24,14 +24,23 @@ namespace Restaurante.Infra.Products
             return await Data.SaveChangesAsync(cancellationToken) > 0;
         }
 
-        public async Task<IEnumerable<Product>> GetAll(int start, int length, CancellationToken cancellationToken = default)
+        public async Task<PaginationInfo<Product>> GetAll(int start, int length, CancellationToken cancellationToken = default)
         {
-            return await All()
+            var entities = await All()
                 .Include(p => p.Photo)
                 .Include(p => p.Category)
                 .Skip(start)
                 .Take(length)
                 .ToListAsync(cancellationToken);
+
+            var count = await All()
+                .CountAsync(cancellationToken);
+
+            return new PaginationInfo<Product>
+            {
+                Entities = entities,
+                Size = count
+            };
         }
 
         public async Task<bool> Update(Product entity, CancellationToken cancellationToken = default)
@@ -49,15 +58,25 @@ namespace Restaurante.Infra.Products
             return entity;
         }
 
-        public async Task<IEnumerable<Product>> Search(string name, int page, int limit, CancellationToken cancellationToken = default)
+        public async Task<PaginationInfo<Product>> Search(Expression<Func<Product, bool>> condition, int page, int limit, CancellationToken cancellationToken = default)
         {
-            return await All()
-                .Where(p => EF.Functions.Like(p.Name, $"%{name}%"))
+            var entities = await All()
+                .Where(condition)
                 .Skip(page * limit)
                 .Take(limit)
                 .Include(p => p.Photo)
                 .Include(p => p.Category)
                 .ToListAsync(cancellationToken);
+
+            var count = await All()
+                        .Where(condition)
+                        .CountAsync(cancellationToken);
+
+            return new PaginationInfo<Product>
+            {
+                Entities = entities,
+                Size = count
+            };
         }
     }
 }

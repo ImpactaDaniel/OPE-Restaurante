@@ -38,9 +38,9 @@ namespace Restaurante.Web.Controllers
         }
 
         [HttpGet, Route("GetAll")]
-        public async Task<IActionResult> GetAllProducts(int page, int pageLength, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> GetAllProducts(int page, int limit, CancellationToken cancellationToken = default)
         {
-            var response = await _mediator.Send(new GetAllProductsRequest() { Page = page, Length = pageLength } , cancellationToken);
+            var response = await _mediator.Send(new GetAllProductsRequest() { Page = page, Limit = limit } , cancellationToken);
             return GetResponse(response);
         }
 
@@ -58,10 +58,10 @@ namespace Restaurante.Web.Controllers
             return GetResponse(response);
         }
 
-        [HttpGet, Route("Search/{name}")]
-        public async Task<IActionResult> SearchByName(string name, int page, int limit, CancellationToken cancellationToken = default)
+        [HttpGet, Route("Search")]
+        public async Task<IActionResult> SearchByName(string field, string value, int page, int limit, CancellationToken cancellationToken = default)
         {
-            var response = await _mediator.Send(new SearchProductsRequest() { Name = name, Page = page, Limit = limit }, cancellationToken);
+            var response = await _mediator.Send(new SearchProductsRequest() { Field = field, Value = value, Page = page, Limit = limit }, cancellationToken);
             return GetResponse(response);
         }
 

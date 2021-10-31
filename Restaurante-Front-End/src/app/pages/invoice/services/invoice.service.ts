@@ -15,7 +15,7 @@ export class InvoiceService {
 
   public emmiter = new EventEmitter();
   constructor(@Inject("BASE_URL") private url: string, private httpClient: HttpClient) { }
-  
+
   public init() {
     this.buildConnection();
     this.startConnection();
@@ -57,7 +57,7 @@ export class InvoiceService {
           console.log('Hub connected!');
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
           setTimeout(() => {
             this.startConnection();
           }, 5000);
@@ -76,5 +76,5 @@ export class InvoiceService {
     });
   }
 
- 
+
 }

@@ -100,7 +100,6 @@ export class CreateEmployeeComponent implements OnInit {
   private async getBanks() {
     let response = await this.basicEntitiesService.getAll({ url: "Banks", page: 0, pageSize: 50 }).toPromise();
     this.banks = response.response.result.entities;
-    console.log(this.banks);
   }
 
   async consultarCep() {
