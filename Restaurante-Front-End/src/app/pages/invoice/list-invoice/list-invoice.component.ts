@@ -54,12 +54,12 @@ export class ListInvoiceComponent implements OnInit {
     let value = this.status;
 
     this.isSearching = true;
-
-    if(value.length <= 2) {
-      this.loadTable();
-      this.isSearching = false;
-      return;
-    }
+    this.loadTable();
+    // if(value.length <= 4) {
+    //   this.loadTable();
+    //   this.isSearching = false;
+    //   return;
+    // }
 
     this.invoiceService.search({page: this.page, limit: this.limit, status: value}).subscribe(
       r => {
