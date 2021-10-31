@@ -9,6 +9,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatButtonModule} from '@angular/material/button';
 import { ListInvoiceComponent } from './list-invoice.component';
+import { MatSelectModule } from '@angular/material/select';
 
 
 const routes: Routes = [
@@ -29,6 +30,7 @@ const routes: Routes = [
     MatPaginatorModule,
     MatCardModule,
     MatButtonModule,
+    MatSelectModule,
     RouterModule.forChild(routes)
   ]
 })
