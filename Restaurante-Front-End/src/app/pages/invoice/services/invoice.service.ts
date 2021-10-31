@@ -30,11 +30,7 @@ export class InvoiceService {
 
   public search(pagination: any): any {
     return this.httpClient.get<APIResponse<any>>(
-      `${this.url}${this.urlInvoices}/
-      Search?field=${pagination.field}&
-      value=${pagination.value}&
-      page=${pagination.page}&
-      size=${pagination.limit}`
+      `${this.url}${this.urlInvoices}/Search?&page=${pagination.page}&size=${pagination.limit}&status=${pagination.status}`
       );
   }
 

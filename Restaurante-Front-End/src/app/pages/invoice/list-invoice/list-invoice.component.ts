@@ -13,12 +13,16 @@ export class ListInvoiceComponent implements OnInit {
 
   public invoices = new MatTableDataSource<any>();
 
+  public statusChoice: string;
   public limit: number = 5;
   public page: number = 0;
   public listSize: number = 0;
   private isSearching = false;
-  public name: string;
-  public invoiceStatusDescription = ['Criado','Aceito', 'Rejeitado', 'Pagamento Pendente', 'Pago', 'Enviado', 'Entregue', 'Fechado']
+  public status: string;
+  public invoiceStatusDescription = [
+    {id: 0, name: 'Criado'}, {id: 1, name: 'Aceito'}, {id: 2, name: 'Rejeitado'}, {id: 3, name: 'Pagamento Pendente'}, 
+    {id: 4, name: 'Pago'}, {id: 5, name: 'Enviado'}, {id: 6, name: 'Entregue'}, {id: 7, name: 'Fechado'}
+  ]
   public paymentTypeDescription = ['Débito', 'Crédito']
 
   public displayedColumns = ['invoiceId', 'name', 'customerId', 'street', 'number', 'cep', 'payment', 'status', 'changeStatus', 'remove', 'details']
@@ -47,7 +51,7 @@ export class ListInvoiceComponent implements OnInit {
   }
 
   public search(){
-    let value = this.name;
+    let value = this.status;
 
     this.isSearching = true;
 
@@ -57,7 +61,7 @@ export class ListInvoiceComponent implements OnInit {
       return;
     }
 
-    this.invoiceService.search({page: this.page, limit: this.limit, field: 'product', value: value}).subscribe(
+    this.invoiceService.search({page: this.page, limit: this.limit, status: value}).subscribe(
       r => {
         console.log(r)
         this.invoices.data = r.response.result.entities
@@ -69,12 +73,15 @@ export class ListInvoiceComponent implements OnInit {
     )
   }
 
+  public getStatusChoice(status: any) {
+    this.statusChoice = status
+  }
+
   public invoiceStatusChange(invoiceId: any, statusCode: any) {
-    console.log(invoiceId)
-    console.log(statusCode)
-    this.invoiceService.invoiceStatusChange({ id: invoiceId, status: statusCode }).subscribe(
+    this.invoiceService.invoiceStatusChange({ id: invoiceId, status: this.statusChoice }).subscribe(
       r => {
         console.log(r)
+        this.loadTable()
       }
     )
   }
