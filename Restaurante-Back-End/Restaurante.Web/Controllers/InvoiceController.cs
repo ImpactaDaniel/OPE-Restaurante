@@ -34,9 +34,9 @@ namespace Restaurante.Web.Controllers
         }
 
         [HttpGet, Route("Search"), Authorize]
-        public async Task<IActionResult> SearchInvoicesByStatus(int page, int limit, InvoiceStatus status, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> SearchInvoicesByStatus(string field, string value, int page, int limit, CancellationToken cancellationToken = default)
         {
-            var response = await _mediator.Send(new SearchInvoicesRequest { CurrentUserId = GetLoggedUserId(), Status = status, Page = page, Limit = limit}, cancellationToken);
+            var response = await _mediator.Send(new SearchInvoicesRequest { Field = field, Value = value, CurrentUserId = GetLoggedUserId(), Page = page, Limit = limit}, cancellationToken);
 
             return GetResponse(response);
         }

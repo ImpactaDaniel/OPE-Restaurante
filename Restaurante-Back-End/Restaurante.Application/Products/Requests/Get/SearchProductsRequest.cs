@@ -61,7 +61,7 @@ namespace Restaurante.Application.Products.Requests.Get
                     "availability" => product => product.Available == bool.Parse(request.Value),
                     "createdDate" => product => product.CreatedOn.Date == DateTime.Parse(request.Value).Date,
                     "category" => product => product.Category.Id == int.Parse(request.Value),
-                    _ => throw new BasicTableException("Campo de filtro não disponível!", Domain.Common.Enums.NotificationKeys.Error),
+                    _ => throw new BasicTableException("Filtro não implementado!", Domain.Common.Enums.NotificationKeys.Error),
                 };
             }
         }

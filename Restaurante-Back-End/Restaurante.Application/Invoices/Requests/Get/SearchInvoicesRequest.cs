@@ -14,6 +14,7 @@ using Restaurante.Domain.Users.Employees.Models;
 using Restaurante.Domain.Users.Funcionarios.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,7 +23,8 @@ namespace Restaurante.Application.Invoices.Requests.Get
     public class SearchInvoicesRequest : InvoiceRequest<SearchInvoicesRequest>, IRequest<Response<PaginationInfo<Invoice>>>
     {
         public int CurrentUserId { get; set; }
-        public InvoiceStatus Status { get; set; }
+        public string Field { get; set; }
+        public string Value { get; set; }
         public int Page { get; set; }
         public int Limit { get; set; }
 
@@ -51,7 +53,7 @@ namespace Restaurante.Application.Invoices.Requests.Get
                         throw new BasicTableException("Funcionário não encontrado!", Domain.Common.Enums.NotificationKeys.EntityNotFound);
 
 
-                    return new Response<PaginationInfo<Invoice>>(true, await _invoiceRespository.GetAll(i => i.Status == request.Status, request.Page, request.Limit, cancellationToken));
+                    return new Response<PaginationInfo<Invoice>>(true, await _invoiceRespository.GetAll(GetSearchExpression(request), request.Page, request.Limit, cancellationToken));
 
                 }
                 catch (RestauranteException e)
@@ -64,6 +66,17 @@ namespace Restaurante.Application.Invoices.Requests.Get
                     _logger.LogError(e, e.Message);
                     throw new Exception("Houve um erro ao recuperar os pedidos!");
                 }
+            }
+
+            private static Expression<Func<Invoice, bool>> GetSearchExpression(SearchInvoicesRequest request)
+            {
+                return request.Field switch
+                {
+                    "customerName" => invoice => invoice.Customer.Name.Contains(request.Value),
+                    "customerEmail" => invoice => invoice.Customer.Email.Contains(request.Value),
+                    "status" => invoice => invoice.Status == (InvoiceStatus)int.Parse(request.Value),
+                    _ => throw new BasicTableException("Filtro não implementado", Domain.Common.Enums.NotificationKeys.Error)
+                };
             }
         }
     }
