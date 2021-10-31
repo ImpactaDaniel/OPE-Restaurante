@@ -18,4 +18,12 @@ export class ProductService {
     });
   }
 
+  public getAllProducts(page: number, limit: number) {
+    return this.client.get<APIResponse<any>>(this.url + "Products/GetAll?page=" + page + "&limit=" + limit);
+  }
+
+  public searchProducts(field: string, value: string, page: number, limit: number) {
+    return this.client.get<APIResponse<any>>(this.url + "Products/Search?page=" + page + "&limit=" + limit + "&field=" + field + "&value=" + value);
+  }
+
 }

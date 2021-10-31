@@ -20,7 +20,7 @@ export class ListInvoiceComponent implements OnInit {
   private isSearching = false;
   public status: string;
   public invoiceStatusDescription = [
-    {id: 0, name: 'Criado'}, {id: 1, name: 'Aceito'}, {id: 2, name: 'Rejeitado'}, {id: 3, name: 'Pagamento Pendente'}, 
+    {id: 0, name: 'Criado'}, {id: 1, name: 'Aceito'}, {id: 2, name: 'Rejeitado'}, {id: 3, name: 'Pagamento Pendente'},
     {id: 4, name: 'Pago'}, {id: 5, name: 'Enviado'}, {id: 6, name: 'Entregue'}, {id: 7, name: 'Fechado'}
   ]
   public paymentTypeDescription = ['Débito', 'Crédito']
@@ -40,12 +40,11 @@ export class ListInvoiceComponent implements OnInit {
   private loadTable() {
     this.invoiceService.getAll({page: this.page, limit: this.limit}).subscribe(
       r => {
-        console.log(r)
         this.invoices.data = r.response.result.entities
         this.listSize = r.response.result.size;
       },
       err => {
-        console.log(err)
+        console.error(err)
       }
     )
   }
@@ -63,12 +62,11 @@ export class ListInvoiceComponent implements OnInit {
 
     this.invoiceService.search({page: this.page, limit: this.limit, status: value}).subscribe(
       r => {
-        console.log(r)
         this.invoices.data = r.response.result.entities
         this.listSize = r.response.result.size;
       },
       err => {
-        console.log(err)
+        console.error(err)
       }
     )
   }
@@ -80,20 +78,16 @@ export class ListInvoiceComponent implements OnInit {
   public invoiceStatusChange(invoiceId: any, statusCode: any) {
     this.invoiceService.invoiceStatusChange({ id: invoiceId, status: this.statusChoice }).subscribe(
       r => {
-        console.log(r)
         this.loadTable()
       }
     )
   }
 
   public details(id: number) {
-    console.log(id);
-    console.log(this.invoices.data)
     // let productsList = this.invoices.data.filter(item => item.id === id)
   }
 
   public remove(id: number) {
-    console.log(id);
   }
 
   public changePaginator(event: any) {

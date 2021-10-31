@@ -95,21 +95,6 @@ namespace Restaurante.Test.Services
         }
 
         [Fact]
-        public async Task ShouldReturnAllProductsFromRepository()
-        {
-            //arrange
-            var productExpected = new Product("test", "test", 10m);
-            _repository.GetAll(Arg.Any<int>(), Arg.Any<int>()).ReturnsForAnyArgs(Builder<Product>.CreateListOfSize(2).All().WithFactory(() => new Product("test", "test", 10m)).Build());
-
-            //act
-            var products = await _service.GetAll(1);
-
-            //assert
-            Assert.NotNull(products);
-            Assert.Equal(2, products.Count());
-        }
-
-        [Fact]
         public async Task ShouldNotifyWhenBasicExceptionOccurs()
         {
             //arrange

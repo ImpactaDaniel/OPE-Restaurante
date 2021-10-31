@@ -54,11 +54,9 @@ export class ListBankComponent implements OnInit {
   }
 
   public details(id: number) {
-    console.log(id);
   }
 
   public remove(id: number) {
-    console.log(id);
   }
 
   public changePaginator(event: any) {

@@ -24,7 +24,6 @@ export class CreateComponent implements OnInit {
   }
 
   public create() {
-    console.log(this.fg);
     if (!this.fg.valid) return;
 
     let bankEntity = {

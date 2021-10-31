@@ -4,6 +4,7 @@ using Restaurante.Application.Common;
 using Restaurante.Application.Common.Models;
 using Restaurante.Application.Products.Common.Models;
 using Restaurante.Domain.Common.Data.Mappers.Interfaces;
+using Restaurante.Domain.Common.Data.Models;
 using Restaurante.Domain.Products.Models;
 using Restaurante.Domain.Products.Services.Interfaces;
 using System;
@@ -14,11 +15,11 @@ using System.Threading.Tasks;
 
 namespace Restaurante.Application.Products.Requests.Get
 {
-    public class GetAllProductsRequest : ProductRequest<GetAllProductsRequest>, IRequest<Response<IEnumerable<ProductResponseDTO>>>
+    public class GetAllProductsRequest : ProductRequest<GetAllProductsRequest>, IRequest<Response<PaginationInfo<ProductResponseDTO>>>
     {
-        public int Length { get; set; }
+        public int Limit { get; set; }
         public int Page { get; set; }
-        internal class GetAllProductsRequestHandler : IRequestHandler<GetAllProductsRequest, Response<IEnumerable<ProductResponseDTO>>>
+        internal class GetAllProductsRequestHandler : IRequestHandler<GetAllProductsRequest, Response<PaginationInfo<ProductResponseDTO>>>
         {
             private readonly IProductService _productService;
             private readonly IMapper<Product, ProductResponseDTO> _mapper;
@@ -29,14 +30,19 @@ namespace Restaurante.Application.Products.Requests.Get
                 _mapper = mapper;
             }
 
-            public async Task<Response<IEnumerable<ProductResponseDTO>>> Handle(GetAllProductsRequest request, CancellationToken cancellationToken)
+            public async Task<Response<PaginationInfo<ProductResponseDTO>>> Handle(GetAllProductsRequest request, CancellationToken cancellationToken)
             {
                 try
                 {
-                    var products = await _productService.GetAll(request.Page, request.Length, cancellationToken);
-                    if (products.Any())
-                        return new Response<IEnumerable<ProductResponseDTO>>(true, _mapper.Map(products));
-                    return new Response<IEnumerable<ProductResponseDTO>>(true, null);
+                    var products = await _productService.GetAll(request.Page, request.Limit, cancellationToken);
+                    if (products.Entities.Any())
+                        return new Response<PaginationInfo<ProductResponseDTO>>(true, new PaginationInfo<ProductResponseDTO>
+                        {
+                            Entities = _mapper.Map(products.Entities),
+                            Size = products.Size
+                        });
+
+                    return new Response<PaginationInfo<ProductResponseDTO>>(true, null);
                 }
                 catch (Exception)
                 {

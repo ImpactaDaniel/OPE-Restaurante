@@ -30,6 +30,11 @@ export class SideNavComponent implements OnInit {
     this.onSidenavClose()
   }
 
+  public toProducts(): void {
+    this.router.navigate(['products/list'])
+    this.onSidenavClose();
+  }
+
   public toDelivers(): void {
     this.router.navigate(['deliveryman/create'])
     this.onSidenavClose()
