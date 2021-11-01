@@ -19,6 +19,8 @@ export class ListInvoiceComponent implements OnInit {
   public listSize: number = 0;
   private isSearching = false;
   public status: string;
+  public searchField = "customerName";
+  public searchValue: string;
   public invoiceStatusDescription = [
     {id: 0, name: 'Criado'}, {id: 1, name: 'Aceito'}, {id: 2, name: 'Rejeitado'}, {id: 3, name: 'Pagamento Pendente'},
     {id: 4, name: 'Pago'}, {id: 5, name: 'Enviado'}, {id: 6, name: 'Entregue'}, {id: 7, name: 'Fechado'}
@@ -34,51 +36,48 @@ export class ListInvoiceComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.loadTable();
+    this.getInvoicesList();
   }
 
-  private loadTable() {
-    this.invoiceService.getAll({page: this.page, limit: this.limit}).subscribe(
-      r => {
-        this.invoices.data = r.response.result.entities
-        this.listSize = r.response.result.size;
-      },
-      err => {
-        console.error(err)
-      }
-    )
+  private getInvoicesList() {
+
+    if (this.isSearching) {
+      this.invoiceService.searchInvoices(this.searchField, this.searchValue, this.page, this.limit).subscribe(res => {
+        this.invoices.data = res.response.result?.entities;
+        this.listSize = res.response.result?.size;
+      });
+      return;
+    }
+
+    this.invoiceService.getAllInvoices(this.page, this.limit).subscribe(res => {
+      this.invoices.data = res.response.result.entities;
+      this.listSize = res.response.result.size;
+    })
   }
 
-  public search(){
-    let value = this.status;
+  public changePaginator(event: any) {
+    this.limit = event.pageSize;
+    this.page = event.pageIndex;
+    this.getInvoicesList();
+  }
+
+  public search(event: any){
+    this.searchValue = !isNaN(event.value) ? event.value : event.target.value;
 
     this.isSearching = true;
-    this.loadTable();
-    // if(value.length <= 4) {
-    //   this.loadTable();
-    //   this.isSearching = false;
-    //   return;
-    // }
-
-    this.invoiceService.search({page: this.page, limit: this.limit, status: value}).subscribe(
-      r => {
-        this.invoices.data = r.response.result.entities
-        this.listSize = r.response.result.size;
-      },
-      err => {
-        console.error(err)
-      }
-    )
+    this.page = 0;
+    this.limit = 5;
+    this.getInvoicesList();
   }
 
   public getStatusChoice(status: any) {
     this.statusChoice = status
   }
 
-  public invoiceStatusChange(invoiceId: any, statusCode: any) {
+  public invoiceStatusChange(invoiceId: string) {
     this.invoiceService.invoiceStatusChange({ id: invoiceId, status: this.statusChoice }).subscribe(
       r => {
-        this.loadTable()
+        this.getInvoicesList()
       }
     )
   }
@@ -90,15 +89,15 @@ export class ListInvoiceComponent implements OnInit {
   public remove(id: number) {
   }
 
-  public changePaginator(event: any) {
-    this.limit = event.pageSize;
-    this.page = event.pageIndex;
-    if(!this.isSearching){
-      this.loadTable();
-      return;
-    }
+  public searchFieldChanged() {
+    this.searchValue = "";
+  }
 
-    this.search()
+  public removeFilters() {
+    this.isSearching = false;
+    this.searchField = "customerName";
+    this.searchValue = "";
+    this.getInvoicesList();
   }
 
 }
