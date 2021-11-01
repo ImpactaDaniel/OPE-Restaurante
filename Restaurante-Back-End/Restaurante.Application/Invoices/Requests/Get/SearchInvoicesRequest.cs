@@ -72,8 +72,10 @@ namespace Restaurante.Application.Invoices.Requests.Get
             {
                 return request.Field switch
                 {
+                    "invoiceId" => invoice => invoice.Id == int.Parse(request.Value),
+                    "customerId" => invoice => invoice.Customer.Id == int.Parse(request.Value),
                     "customerName" => invoice => invoice.Customer.Name.Contains(request.Value),
-                    "customerEmail" => invoice => invoice.Customer.Email.Contains(request.Value),
+                    "cep" => invoice => invoice.Address.CEP.Contains(request.Value),
                     "status" => invoice => invoice.Status == (InvoiceStatus)int.Parse(request.Value),
                     _ => throw new BasicTableException("Filtro não implementado", Domain.Common.Enums.NotificationKeys.Error)
                 };

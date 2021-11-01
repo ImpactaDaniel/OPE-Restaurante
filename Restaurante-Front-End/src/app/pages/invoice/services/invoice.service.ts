@@ -22,21 +22,21 @@ export class InvoiceService {
     this.registerOnServerEvents();
   }
 
-  public getAll(pagination: any): any {
+  public getAllInvoices(page: number, limit: number): any {
     return this.httpClient.get<any>(
-      `${this.url}${this.urlInvoices}/GetAll?page=${pagination.page}&limit=${pagination.limit}`
+      this.url + this.urlInvoices + "/GetAll?page=" + page + "&limit=" + limit
       );
   }
 
-  public search(pagination: any): any {
+  public searchInvoices(field: string, value: string, page: number, limit: number): any {
     return this.httpClient.get<APIResponse<any>>(
-      `${this.url}${this.urlInvoices}/Search?&page=${pagination.page}&size=${pagination.limit}&status=${pagination.status}`
+      this.url + this.urlInvoices + "/Search?&field=" + field + "&value=" + value + "&page=" + page + "&limit=" + limit
       );
   }
 
-  public invoiceStatusChange(statusChange: any) {
+  public invoiceStatusChange(changeStatus: any) {
     return this.httpClient.patch<any>(
-      `${this.url}${this.urlInvoices}/UpdateStatus/${statusChange.id}?status=${statusChange.status}`, statusChange
+      this.url + this.urlInvoices + "/UpdateStatus/"+ changeStatus.id + "?status=" + changeStatus.status, changeStatus
     )
   }
 

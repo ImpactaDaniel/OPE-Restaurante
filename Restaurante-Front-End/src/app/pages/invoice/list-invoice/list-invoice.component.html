@@ -3,10 +3,41 @@
   <mat-card>
 
     <div class="row justify-content-center my-2">
-      <mat-form-field class="col-md-2">
-        <mat-label>Filtrar Status do Pedido</mat-label>
-        <input matInput (keyup)="search()" [(ngModel)]="status" name="name" type="text">
-      </mat-form-field>
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-4">
+            <mat-form-field>
+              <mat-label>Selecione:</mat-label>
+              <mat-select (selectionChange)="searchFieldChanged()" [(ngModel)]="searchField">
+                <mat-option value="customerName">Nome do Cliente</mat-option>
+                <mat-option value="customerId">ID do Cliente</mat-option>
+                <mat-option value="invoiceId">ID do Pedido</mat-option>
+                <mat-option value="cep">CEP</mat-option>
+                <mat-option value="status">Status</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+    
+          <mat-form-field class="col-md-4" *ngIf="searchField === 'customerName' || searchField === 'customerId' || searchField === 'invoiceId' || searchField === 'cep'">
+            <mat-label>Valor</mat-label>
+            <input (keyup)="search($event)" #inputText name="inputText" matInput type="text">
+          </mat-form-field>
+
+          <mat-form-field class="col-md-4" *ngIf="searchField === 'status'">
+            <mat-label>Status</mat-label>
+            <mat-select (selectionChange)="search($event)">
+              <mat-option *ngFor="let status of invoiceStatusDescription" [value]="status.id">
+                {{ status.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+    
+          <div class="col-md-4">
+            <button class="btn btn-danger" (click)="removeFilters()">Retirar Filtros</button>
+          </div>
+        </div>
+      </div>
+      
     </div>
 
     <div class="row justify-content-center">
@@ -69,7 +100,7 @@
           <ng-container matColumnDef="changeStatus">
             <th mat-header-cell *matHeaderCellDef> Mudar Status </th>
             <td mat-cell *matCellDef="let row; columns: displayedColumns">
-              <button mat-icon-button (click)="invoiceStatusChange(row.id, row.status)" ><mat-icon>update</mat-icon></button>
+              <button mat-icon-button (click)="invoiceStatusChange(row.id)" ><mat-icon>update</mat-icon></button>
             <td>
           </ng-container>
 
