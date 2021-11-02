@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { InvoiceDetailsDialogComponent } from 'src/app/components/dialogs/invoice-details-dialog/invoice-details-dialog.component';
 import { AlertService } from 'src/app/services/alert.service';
 import { InvoiceService } from '../services/invoice.service';
 
@@ -31,6 +33,7 @@ export class ListInvoiceComponent implements OnInit {
 
   constructor(
     private invoiceService: InvoiceService,
+    private dialog: MatDialog,
     private alertService: AlertService,
     private router: Router
     ) { }
@@ -83,7 +86,13 @@ export class ListInvoiceComponent implements OnInit {
   }
 
   public details(id: number) {
-    // let productsList = this.invoices.data.filter(item => item.id === id)
+    let invoice = this.invoices.data.filter(item => item.id === id).shift()
+    this.dialog.open(InvoiceDetailsDialogComponent, {
+      maxWidth: '70%',
+      data: {
+        invoice
+      }
+    });
   }
 
   public remove(id: number) {

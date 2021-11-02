@@ -13,10 +13,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderModule } from './components/header/header.module';
 import { SideNavModule } from './components/side-nav/side-nav.module';
 import { ErrorHandler, NgModule } from '@angular/core';
+import { InvoiceDetailsDialogModule } from './components/dialogs/invoice-details-dialog/invoice-details-dialog.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -51,7 +52,8 @@ import { ErrorHandler, NgModule } from '@angular/core';
     HeaderModule,
     MatSidenavModule,
     MatDialogModule,
-    NewInvoiceDialogModule
+    NewInvoiceDialogModule,
+    InvoiceDetailsDialogModule
   ],
   providers: [
     {

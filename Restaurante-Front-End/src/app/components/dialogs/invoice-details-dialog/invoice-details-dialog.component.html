@@ -1,0 +1,76 @@
+<mat-card>
+    <mat-card-header class="text-center d-block">
+      <mat-card-title>
+        <div class="row d-block"><span>Detalhes do Pedido: {{ invoice?.id }}</span></div>
+        <div class="row d-block mt-2"><span>Cliente: {{ invoice?.customer.name}} - Status: {{ invoiceStatusDescription[invoice.status]?.name }}</span></div>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <table mat-table [dataSource]="invoiceLines" multiTemplateDataRows class="w-100 mat-elevation-z8 my-3">
+  
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+            <div class="example-element-detail row"
+              [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+              <div class="example-element-diagram col-4">
+                <!-- <div class="example-element-position"> <img src="{{url + 'Products/' + element.product?.photo?.Path}}"
+                    class="img-fluid" /> </div> -->
+              </div>
+              <div class="example-element-description col-4">
+                <span>Logs do Pedido</span>
+                <ul class="heroes">
+                    <li *ngFor="let log of invoice.logs">
+                        <span class="badge">{{log.id}}</span><span class="badge">{{log.date}}</span><span class="badge">{{log.message}}</span>
+                    </li>
+                </ul>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="productId">
+            <th mat-header-cell *matHeaderCellDef> Produto ID </th>
+            <td mat-cell *matCellDef="let element"> {{ element.id }} </td>
+          </ng-container>
+
+        <ng-container matColumnDef="productName">
+          <th mat-header-cell *matHeaderCellDef class=""> Produto </th>
+          <td mat-cell *matCellDef="let element"> {{ element.product?.name }} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef> Quantidade </th>
+          <td mat-cell *matCellDef="let element"> {{ element.quantity }} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="accompaniments">
+            <th mat-header-cell *matHeaderCellDef> Acompanhamentos </th>
+            <td mat-cell *matCellDef="let element"> {{ element.product?.accompaniments }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef> Preço </th>
+            <td mat-cell *matCellDef="let element"> {{ element.product?.price }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="obs">
+          <th mat-header-cell *matHeaderCellDef> Observações </th>
+          <td mat-cell *matCellDef="let element"> {{ element.obs }} </td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr class="hover" mat-row *matRowDef="let row; columns: columnsToDisplay;"
+          (click)="expandedElement = expandedElement === row ? null : row">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+      </table>
+  
+      <div class="row">
+        <div class="ml-auto">
+          <button class="btn btn-outline-success mr-2">Aceitar</button>
+          <button class="btn btn-outline-danger">Rejeitar</button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  
