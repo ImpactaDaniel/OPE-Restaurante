@@ -201,6 +201,9 @@ namespace Restaurante.Application.Products.Services
 
         private async Task DeletePhoto(Photo photo, CancellationToken cancellationToken = default)
         {
+            if (photo is null)
+                return;
+
             var photoDeleted = await _basicEntitiesService.DeleteEntity(photo, cancellationToken);
 
             if (!photoDeleted)

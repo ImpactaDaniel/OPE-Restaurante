@@ -35,7 +35,7 @@ namespace Restaurante.Infra
                     .AddClasses(classes => classes
                                     .AssignableTo(typeof(IMessageSenderService<>)))
                                     .AsImplementedInterfaces()
-                                    .WithTransientLifetime());
+                                    .WithScopedLifetime());
 
         internal static IServiceCollection AddRepositories(this IServiceCollection services)
         {
@@ -45,14 +45,14 @@ namespace Restaurante.Infra
                     .AddClasses(classes => classes
                                     .AssignableTo(typeof(IDomainRepository<>)))
                                     .AsImplementedInterfaces()
-                                    .WithTransientLifetime());
+                                    .WithScopedLifetime());
             services
                .Scan(scan => scan
                    .FromCallingAssembly()
                    .AddClasses(classes => classes
                                    .AssignableTo(typeof(IDefaultDomainRepository)))
                                    .AsImplementedInterfaces()
-                                   .WithTransientLifetime());
+                                   .WithScopedLifetime());
             return services;
         }
 
@@ -67,7 +67,7 @@ namespace Restaurante.Infra
                    .AddClasses(classes => classes
                                    .AssignableTo<IFileUploadService>())
                                    .AsImplementedInterfaces()
-                                   .WithTransientLifetime());
+                                   .WithScopedLifetime());
 
         internal static IServiceCollection AddContext(this IServiceCollection services, IConfiguration configuration) =>
             services
@@ -76,7 +76,7 @@ namespace Restaurante.Infra
                                                                 configuration.GetConnectionString("Default"),
                                                                 sqlServer => sqlServer
                                                                     .MigrationsAssembly(typeof(RestauranteDbContext).Assembly.FullName)))
-                .AddTransient<IRestauranteDbContext, RestauranteDbContext>(provider => provider.GetService<RestauranteDbContext>())
-                .AddTransient<IInitializer, DatabaseInitializer>();
+                .AddScoped<IRestauranteDbContext, RestauranteDbContext>(provider => provider.GetService<RestauranteDbContext>())
+                .AddScoped<IInitializer, DatabaseInitializer>();
     }
 }

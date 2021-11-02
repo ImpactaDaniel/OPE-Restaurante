@@ -20,6 +20,7 @@ namespace Restaurante.Infra.Products
 
         public async Task<bool> Delete(Product product, CancellationToken cancellationToken = default)
         {
+            await DeleteInvoiceLines(product, cancellationToken);
             Data.Products.Remove(product);
             return await Data.SaveChangesAsync(cancellationToken) > 0;
         }
@@ -77,6 +78,16 @@ namespace Restaurante.Infra.Products
                 Entities = entities,
                 Size = count
             };
+        }
+
+        private async Task DeleteInvoiceLines(Product product, CancellationToken cancellationToken = default)
+        {
+            var invoiceLines = await Data.InvoiceLines.Where(il => il.Product.Id == product.Id).ToListAsync(cancellationToken);
+
+            foreach (var invoiceLine in invoiceLines)
+                Data.InvoiceLines.Remove(invoiceLine);
+
+            await Data.SaveChangesAsync(cancellationToken);
         }
     }
 }

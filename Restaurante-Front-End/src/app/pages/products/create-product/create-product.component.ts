@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/services/alert.service';
@@ -19,7 +20,7 @@ export class CreateProductComponent implements OnInit {
   erroMsg = "";
 
   constructor(private basicEntitiesService: BasicentitiesService, private fb: FormBuilder,
-    private productService: ProductService, private alertService: AlertService) { }
+    private productService: ProductService, private alertService: AlertService, private router: Router) { }
 
   async ngOnInit() {
     this.buildForm();
@@ -33,7 +34,9 @@ export class CreateProductComponent implements OnInit {
     this.productService.createProduct(this.fg.value).subscribe(response => {
       if(response.success)
       {
-        this.alertService.showSuccess("Sucesso", "Produto Cadastrado Com Sucesso!")
+        this.alertService.showSuccess("Sucesso", "Produto Cadastrado Com Sucesso!", () => {
+          this.router.navigate(['/products/list']);
+        })
         return;
       }
       this.error = true;
@@ -87,7 +90,7 @@ export class CreateProductComponent implements OnInit {
       };
       this.hasPhoto = true;
       this.fg.get('photoRequest').get('fileName').setValue(this.photo.fileName);
-      this.fg.get('photoRequest').get('photoB64').setValue(this.photo.photob64.replace('data:image/jpeg;base64,', ''));
+      this.fg.get('photoRequest').get('photoB64').setValue(this.photo.photob64.replace('data:image/jpeg;base64,', '').replace('data:image/gif;base64,', ''));
     }
   }
 

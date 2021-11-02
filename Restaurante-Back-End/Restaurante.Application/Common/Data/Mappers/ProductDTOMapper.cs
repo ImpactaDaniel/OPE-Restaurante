@@ -22,7 +22,7 @@ namespace Restaurante.Application.Common.Data.Mappers
                 CreatedOn = source.CreatedOn,
                 Photo = new PhotoResponseDTO
                 {
-                    PhotoPath = "Products/" + source.Photo.Path
+                    PhotoPath = "Products/" + source.Photo?.Path
                 },
                 Price = source.Price,
                 QuantityStock = source.QuantityStock,
