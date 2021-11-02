@@ -53,7 +53,8 @@ namespace Restaurante.Infra.Invoices.Repositories
                     .Include(i => i.Address)
                     .Include(i => i.Logs.Where(l => l.Type == InvoiceLogType.Created))
                     .Include(i => i.Customer)
-                    .Include(i => i.Payment)                  
+                    .Include(i => i.Payment)
+                    .OrderBy(i => i.Logs.FirstOrDefault().Date)
                   .ToListAsync(cancellationToken);
 
         public async Task<IList<Invoice>> GetAll(Customer customer, CancellationToken cancellationToken = default) =>
@@ -65,6 +66,7 @@ namespace Restaurante.Infra.Invoices.Repositories
                         .Include(i => i.Logs.Where(l => l.Type == InvoiceLogType.Created))
                         .Include(i => i.Payment)
                     .Where(i => i.Customer == customer)
+                    .OrderBy(i => i.Logs.FirstOrDefault().Date)
                     .ToListAsync(cancellationToken);
 
         public async Task<IList<Invoice>> GetAll(Expression<Func<Invoice, bool>> condition, CancellationToken cancellationToken = default) =>
@@ -76,6 +78,7 @@ namespace Restaurante.Infra.Invoices.Repositories
                         .Include(i => i.Customer)
                         .Include(i => i.Payment)
                     .Where(condition)
+                    .OrderBy(i => i.Logs.FirstOrDefault().Date)
                     .ToListAsync(cancellationToken);
 
         public async Task<PaginationInfo<Invoice>> GetAll(int page, int limit, CancellationToken cancellationToken = default)
@@ -89,6 +92,7 @@ namespace Restaurante.Infra.Invoices.Repositories
                         .Include(i => i.Payment)
                     .Skip(page * limit)
                     .Take(limit)
+                    .OrderBy(i => i.Logs.FirstOrDefault().Date)
                     .ToListAsync(cancellationToken);
 
             var count = await All()
@@ -113,6 +117,7 @@ namespace Restaurante.Infra.Invoices.Repositories
                     .Where(condition)
                     .Skip(page * limit)
                     .Take(limit)
+                    .OrderBy(i => i.Logs.FirstOrDefault().Date)
                     .ToListAsync(cancellationToken);
 
             var count = await All()

@@ -46,13 +46,22 @@ namespace Restaurante.Application.Products.Requests.Update
                 {
                     var category = await _basicEntitiesService.GetEntity<ProductCategory>(pc => pc.Id == request.Category.Id, cancellationToken);
 
-                    if(category is null)
+                    var currentProduct = await _service.Get(request.Id, cancellationToken);
+
+                    var updatePhoto = !string.IsNullOrEmpty(request.PhotoRequest.FileName);
+
+                    if (category is null)
                     {
                         _notifier.AddNotification(NotificationHelper.EntityNotFound("Categoria"));
                         return new Response<bool>(false, false);
                     }
 
-                    var photoPath = await _productUploadService.SaveProductPhoto(request.PhotoRequest.PhotoB64, request.PhotoRequest.FileName, cancellationToken);//SavePhoto(GetFile(request.PhotoRequest.PhotoB64), request.PhotoRequest.FileName);
+                    var photoPath = currentProduct.Photo.Path;
+
+                    if (updatePhoto)
+                    {
+                        photoPath = await _productUploadService.SaveProductPhoto(request.PhotoRequest.PhotoB64, request.PhotoRequest.FileName, cancellationToken);//SavePhoto(GetFile(request.PhotoRequest.PhotoB64), request.PhotoRequest.FileName);
+                    }
 
                     var product = _factory
                                     .WithAccompaniments(request.Accompaniments)

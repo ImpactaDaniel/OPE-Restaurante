@@ -27,7 +27,7 @@ namespace Restaurante.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration) =>
             services
-                .AddMediatR(Assembly.GetExecutingAssembly())
+                .AddMediatR(c => c.AsScoped(), Assembly.GetExecutingAssembly())
                 .AddNotifier()
                 .AddServices()
                 .AddMappers()
@@ -44,7 +44,7 @@ namespace Restaurante.Application
                                     .AssignableTo(typeof(IEntityService<>)))
                                     .AsMatchingInterface()
                                     .AsImplementedInterfaces()
-                                    .WithTransientLifetime());
+                                    .WithScopedLifetime());
 
         internal static IServiceCollection AddNotifier(this IServiceCollection services) =>
             services.AddScoped<INotifier, Notifier>();
@@ -55,7 +55,7 @@ namespace Restaurante.Application
                                 configuration
                                     .GetSection(nameof(IntegrationConfiguration))
                                     .Get<IntegrationConfiguration>())
-                .AddTransient<IEntregadorIntegrationService, DeliveriesIntegrationService>();
+                .AddScoped<IEntregadorIntegrationService, DeliveriesIntegrationService>();
 
         internal static IServiceCollection AddMappers(this IServiceCollection services) =>
              services
@@ -65,7 +65,7 @@ namespace Restaurante.Application
                                     .AssignableTo(typeof(IMapper<,>)))
                                     .AsMatchingInterface()
                                     .AsImplementedInterfaces()
-                                    .WithTransientLifetime());
+                                    .WithScopedLifetime());
 
         internal static IServiceCollection AddFactories(this IServiceCollection services) =>
             services
@@ -104,7 +104,7 @@ namespace Restaurante.Application
                     };
                 });
 
-            services.AddTransient<ITokenService, TokenService>();
+            services.AddScoped<ITokenService, TokenService>();
 
             return services;
         }
