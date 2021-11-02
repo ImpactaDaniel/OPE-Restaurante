@@ -210,7 +210,7 @@ namespace Restaurante.Test.Services
         public async Task ShouldNotUpdateProductIfPhotoIsNotDeleted()
         {
             //arrange
-            var productToUpdate = new Product("Test", "Test", 10m);
+            var productToUpdate = new Product("Test", "Test", 10m, 50, new ProductCategory("teste"), "tesre", "ah");
             _repository.Get(Arg.Any<Expression<Func<Product, bool>>>()).Returns(productToUpdate);
             _repository.Update(Arg.Any<Product>()).Returns(true);
             _basicEntitiesService.DeleteEntity(Arg.Any<Photo>()).Returns(false);
