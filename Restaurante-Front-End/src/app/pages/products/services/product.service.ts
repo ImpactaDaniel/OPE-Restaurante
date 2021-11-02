@@ -10,12 +10,11 @@ export class ProductService {
   constructor(private client: HttpClient, @Inject('BASE_URL') private url: string) { }
 
   public createProduct(product: any) {
-    let header = new HttpHeaders();
+    return this.client.post<APIResponse<any>>(this.url + "Products/Create", product);
+  }
 
-    header.append('Content-Type', 'application/json');
-    return this.client.post<APIResponse<any>>(this.url + "Products/Create", product, {
-      headers: header
-    });
+  public updateProduct(product: any, id: number) {
+    return this.client.put<APIResponse<any>>(this.url + 'Products/Update/' + id, product);
   }
 
   public getAllProducts(page: number, limit: number) {
@@ -24,6 +23,14 @@ export class ProductService {
 
   public searchProducts(field: string, value: string, page: number, limit: number) {
     return this.client.get<APIResponse<any>>(this.url + "Products/Search?page=" + page + "&limit=" + limit + "&field=" + field + "&value=" + value);
+  }
+
+  public getProduct(id: number) {
+    return this.client.get<APIResponse<any>>(this.url + "Products/Get/" + id);
+  }
+
+  public deleteProduct(id: number) {
+    return this.client.delete<APIResponse<any>>(this.url + "Products/Delete/" + id);
   }
 
 }

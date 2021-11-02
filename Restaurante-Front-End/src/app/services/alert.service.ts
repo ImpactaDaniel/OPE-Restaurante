@@ -21,6 +21,20 @@ export class AlertService {
     });
   }
 
+  public showQuestion(title?: string, message?: string, callBack?: () => any): void {
+    Swal.fire({
+      position: 'center',
+      icon: 'question',
+      title: title || 'Você confirma?',
+      text: message,
+      showConfirmButton: true,
+      showCancelButton: true
+    }).then(a => {
+      if(a.isConfirmed)
+        callBack();
+    })
+  }
+
   public showSuccess(title?: string, message?: string, callBack?: () => any): void {
     Swal.fire({
       position: 'center',
