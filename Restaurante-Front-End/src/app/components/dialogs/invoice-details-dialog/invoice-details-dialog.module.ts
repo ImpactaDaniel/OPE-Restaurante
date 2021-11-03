@@ -3,6 +3,7 @@ import { MatCardModule } from '@angular/material/card';
 import { InvoiceDetailsDialogComponent } from './invoice-details-dialog.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 
 
@@ -11,7 +12,8 @@ import { CommonModule } from '@angular/common';
   imports: [
     CommonModule,
     MatCardModule,
-    MatTableModule
+    MatTableModule,
+    MatExpansionModule
   ],
   exports: [InvoiceDetailsDialogComponent]
 })

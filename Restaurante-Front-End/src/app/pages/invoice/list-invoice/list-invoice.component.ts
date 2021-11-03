@@ -23,6 +23,7 @@ export class ListInvoiceComponent implements OnInit {
   public status: string;
   public searchField = "customerName";
   public searchValue: string;
+  public invoice: Object;
   public invoiceStatusDescription = [
     {id: 0, name: 'Criado'}, {id: 1, name: 'Aceito'}, {id: 2, name: 'Rejeitado'}, {id: 3, name: 'Pagamento Pendente'},
     {id: 4, name: 'Pago'}, {id: 5, name: 'Enviado'}, {id: 6, name: 'Entregue'}, {id: 7, name: 'Fechado'}
@@ -85,10 +86,11 @@ export class ListInvoiceComponent implements OnInit {
     )
   }
 
-  public details(id: number) {
-    let invoice = this.invoices.data.filter(item => item.id === id).shift()
+  public async details(id: number) {
+    let response = await this.invoiceService.getInvoiceById(id).toPromise()
+    let invoice = response.response.result
     this.dialog.open(InvoiceDetailsDialogComponent, {
-      maxWidth: '70%',
+      maxWidth: '100%',
       data: {
         invoice
       }

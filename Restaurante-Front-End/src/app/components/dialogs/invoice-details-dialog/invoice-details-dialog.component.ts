@@ -19,15 +19,20 @@ export class InvoiceDetailsDialogComponent implements OnInit {
   public invoice: any;
 
   public columnsToDisplay = ['productId', 'productName', 'quantity', 'accompaniments', 'price', 'obs']
+  public columnsToDisplayLogs = ['logId', 'date', 'type', 'message']
 
   public invoiceStatusDescription = [
     {id: 0, name: 'Criado'}, {id: 1, name: 'Aceito'}, {id: 2, name: 'Rejeitado'}, {id: 3, name: 'Pagamento Pendente'},
     {id: 4, name: 'Pago'}, {id: 5, name: 'Enviado'}, {id: 6, name: 'Entregue'}, {id: 7, name: 'Fechado'}
   ]
+  public invoiceLogType = [
+    {id: 0, name: 'Criado'}, {id: 1, name: 'Atualizado'}, {id: 2, name: 'Deletado'}, {id: 3, name: 'Fechado'}
+  ]
 
   public expandedElement: any;
 
   public invoiceLines = new MatTableDataSource<any>();
+  public invoiceLogs = new MatTableDataSource<any>();
 
   constructor(@Inject(MAT_DIALOG_DATA) private data: any, @Inject('BASE_URL') public url: string) { }
 
@@ -35,5 +40,6 @@ export class InvoiceDetailsDialogComponent implements OnInit {
     console.log(this.data.invoice)
     this.invoice = this.data?.invoice;
     this.invoiceLines.data = this.data?.invoice?.products;
+    this.invoiceLogs.data = this.data?.invoice?.logs;
   }
 }

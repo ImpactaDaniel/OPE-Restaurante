@@ -22,6 +22,12 @@ export class InvoiceService {
     this.registerOnServerEvents();
   }
 
+  public getInvoiceById(invoiceId: number): any {
+    return this.httpClient.get<any>(
+      this.url + this.urlInvoices + "/Get/" + invoiceId
+    );
+  }
+
   public getAllInvoices(page: number, limit: number): any {
     return this.httpClient.get<any>(
       this.url + this.urlInvoices + "/GetAll?page=" + page + "&limit=" + limit
