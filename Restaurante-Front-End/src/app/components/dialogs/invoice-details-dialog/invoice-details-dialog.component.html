@@ -7,9 +7,9 @@
     </mat-card-header>
     <mat-card-content>
       <mat-expansion-panel hideToggle>
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header class="panel-header">
           <mat-panel-title>
-            Dados do Cliente
+            <h3>Dados do Cliente</h3>
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="form-row">
@@ -23,20 +23,18 @@
           </div>
         </div>
         <div class="form-row">
-          <div class="form-group col-md-6">
-            <div class="row">
+          <div class="form-group col-md-12">
               <label class="mr-1">Endereço:</label>
-              <span>{{ invoice?.address.street }}, {{ invoice?.address.number }}</span>
-              <label class="mr-1">Bairro:</label> 
+              <span class="mr-1">{{ invoice?.address.street }}, {{ invoice?.address.number }} - </span>
               <span>{{ invoice?.address.district }}</span>
-            </div>
-            <div class="row">
-              <label class="mr-1">CEP:</label>
-              <span>{{ invoice?.address?.cep}}</span>
-              <label class="mr-1">Cidade:</label>
-              <span>{{ invoice?.address?.city }}</span>
-              <span>{{ invoice?.address?.state }}</span>
-            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label class="mr-1">CEP:</label>
+            <span class="mr-1">{{ invoice?.address?.cep}} - </span>
+            <span>{{ invoice?.address?.city }} - </span>
+            <span>{{ invoice?.address?.state }}</span>
           </div>
         </div>
       </mat-expansion-panel>
@@ -44,7 +42,7 @@
       <mat-expansion-panel hideToggle>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            Dados do Pedido
+            <h3>Dados do Pedido</h3>
           </mat-panel-title>
         </mat-expansion-panel-header>
         <table mat-table [dataSource]="invoiceLines" multiTemplateDataRows class="w-100 mat-elevation-z8 my-3">
@@ -89,7 +87,7 @@
       <mat-expansion-panel hideToggle>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            Logs do Pedido
+            <h3>Logs do Pedido</h3>
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="logs-table">

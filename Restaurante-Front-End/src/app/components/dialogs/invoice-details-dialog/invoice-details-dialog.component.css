@@ -1,6 +1,11 @@
 
 mat-card {
     width: 100%;
+    background-color: #ddd5cb;
+}
+
+mat-expansion-panel {
+    background-color: #dfc197;
 }
 
 .logs-table {
