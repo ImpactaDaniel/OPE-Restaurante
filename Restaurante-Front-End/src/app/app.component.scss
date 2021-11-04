@@ -5,3 +5,7 @@ mat-sidenav {
   width: 250px;
   background-color: #FFBA5C;
 }
+
+.height {
+  height: calc(100% - 64px);
+}

@@ -5,8 +5,6 @@
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <IsPackable>false</IsPackable>
-    <SpaRoot>ClientApp\</SpaRoot>
-    <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
     <!-- Set this to true if you enable server-side prerendering -->
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
   </PropertyGroup>
@@ -31,22 +29,7 @@
     <PackageReference Include="Serilog.Extensions.Logging.File" Version="2.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
-
-  <ItemGroup>
-    <!-- Don't publish the SPA source files, but do show them in the project files list -->
-    <Content Remove="$(SpaRoot)**" />
-    <Content Remove="ClientApp\**" />
-    <None Remove="$(SpaRoot)**" />
-    <None Remove="ClientApp\**" />
-    <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="ClientApp\**" />
-    <EmbeddedResource Remove="ClientApp\**" />
-    <TypeScriptCompile Remove="ClientApp\**" />
-  </ItemGroup>
-
+	
   <ItemGroup>
     <ProjectReference Include="..\Restaurante.Infra\Restaurante.Infra.csproj" />
   </ItemGroup>

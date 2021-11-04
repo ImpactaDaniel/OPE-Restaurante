@@ -1,7 +1,6 @@
 import { InvoiceService } from './pages/invoice/services/invoice.service';
-import { ThrowStmt } from '@angular/compiler';
 import { AfterContentChecked, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { NewInvoiceDialogComponent } from './components/dialogs/new-invoice-dialog/new-invoice-dialog.component';
