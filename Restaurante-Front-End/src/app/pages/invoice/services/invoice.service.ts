@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
-import { Observable } from 'rxjs';
 import { APIResponse } from 'src/app/models/common/apiResponse';
 import { EventEmitter } from 'events';
 
@@ -20,6 +19,12 @@ export class InvoiceService {
     this.buildConnection();
     this.startConnection();
     this.registerOnServerEvents();
+  }
+
+  public getInvoiceById(invoiceId: number): any {
+    return this.httpClient.get<any>(
+      this.url + this.urlInvoices + "/Get/" + invoiceId
+    );
   }
 
   public getAllInvoices(page: number, limit: number): any {

@@ -16,7 +16,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -51,7 +51,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
     HeaderModule,
     MatSidenavModule,
     MatDialogModule,
-    NewInvoiceDialogModule
+    NewInvoiceDialogModule,
   ],
   providers: [
     {

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { InvoiceDetailsDialogComponent } from '../dialog-invoice/invoice-details-dialog.component';
 import { AlertService } from 'src/app/services/alert.service';
 import { InvoiceService } from '../services/invoice.service';
 
@@ -21,16 +23,18 @@ export class ListInvoiceComponent implements OnInit {
   public status: string;
   public searchField = "customerName";
   public searchValue: string;
+  public invoice: any;
   public invoiceStatusDescription = [
     {id: 0, name: 'Criado'}, {id: 1, name: 'Aceito'}, {id: 2, name: 'Rejeitado'}, {id: 3, name: 'Pagamento Pendente'},
     {id: 4, name: 'Pago'}, {id: 5, name: 'Enviado'}, {id: 6, name: 'Entregue'}, {id: 7, name: 'Fechado'}
   ]
   public paymentTypeDescription = ['Débito', 'Crédito']
 
-  public displayedColumns = ['invoiceId', 'name', 'customerId', 'street', 'number', 'cep', 'payment', 'status', 'changeStatus', 'remove', 'details']
+  public displayedColumns = ['invoiceId', 'name', 'customerId', 'street', 'number', 'cep', 'payment', 'status', 'changeStatus', 'details']
 
   constructor(
     private invoiceService: InvoiceService,
+    private dialog: MatDialog,
     private alertService: AlertService,
     private router: Router
     ) { }
@@ -82,11 +86,15 @@ export class ListInvoiceComponent implements OnInit {
     )
   }
 
-  public details(id: number) {
-    // let productsList = this.invoices.data.filter(item => item.id === id)
-  }
-
-  public remove(id: number) {
+  public async details(id: number) {
+    let response = await this.invoiceService.getInvoiceById(id).toPromise()
+    let invoice = response.response.result
+    this.dialog.open(InvoiceDetailsDialogComponent, {
+      maxWidth: '100%',
+      data: {
+        invoice
+      }
+    });
   }
 
   public searchFieldChanged() {
