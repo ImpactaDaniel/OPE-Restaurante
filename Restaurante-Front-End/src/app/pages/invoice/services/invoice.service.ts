@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
-import { Observable } from 'rxjs';
 import { APIResponse } from 'src/app/models/common/apiResponse';
 import { EventEmitter } from 'events';
 

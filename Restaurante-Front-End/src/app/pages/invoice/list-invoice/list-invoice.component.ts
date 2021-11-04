@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { InvoiceDetailsDialogComponent } from 'src/app/components/dialogs/invoice-details-dialog/invoice-details-dialog.component';
+import { InvoiceDetailsDialogComponent } from '../dialog-invoice/invoice-details-dialog.component';
 import { AlertService } from 'src/app/services/alert.service';
 import { InvoiceService } from '../services/invoice.service';
 
@@ -23,7 +23,7 @@ export class ListInvoiceComponent implements OnInit {
   public status: string;
   public searchField = "customerName";
   public searchValue: string;
-  public invoice: Object;
+  public invoice: any;
   public invoiceStatusDescription = [
     {id: 0, name: 'Criado'}, {id: 1, name: 'Aceito'}, {id: 2, name: 'Rejeitado'}, {id: 3, name: 'Pagamento Pendente'},
     {id: 4, name: 'Pago'}, {id: 5, name: 'Enviado'}, {id: 6, name: 'Entregue'}, {id: 7, name: 'Fechado'}
