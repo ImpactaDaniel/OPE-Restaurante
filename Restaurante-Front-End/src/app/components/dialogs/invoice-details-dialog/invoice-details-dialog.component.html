@@ -2,7 +2,12 @@
     <mat-card-header class="text-center d-block">
       <mat-card-title>
         <div class="row d-block"><span>Detalhes do Pedido: {{ invoice?.id }}</span></div>
-        <div class="row d-block mt-2"><span>Cliente: {{ invoice?.customer?.name}} - Status: {{ invoiceStatusDescription[invoice.status]?.name }}</span></div>
+        <div class="row d-block mt-2">
+          <span>
+            Cliente: {{ invoice?.customer?.name}} - Status: {{ invoiceStatusDescription[invoice.status]?.name }} -
+            Preço Total: R${{ invoiceTotalPrice }}
+          </span>
+        </div>
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
@@ -19,7 +24,7 @@
           </div>
           <div class="form-group col-md-6">
             <label class="mr-1">Data de Cadastro:</label>
-            <span>{{ invoice?.customer?.createdDate}}</span>
+            <span>{{ invoice?.customer?.createdDate | date: 'short' }}</span>
           </div>
         </div>
         <div class="form-row">

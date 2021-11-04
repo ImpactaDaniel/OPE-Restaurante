@@ -30,7 +30,7 @@ export class ListInvoiceComponent implements OnInit {
   ]
   public paymentTypeDescription = ['Débito', 'Crédito']
 
-  public displayedColumns = ['invoiceId', 'name', 'customerId', 'street', 'number', 'cep', 'payment', 'status', 'changeStatus', 'remove', 'details']
+  public displayedColumns = ['invoiceId', 'name', 'customerId', 'street', 'number', 'cep', 'payment', 'status', 'changeStatus', 'details']
 
   constructor(
     private invoiceService: InvoiceService,
@@ -95,9 +95,6 @@ export class ListInvoiceComponent implements OnInit {
         invoice
       }
     });
-  }
-
-  public remove(id: number) {
   }
 
   public searchFieldChanged() {

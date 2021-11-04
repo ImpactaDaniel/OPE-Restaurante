@@ -8,6 +8,11 @@ mat-expansion-panel {
     background-color: #dfc197;
 }
 
+table {
+    border-radius: 3px;
+    background-color: #ddd5cb;
+}
+
 .logs-table {
     height: 200px;
     overflow-y: scroll;
