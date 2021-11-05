@@ -9,21 +9,28 @@ import { EmployeRoutingModule } from './employe-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginEmployeeComponent } from './login-employee/login-employee';
 import { NgxMaskModule } from 'ngx-mask';
-
-
+import { ListEmployeeComponent } from './list-employee/list-employee/list-employee.component';
+import { MatCardModule } from '@angular/material/card'
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
-  declarations: [CreateEmployeeComponent, EditEmployeeComponent, LoginEmployeeComponent],
+  declarations: [CreateEmployeeComponent, EditEmployeeComponent, LoginEmployeeComponent, ListEmployeeComponent],
   imports: [
     CommonModule,
+    MatTableModule,
+    MatIconModule,
     EmployeRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     MatSelectModule,
     NgxMaskModule.forRoot(),
     MatInputModule,
-    LogoModule
+    LogoModule,
+    MatCardModule,
+    MatPaginatorModule
   ]
 })
 export class EmployeeModule { }

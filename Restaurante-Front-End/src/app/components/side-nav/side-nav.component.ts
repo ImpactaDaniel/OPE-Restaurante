@@ -26,7 +26,7 @@ export class SideNavComponent implements OnInit {
   }
 
   public toEmployees(): void {
-    this.router.navigate(['employee/create'])
+    this.router.navigate(['employee/list'])
     this.onSidenavClose()
   }
 
