@@ -6,8 +6,14 @@ import { CreateEmployeeComponent } from './create-employee/create-employee.compo
 import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
 import { EmployeeGuard } from './employee.guard';
 import { LoginEmployeeComponent } from './login-employee/login-employee';
+import { ListEmployeeComponent } from './list-employee/list-employee.component';
 
 const routes : Routes = [
+  {
+    path: 'list',
+    component: ListEmployeeComponent,
+    canActivate: [EmployeeGuard]
+  },
   {
     path: 'create',
     component: CreateEmployeeComponent,
