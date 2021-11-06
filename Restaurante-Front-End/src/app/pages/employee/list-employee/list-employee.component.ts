@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/alert.service';
-import { EmployeeService } from '../../service/employee.service';
+import { DialogEmployeeComponent } from '../dialog-employee/employee-dialog.component';
+import { EmployeeService } from '../service/employee.service';
 
 @Component({
   selector: 'app-list-employee',
@@ -32,6 +34,7 @@ export class ListEmployeeComponent implements OnInit {
 
   constructor(
     private employeeService: EmployeeService,
+    private dialog: MatDialog,
     private alertService: AlertService,
     private router: Router
     ) { }
@@ -71,12 +74,12 @@ export class ListEmployeeComponent implements OnInit {
   public async details(id: number) {
     // let response = await this.invoiceService.getInvoiceById(id).toPromise()
     // let invoice = response.response.result
-    // this.dialog.open(InvoiceDetailsDialogComponent, {
-    //   maxWidth: '100%',
-    //   data: {
-    //     invoice
-    //   }
-    // });
+    this.dialog.open(DialogEmployeeComponent, {
+      maxWidth: '100%',
+      data: {
+        // invoice
+      }
+    });
   }
 
   public searchFieldChanged() {

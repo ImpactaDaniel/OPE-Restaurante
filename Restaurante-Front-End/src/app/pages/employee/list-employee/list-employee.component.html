@@ -95,7 +95,7 @@
 
             <ng-container matColumnDef="edit">
                 <th mat-header-cell *matHeaderCellDef> Editar </th>
-                <td mat-cell *matCellDef="let employee"><a (click)="details(employee.id)" href="javascript:void(0);"><mat-icon>edit_outline</mat-icon></a><td>
+                <td mat-cell *matCellDef="let employee"><a (click)="edit(employee.id)" href="javascript:void(0);"><mat-icon>edit_outline</mat-icon></a><td>
               </ng-container>
     
               <ng-container matColumnDef="remove">
