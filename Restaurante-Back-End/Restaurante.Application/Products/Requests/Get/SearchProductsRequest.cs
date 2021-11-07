@@ -1,10 +1,13 @@
 ﻿using MediatR;
 using Restaurante.Application.Common;
+using Restaurante.Application.Common.Helper;
 using Restaurante.Application.Common.Models;
 using Restaurante.Application.Products.Common.Models;
 using Restaurante.Domain.BasicEntities.Exception;
 using Restaurante.Domain.Common.Data.Mappers.Interfaces;
 using Restaurante.Domain.Common.Data.Models;
+using Restaurante.Domain.Common.Exceptions;
+using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Domain.Products.Models;
 using Restaurante.Domain.Products.Services.Interfaces;
 using System;
@@ -26,11 +29,12 @@ namespace Restaurante.Application.Products.Requests.Get
         {
             private readonly IProductService _productService;
             private readonly IMapper<Product, ProductResponseDTO> _mapper;
-
-            public SearchProductsRequestHandler(IProductService productService, IMapper<Product, ProductResponseDTO> mapper)
+            private readonly INotifier _notifier;
+            public SearchProductsRequestHandler(IProductService productService, IMapper<Product, ProductResponseDTO> mapper, INotifier notifier)
             {
                 _productService = productService;
                 _mapper = mapper;
+                _notifier = notifier;
             }
 
             public async Task<Response<PaginationInfo<ProductResponseDTO>>> Handle(SearchProductsRequest request, CancellationToken cancellationToken)
@@ -45,6 +49,11 @@ namespace Restaurante.Application.Products.Requests.Get
                             Size = products.Size
                         });
                     return new Response<PaginationInfo<ProductResponseDTO>>(true, null);
+                }
+                catch (RestauranteException e)
+                {
+                    _notifier.AddNotification(NotificationHelper.FromException(e));
+                    return new Response<PaginationInfo<ProductResponseDTO>>(false, null);
                 }
                 catch (Exception)
                 {

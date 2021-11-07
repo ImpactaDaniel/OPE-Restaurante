@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using Restaurante.Application.Common.Helper;
+using Restaurante.Domain.Common.Data.Models;
 using Restaurante.Domain.Common.Enums;
+using Restaurante.Domain.Common.Exceptions;
 using Restaurante.Domain.Common.Models;
 using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Domain.Users.Employees.Models;
@@ -10,6 +12,7 @@ using Restaurante.Domain.Users.Exceptions;
 using Restaurante.Domain.Users.Funcionarios.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -45,7 +48,7 @@ namespace Restaurante.Application.Users.Funcionarios.Services
                     return false;
                 }
 
-                if(employeeExist is not null)
+                if (employeeExist is not null)
                 {
                     _notifier.AddNotification(new Notification((int)NotificationKeys.Error, "Funcionário já existe!"));
                     return false;
@@ -70,7 +73,7 @@ namespace Restaurante.Application.Users.Funcionarios.Services
             catch (Exception e)
             {
                 _logger.LogError(e, e.Message);
-                throw new Exception("Houve um erro ao tentar criar o funcionário!", e);
+                throw new Exception("Houve um erro ao tentar criar o funcionário!");
             }
         }
 
@@ -103,7 +106,7 @@ namespace Restaurante.Application.Users.Funcionarios.Services
             catch (Exception e)
             {
                 _logger.LogError(e, e.Message);
-                throw new Exception("Houve um erro ao tentar deletar o funcionário!", e);
+                throw new Exception("Houve um erro ao tentar deletar o funcionário!");
             }
         }
 
@@ -129,12 +132,25 @@ namespace Restaurante.Application.Users.Funcionarios.Services
             catch (Exception e)
             {
                 _logger.LogError(e, e.Message);
-                throw new Exception("Houve um erro ao tentar buscar o funcionário!", e);
+                throw new Exception("Houve um erro ao tentar buscar o funcionário!");
             }
         }
 
         public Task<IList<TEmployee>> GetAll(CancellationToken cancellationToken = default) =>
             _repository.GetAll(cancellationToken);
+
+        public async Task<PaginationInfo<TEmployee>> GetAll(int page, int limit, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await _repository.GetAll(page, limit, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                throw new Exception("Houve um erro ao tentar buscar funcionários!");
+            }
+        }
 
         public async Task<TEmployee> Login(string email, string password, CancellationToken cancellationToken = default)
         {
@@ -159,7 +175,20 @@ namespace Restaurante.Application.Users.Funcionarios.Services
             catch (Exception e)
             {
                 _logger.LogError(e, e.Message);
-                throw new Exception("Houve um erro ao tentar buscar funcionários!", e);
+                throw new Exception("Houve um erro ao tentar buscar funcionários!");
+            }
+        }
+
+        public async Task<PaginationInfo<TEmployee>> Search(Expression<Func<TEmployee, bool>> condition, int page, int limit, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await _repository.GetAll(condition, page, limit, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                throw new Exception("Houve um erro ao tentar buscar funcionários!");
             }
         }
 

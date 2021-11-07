@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Restaurante.Domain.Common.Data.Models;
 using Restaurante.Domain.Encrypt.Intefaces;
 using Restaurante.Domain.Users.Employees.Models;
 using Restaurante.Domain.Users.Employees.Repositories;
@@ -6,6 +7,8 @@ using Restaurante.Infra.Common.Persistence;
 using Restaurante.Infra.Common.Persistence.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -65,6 +68,42 @@ namespace Restaurante.Infra.Users.Employees
                 .Include(e => e.Address)
                 .Include(e => e.Phones)
                 .ToListAsync(cancellationToken);
+
+        public async Task<PaginationInfo<Employee>> GetAll(Expression<Func<Employee, bool>> condition, int page, int limit, CancellationToken cancellationToken = default)
+        {
+            var list = await All()
+                        .Where(condition)
+                        .Skip(page * limit)
+                        .Take(limit)
+                        .ToListAsync(cancellationToken);
+
+            var count = await All()
+                        .Where(condition)
+                        .CountAsync(cancellationToken);
+
+            return new PaginationInfo<Employee>
+            {
+                Entities = list,
+                Size = count
+            };
+        }
+
+        public async Task<PaginationInfo<Employee>> GetAll(int page, int limit, CancellationToken cancellationToken = default)
+        {
+            var list = await All()
+                        .Skip(page * limit)
+                        .Take(limit)
+                        .ToListAsync(cancellationToken);
+
+            var count = await All()
+                        .CountAsync(cancellationToken);
+
+            return new PaginationInfo<Employee>
+            {
+                Entities = list,
+                Size = count
+            };
+        }
 
         public async Task<Employee> Login(string email, string password, CancellationToken cancellationToken = default)
         {
