@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Restaurante.Application.Common.Helper;
 using Restaurante.Domain.Common.Data.Mappers.Interfaces;
+using Restaurante.Domain.Common.Data.Models;
 using Restaurante.Domain.Common.Models.Integration;
 using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Domain.Users.Employees.Models;
@@ -11,6 +12,7 @@ using Restaurante.Domain.Users.Enums;
 using Restaurante.Domain.Users.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -90,9 +92,19 @@ namespace Restaurante.Application.Users.Deliveries.Services
             throw new System.NotImplementedException();
         }
 
+        public Task<PaginationInfo<DeliveryPerson>> GetAll(int page, int limit, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<DeliveryPerson> Login(string email, string password, CancellationToken cancellationToken = default)
         {
             throw new System.NotImplementedException();
+        }
+
+        public Task<PaginationInfo<DeliveryPerson>> Search(Expression<Func<DeliveryPerson, bool>> condition, int page, int limit, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
         }
 
         public Task<bool> Update(DeliveryPerson employee, CancellationToken cancellationToken = default)
