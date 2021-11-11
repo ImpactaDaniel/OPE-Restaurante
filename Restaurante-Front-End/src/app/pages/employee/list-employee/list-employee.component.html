@@ -8,19 +8,19 @@
               <mat-form-field>
                 <mat-label>Selecione:</mat-label>
                 <mat-select (selectionChange)="searchFieldChanged()" [(ngModel)]="searchField">
-                  <mat-option value="employeeEmail">Email</mat-option>
-                  <mat-option value="employeeName">Nome</mat-option>
-                  <mat-option value="employeeType">Tipo de Funcionário</mat-option>
+                  <mat-option value="email">Email</mat-option>
+                  <mat-option value="name">Nome</mat-option>
+                  <mat-option value="type">Tipo de Funcionário</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
       
-            <mat-form-field class="col-md-3" *ngIf="searchField === 'employeeEmail' || searchField === 'employeeName' || searchField === 'employeeType'">
+            <mat-form-field class="col-md-3" *ngIf="searchField === 'email' || searchField === 'name'">
               <mat-label>Valor</mat-label>
               <input (keyup)="search($event)" #inputText name="inputText" matInput type="text">
             </mat-form-field>
   
-            <mat-form-field class="col-md-3" *ngIf="searchField === 'employeeType'">
+            <mat-form-field class="col-md-3" *ngIf="searchField === 'type'">
               <mat-label>Status</mat-label>
               <mat-select (selectionChange)="search($event)">
                 <mat-option *ngFor="let type of employeesType" [value]="type.id">
