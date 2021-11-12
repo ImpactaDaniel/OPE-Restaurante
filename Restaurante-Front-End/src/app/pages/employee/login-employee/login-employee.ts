@@ -49,7 +49,7 @@ export class LoginEmployeeComponent {
         this.error = true;
         return;
       }
-      if(this.tokenservice.getTokenData().firstAccess === 'True')
+      //if(this.tokenservice.getTokenData().firstAccess === 'True')
       this.router.navigate(['/']);
     }).catch(e => {
       var message = '';
