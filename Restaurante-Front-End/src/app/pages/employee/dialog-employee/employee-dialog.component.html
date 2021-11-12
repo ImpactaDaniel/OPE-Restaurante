@@ -1,1 +1,52 @@
-<p>dialog-employee works!</p>
+<mat-card>
+    <mat-card-header class="text-center d-block">
+      <mat-card-title>
+        <div class="row d-block"><span>Detalhes do Funcionário: {{ employee?.name }}</span></div>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label class="mr-1">Funcionário ID:</label>
+                <span>{{ employee?.id}}</span>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="mr-1">CPF:</label>
+                <span class="mr-1">{{ employee?.document}}</span>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="mr-1">CPF:</label>
+                <span class="mr-1">{{ employeesType[employee?.type].name}}</span>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label class="mr-1">CPF:</label>
+                <span>{{ employee?.customer?.createdDate | date: 'short' }}</span>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="mr-1">CPF:</label>
+                <span>{{ employee?.customer?.createdDate | date: 'short' }}</span>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="mr-1">CPF:</label>
+                <span>{{ employee?.customer?.createdDate | date: 'short' }}</span>
+            </div>
+        </div>
+    
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label class="mr-1">CEP:</label>
+            <span class="mr-1">{{ employee?.address?.cep}} - </span>
+            <span>{{ employee?.address?.city }} - </span>
+            <span>{{ employee?.address?.state }}</span>
+          </div>
+        </div>
+
+      <br/>
+    </mat-card-content>
+  </mat-card>
+  
+

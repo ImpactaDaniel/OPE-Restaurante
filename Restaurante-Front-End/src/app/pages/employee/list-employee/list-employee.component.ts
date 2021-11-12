@@ -54,6 +54,7 @@ export class ListEmployeeComponent implements OnInit {
     this.employeeService.getAllEmployees(this.page, this.limit).subscribe(res => {
       this.employees.data = res.response.result.entities;
       this.listSize = res.response.result.size;
+      console.log(res)
     })
   }
 
@@ -77,8 +78,9 @@ export class ListEmployeeComponent implements OnInit {
   }
 
   public async details(id: number) {
-    // let response = await this.employeeService.getInvoiceById(id).toPromise()
-    // let invoice = response.response.result
+    let response = await this.employeeService.getEmployeeById(id).toPromise()
+    let employee = response.response.result
+    console.log(employee)
     this.dialog.open(DialogEmployeeComponent, {
       maxWidth: '100%',
       data: {
