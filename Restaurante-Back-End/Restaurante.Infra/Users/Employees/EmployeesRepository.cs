@@ -50,7 +50,7 @@ namespace Restaurante.Infra.Users.Employees
                 All()
                     .AsNoTrackingWithIdentityResolution()
                 .Include(e => e.Account)
-                .ThenInclude(a => a.Bank)
+                    .ThenInclude(a => a.Bank)
                 .Include(e => e.Address)
                 .Include(e => e.Phones)
                 .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
@@ -75,6 +75,10 @@ namespace Restaurante.Infra.Users.Employees
                         .Where(condition)
                         .Skip(page * limit)
                         .Take(limit)
+                        .Include(e => e.Phones)
+                        .Include(e => e.Address)
+                        .Include(e => e.Account)                        
+                            .ThenInclude(a => a.Bank)
                         .ToListAsync(cancellationToken);
 
             var count = await All()
@@ -93,6 +97,10 @@ namespace Restaurante.Infra.Users.Employees
             var list = await All()
                         .Skip(page * limit)
                         .Take(limit)
+                        .Include(e => e.Phones)
+                        .Include(e => e.Address)
+                        .Include(e => e.Account)
+                            .ThenInclude(a => a.Bank)
                         .ToListAsync(cancellationToken);
 
             var count = await All()
@@ -108,6 +116,10 @@ namespace Restaurante.Infra.Users.Employees
         public async Task<Employee> Login(string email, string password, CancellationToken cancellationToken = default)
         {
             var user = await All()
+                .Include(e => e.Phones)
+                .Include(e => e.Address)
+                .Include(e => e.Account)
+                    .ThenInclude(a => a.Bank)
                 .FirstOrDefaultAsync(u =>
                     u.Email == email,
                     cancellationToken);
