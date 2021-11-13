@@ -1,0 +1,16 @@
+
+mat-card {
+    background-color: #ddd5cb;
+}
+
+.form-employee {
+    padding-top: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #dfc197;
+}
+
+.leg-employee {
+    font-size: 14px;
+    font-weight: bold;
+}

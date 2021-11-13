@@ -1,1 +1,137 @@
-<p>dialog-employee works!</p>
+<mat-card>
+    <mat-card-header class="text-center d-block">
+      <mat-card-title>
+        <div class="row d-block"><span>Detalhes do Funcionário: {{ employee?.name }}</span></div>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <label class="mr-1 leg-employee">Funcionário</label>
+        <div class="col-md-12 form-employee">
+            <div class="form-row align-items-center">
+                <div class="form-group col-md-12">
+                    <div class="row">
+                        <div class="col">
+                            <label class="mr-1">Tipo de Funcionário:</label>
+                            <span>{{ employeesType[employee?.type].name }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row align-items-center">
+                <div class="form-group col-md-6">
+                    <div class="row">
+                        <div class="col">
+                            <label class="mr-1">Nome:</label>
+                            <span>{{ employee?.name}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="mr-1">Email:</label>
+                            <span class="mr-1">{{ employee?.email}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="mr-1">CPF:</label>
+                            <span class="mr-1">{{ employee?.document}}</span>   
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="mr-1">Telefones:</label>
+                    <div *ngFor="let phone of phonesList">
+                        <span class="mr-1">{{ phone?.ddd}}</span>{{ phone?.phoneNumber}}
+                    </div>
+                </div>
+            </div>
+            <div class="form-row align-items-center">
+                <div class="form-group col-md-12">
+                    <div class="row">
+                        <div class="col">
+                            <label class="mr-1">Data de Cadastro:</label>
+                            <span>{{ employee?.createdDate | date: 'short' }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row align-items-center">
+                <div class="form-group col-md-12">
+                    <div class="row">
+                        <div class="col">
+                            <label class="mr-1">Data de Nascimento:</label>
+                            <span>{{ employee?.birthDate | date: 'short' }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row align-items-center">
+                <div class="form-group col-md-4">
+                    <label class="mr-1">Rua:</label>
+                    <span class="mr-1">{{ employee?.address.street }}</span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="mr-1">Número:</label>
+                    <span class="mr-1">{{ employee?.address.number }}</span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="mr-1">Bairro:</label>
+                    <span class="mr-1">{{ employee?.address.district }}</span>
+                </div>
+            </div>
+            <div class="form-row align-items-center">
+                <div class="form-group col-md-4">
+                    <label class="mr-1">CEP:</label>
+                    <span class="mr-1">{{ employee?.address?.cep}}</span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="mr-1">Cidade:</label>
+                    <span>{{ employee?.address?.city }}</span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="mr-1">Estado:</label>
+                    <span>{{ employee?.address?.state }}</span>
+                </div>
+            </div>
+        </div>
+        <label class="mr-1 leg-employee">Dados Bancários</label>
+        <div class="col-md-12 form-employee">
+            <div class="form-row align-items-center">
+                <div class="form-group col-md-6">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <label class="mr-1 leg-employee">Banco</label>
+                        </div>
+                    </div>
+                    <div class="row" align-items-center>
+                        <div class="col">
+                            <label class="mr-1">Banco ID:</label>
+                            <span class="mr-1"> {{ employee?.account?.bank?.id }} </span>
+                            <label class="mr-1">Nome:</label>
+                            <span class="mr-1"> {{ employee?.account?.bank?.name }} </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <label class="mr-1 leg-employee">Conta</label>
+                        </div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <label class="mr-1">Número:</label>
+                            <span class="mr-1"> {{ employee?.account?.accountNumber}}</span>
+                            <label class="mr-1">Agência:</label>
+                            <span class="mr-1"> {{ employee?.account?.branch}}</span>
+                            <label class="mr-1">Dígito:</label>
+                            <span class="mr-1"> {{ employee?.account?.digit}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+  </mat-card>
+  
+

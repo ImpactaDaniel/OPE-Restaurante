@@ -21,16 +21,14 @@ export class ListEmployeeComponent implements OnInit {
   public listSize: number = 0;
   private isSearching = false;
   public status: string;
-  public searchField = "customerName";
+  public searchField = "employeeName";
   public searchValue: string;
 
-  // public invoiceStatusDescription = [
-  //   {id: 0, name: 'Criado'}, {id: 1, name: 'Aceito'}, {id: 2, name: 'Rejeitado'}, {id: 3, name: 'Pagamento Pendente'},
-  //   {id: 4, name: 'Pago'}, {id: 5, name: 'Enviado'}, {id: 6, name: 'Entregue'}, {id: 7, name: 'Fechado'}
-  // ]
-  // public paymentTypeDescription = ['Débito', 'Crédito']
-
-  public displayedColumns = ['employeeId', 'employeeName', 'employeeEmail', 'employeePhone', 'employeeCreateDate', 'employeeBirthDate', 'remove', 'edit', 'details']
+  public employeesType = [
+    {id: 0, name: 'Gerente'}, {id: 1, name: 'Funcionário Padrão'}, {id: 2, name: 'Entregador'}
+  ]
+  
+  public displayedColumns = ['employeeId', 'employeeName', 'employeeEmail', 'employeeType', 'employeeCreateDate', 'employeeBirthDate', 'remove', 'edit', 'details']
 
   constructor(
     private employeeService: EmployeeService,
@@ -45,10 +43,16 @@ export class ListEmployeeComponent implements OnInit {
 
   private getEmployeesList() {
 
-    this.employeeService.getAllInvoices().subscribe(res => {
-      console.log(res)
-      this.employees.data = res.response;
-      this.listSize = res.response.size;
+    if (this.isSearching) {
+        this.employeeService.searchEmployees(this.searchField, this.searchValue, this.page, this.limit).subscribe(res => {
+        this.employees.data = res.response.result?.entities;
+        this.listSize = res.response.result?.size;
+      });
+      return;
+    }
+    this.employeeService.getAllEmployees(this.page, this.limit).subscribe(res => {
+      this.employees.data = res.response.result.entities;
+      this.listSize = res.response.result.size;
     })
   }
 
@@ -58,26 +62,26 @@ export class ListEmployeeComponent implements OnInit {
     this.getEmployeesList();
   }
 
-  // public search(event: any){
-  //   this.searchValue = !isNaN(event.value) ? event.value : event.target.value;
+  public search(event: any){
+    this.searchValue = !isNaN(event.value) ? event.value : event.target.value;
 
-  //   this.isSearching = true;
-  //   this.page = 0;
-  //   this.limit = 5;
-  //   this.getEmployeesList();
-  // }
+    this.isSearching = true;
+    this.page = 0;
+    this.limit = 5;
+    this.getEmployeesList();
+  }
 
   public getStatusChoice(status: any) {
     this.statusChoice = status
   }
 
   public async details(id: number) {
-    // let response = await this.invoiceService.getInvoiceById(id).toPromise()
-    // let invoice = response.response.result
+    let response = await this.employeeService.getEmployeeById(id).toPromise()
+    let employee = response.response.result
     this.dialog.open(DialogEmployeeComponent, {
       maxWidth: '100%',
       data: {
-        // invoice
+        employee
       }
     });
   }
@@ -88,7 +92,7 @@ export class ListEmployeeComponent implements OnInit {
 
   public removeFilters() {
     this.isSearching = false;
-    this.searchField = "customerName";
+    this.searchField = "employeeName";
     this.searchValue = "";
     this.getEmployeesList();
   }
