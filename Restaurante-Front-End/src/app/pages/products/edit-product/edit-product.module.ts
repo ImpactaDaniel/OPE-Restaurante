@@ -1,3 +1,4 @@
+import { RouteGuardService } from 'src/app/services/route-guard.service';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { LogoModule } from './../../../components/logo/logo.module';
@@ -11,7 +12,8 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    component: EditProductComponent
+    component: EditProductComponent,
+    canActivate: [RouteGuardService]
   }
 ]
 

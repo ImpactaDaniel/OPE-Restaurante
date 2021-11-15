@@ -1,3 +1,4 @@
+import { RouteGuardService } from './services/route-guard.service';
 import { NewInvoiceDialogModule } from './components/dialogs/new-invoice-dialog/new-invoice-dialog.module';
 import { GlobalErrorHandler } from './middlewares/GlobalErrorHandler';
 import { Error404Component } from './components/errors/error404/error404.component';
@@ -12,7 +13,8 @@ import { RequestInterceptor } from './middlewares/TokenInterceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderModule } from './components/header/header.module';
 import { SideNavModule } from './components/side-nav/side-nav.module';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule, Component } from '@angular/core';
+import { Error401Component } from './components/errors/error401/error401.component';
 
 @NgModule({
   declarations: [
@@ -41,8 +43,14 @@ import { ErrorHandler, NgModule } from '@angular/core';
         loadChildren: () => import('./pages/products/products.module').then(m => m.ProductsModule)
       },
       {
+        path: 'unauthorized',
+        component: Error401Component,
+        canActivate: [RouteGuardService]
+      },
+      {
         path: '**',
-        component: Error404Component
+        component: Error404Component,
+        canActivate: [RouteGuardService]
       },
     ]),
     HttpClientModule,

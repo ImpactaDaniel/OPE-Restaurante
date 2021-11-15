@@ -30,10 +30,11 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  private getUserName(){
+  private getUserName() {
     this.userNameLogged = "";
-    if(this.authService.isAuthenticated())
-        this.userNameLogged = this.authService.getTokenData().name;
+    if (this.authService.isAuthenticated()) {
+      this.userNameLogged = this.authService.getTokenData().name;
+    }
   }
 
   public onToggleSidenav = () => {

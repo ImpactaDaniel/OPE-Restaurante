@@ -1,3 +1,4 @@
+import { RouteGuardService } from './../../../services/route-guard.service';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { LogoModule } from './../../../components/logo/logo.module';
@@ -12,7 +13,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 const routes: Routes = [
   {
     path: '',
-    component: CreateProductComponent
+    component: CreateProductComponent,
+    canActivate: [RouteGuardService]
   }
 ]
 

@@ -1,3 +1,4 @@
+import { RouteGuardService } from 'src/app/services/route-guard.service';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -16,7 +17,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 const routes: Routes = [
   {
     path: '',
-    component: ListProductComponent
+    component: ListProductComponent,
+    canActivate: [RouteGuardService]
   }
 ]
 

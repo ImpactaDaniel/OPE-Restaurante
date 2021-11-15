@@ -30,7 +30,7 @@ namespace Restaurante.Web.Middlewares
                 if (!string.IsNullOrEmpty(id))
                 {
                     var user = await _service.Get(int.Parse(id));
-                    if (user.FirstAccess && !context.Request.Path.Value?.Contains("ChangePasswordFirstAccess") == true)
+                    if (user.FirstAccess && !context.Request.Path.Value?.Contains("ChangePassword") == true)
                     {
                         context.Response.Clear();
                         context.Response.StatusCode = StatusCodes.Status400BadRequest;

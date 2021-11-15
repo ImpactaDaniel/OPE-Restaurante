@@ -1,3 +1,4 @@
+import { ChangePasswordComponent } from './change-password/change-password.component';
 import { LogoModule } from './../../components/logo/logo.module';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -18,7 +19,7 @@ import { EmployeeDialogModule } from './dialog-employee/employee-dialog.module';
 
 
 @NgModule({
-  declarations: [CreateEmployeeComponent, EditEmployeeComponent, LoginEmployeeComponent, ListEmployeeComponent],
+  declarations: [CreateEmployeeComponent, EditEmployeeComponent, LoginEmployeeComponent, ListEmployeeComponent, ChangePasswordComponent],
   imports: [
     CommonModule,
     MatTableModule,

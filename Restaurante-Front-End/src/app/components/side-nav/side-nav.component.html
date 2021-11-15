@@ -2,13 +2,13 @@
     <a mat-list-item routerlink="/" (click)="onSidenavClose()">
         <mat-icon>Home</mat-icon><span class="nav-caption">Painel Principal</span>
     </a>
-    <a mat-list-item routerlink="/" (click)="onSidenavClose()">
+    <a mat-list-item routerlink="/" (click)="toMyProfile()">
         <mat-icon>account_box</mat-icon><span class="nav-caption">Meu Perfil</span>
     </a>
-    <a mat-list-item (click)="toDelivers()">
+    <a *ngIf="user && user.role.toUpperCase() == 'MANAGER' " mat-list-item (click)="toDelivers()">
         <mat-icon>account_box</mat-icon><span class="nav-caption">Painel de Entregadores</span>
     </a>
-    <a mat-list-item (click)="toEmployees()">
+    <a *ngIf="user && user.role.toUpperCase() == 'MANAGER'" mat-list-item (click)="toEmployees()">
         <mat-icon>account_box</mat-icon><span class="nav-caption">Painel de Funcionários</span>
     </a>
     <a mat-list-item (click)="toInvoices()">
@@ -17,7 +17,7 @@
     <a mat-list-item routerlink="/" (click)="toProducts()">
         <mat-icon>account_box</mat-icon><span class="nav-caption">Painel de Produtos</span>
     </a>
-    <a mat-list-item (click)="toBanks()">
+    <a *ngIf="user && user.role.toUpperCase() == 'MANAGER'" mat-list-item (click)="toBanks()">
         <mat-icon>account_box</mat-icon><span class="nav-caption">Painel de Bancos</span>
     </a>
     <a mat-list-item (click)="onSidenavClose()">
