@@ -1,3 +1,4 @@
+import { RouteGuardAdminService } from './../../../services/route-guard-admin.service';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,7 +14,8 @@ import {MatButtonModule} from '@angular/material/button';
 const routes: Routes = [
   {
     path: '',
-    component: ListBankComponent
+    component: ListBankComponent,
+    canActivate: [RouteGuardAdminService]
   }
 ]
 

@@ -1,4 +1,5 @@
 import { Routes, RouterModule } from '@angular/router';
+import { RouteGuardService } from 'src/app/services/route-guard.service';
 
 const routes: Routes = [
   {
