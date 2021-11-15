@@ -1,5 +1,7 @@
+import { Roles } from './../../models/common/token.data.model';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { TokenData } from 'src/app/models/common/token.data.model';
 import { TokenService } from 'src/app/services/token.service';
 
 @Component({
@@ -11,9 +13,22 @@ export class SideNavComponent implements OnInit {
 
   @Output() sidenavClose = new EventEmitter();
 
+  public user: TokenData;
+
+  public eRoles: Roles;
+
   constructor(private authService: TokenService, private router: Router) { }
 
   ngOnInit() {
+    this.getUser();
+    this.authService.userChanged.subscribe(() => {
+      this.getUser();
+    });
+  }
+
+  private getUser() {
+    if(this.authService.isAuthenticated())
+      this.user = this.authService.getTokenData();
   }
 
   public onSidenavClose = () => {

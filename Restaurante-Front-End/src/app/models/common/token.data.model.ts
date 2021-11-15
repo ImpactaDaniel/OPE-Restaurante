@@ -7,7 +7,7 @@ export class TokenData extends Model {
 }
 
 export enum Roles {
-  MANAGER,
-  EMPLOYEE,
-  DELIVERYMAN
+  MANAGER = 'Manager',
+  EMPLOYEE = 'Employee',
+  DELIVERYMAN = 'Deliveryman'
 }
