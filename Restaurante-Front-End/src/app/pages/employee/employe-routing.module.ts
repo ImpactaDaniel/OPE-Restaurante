@@ -1,3 +1,5 @@
+import { RouteGuardService } from 'src/app/services/route-guard.service';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 import { RouteGuardAdminService } from './../../services/route-guard-admin.service';
 import { AuthenticateGuardService } from './authenticate-guard.service';
 import { NgModule } from '@angular/core';
@@ -29,6 +31,11 @@ const routes : Routes = [
     path: 'login',
     component: LoginEmployeeComponent,
     canActivate: [AuthenticateGuardService]
+  },
+  {
+    path: 'change-password',
+    component: ChangePasswordComponent,
+    canActivate: [RouteGuardService]
   }
 ];
 

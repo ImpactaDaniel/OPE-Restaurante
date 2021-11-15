@@ -49,8 +49,13 @@ export class LoginEmployeeComponent {
         this.error = true;
         return;
       }
-      //if(this.tokenservice.getTokenData().firstAccess === 'True')
-      this.router.navigate(['/']);
+      if(this.tokenservice.getTokenData().firstAccess === 'True'){
+        this.alertService.showQuestion("Mudar senha", "Para continuar usando o sistema, mude sua senha", () => {
+          this.router.navigate(['employee/change-password']);
+        });
+        return;
+      }
+      this.router.navigate(['invoice/list']);
     }).catch(e => {
       var message = '';
         e.error.notifications.map(not => {

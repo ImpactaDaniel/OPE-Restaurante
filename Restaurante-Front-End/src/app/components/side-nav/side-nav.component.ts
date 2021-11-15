@@ -45,6 +45,11 @@ export class SideNavComponent implements OnInit {
     this.onSidenavClose()
   }
 
+  public toMyProfile(): void {
+    this.router.navigate(['employee/change-password']);
+    this.onSidenavClose();
+  }
+
   public toProducts(): void {
     this.router.navigate(['products/list'])
     this.onSidenavClose();

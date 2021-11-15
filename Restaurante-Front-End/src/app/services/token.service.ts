@@ -26,7 +26,7 @@ export class TokenService {
   }
 
   public async updatePassowrd(changePassword: ChangePasswordModel): Promise<APIResponse<any>> {
-    let response = await this.httpClient.post<APIResponse<any>>(this.url + 'Auth/ChangePassowrd', changePassword).toPromise();
+    let response = await this.httpClient.post<APIResponse<any>>(this.url + 'Auth/ChangePassword', changePassword).toPromise();
 
     if (response.success) {
       this.saveToken(response.response.result);
