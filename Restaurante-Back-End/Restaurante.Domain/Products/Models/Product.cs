@@ -76,6 +76,13 @@ namespace Restaurante.Domain.Products.Models
             return this;
         }
 
+        public Product UpdateQuantity(int? quantity)
+        {
+            QuantityStock = quantity;
+            UpdatedOn = DateTime.Now;
+            return this;
+        }
+
         public Product UpdateDescription(string description)
         {
             ValidateNullString(description, "Descrição do produto");

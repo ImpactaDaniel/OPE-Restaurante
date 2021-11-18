@@ -59,8 +59,8 @@ export class ListProductComponent implements OnInit {
     }
 
     this.productsService.getAllProducts(this.page, this.limit).subscribe(res => {
-      this.products = res.response.result.entities;
-      this.listSize = res.response.result.size;
+      this.products = res.response.result?.entities;
+      this.listSize = res.response.result?.size;
     })
   }
 

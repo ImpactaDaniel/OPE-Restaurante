@@ -17,7 +17,7 @@
     <a mat-list-item routerlink="/" (click)="toProducts()">
         <mat-icon>account_box</mat-icon><span class="nav-caption">Painel de Produtos</span>
     </a>
-    <a *ngIf="user && user.role.toUpperCase() == 'MANAGER'" mat-list-item (click)="toBanks()">
+    <a mat-list-item (click)="toBanks()">
         <mat-icon>account_box</mat-icon><span class="nav-caption">Painel de Bancos</span>
     </a>
     <a mat-list-item (click)="onSidenavClose()">

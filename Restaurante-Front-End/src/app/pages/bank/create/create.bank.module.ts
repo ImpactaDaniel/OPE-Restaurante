@@ -1,3 +1,4 @@
+import { RouteGuardService } from './../../../services/route-guard.service';
 import { RouteGuardAdminService } from './../../../services/route-guard-admin.service';
 import { LogoModule } from './../../../components/logo/logo.module';
 import { CommonModule } from '@angular/common';
@@ -11,7 +12,7 @@ const routes: Routes = [
   {
     path: '',
     component: CreateComponent,
-    canActivate: [RouteGuardAdminService]
+    canActivate: [RouteGuardService]
   }
 ]
 
