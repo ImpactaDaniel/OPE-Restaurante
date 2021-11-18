@@ -117,7 +117,7 @@ namespace Restaurante.Application.Products.Services
                     .UpdatePrice(product.Price)
                     .UpdateAvailable(product.Available)
                     .UpdatePhoto(product.Photo)
-                    .AddQuantity(product.QuantityStock)
+                    .UpdateQuantity(product.QuantityStock)
                     .UpdateAccompaniments(product.Accompaniments);
 
                 currentProduct.UpdatedBy = currentUserId;
