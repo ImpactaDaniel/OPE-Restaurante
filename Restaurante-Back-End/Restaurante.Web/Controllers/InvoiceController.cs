@@ -1,10 +1,12 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Restaurante.Application.Common;
 using Restaurante.Application.Invoices.Requests.Create;
 using Restaurante.Application.Invoices.Requests.Get;
 using Restaurante.Application.Invoices.Requests.Update;
 using Restaurante.Domain.Common.Services.Interfaces;
+using Restaurante.Domain.Invoices.Models;
 using Restaurante.Domain.Invoices.Models.Enum;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,7 +20,7 @@ namespace Restaurante.Web.Controllers
         {
         }
 
-        [HttpPost, Route("Create")]
+        [HttpPost, Route("Create"), Produces(typeof(Response<Invoice>))]
         public async Task<IActionResult> CreateNewInvoice([FromBody] CreateInvoiceRequest request, CancellationToken cancellationToken = default)
         {
             var response = await _mediator.Send(request, cancellationToken);
@@ -41,7 +43,7 @@ namespace Restaurante.Web.Controllers
             return GetResponse(response);
         }
 
-        [HttpGet, Route("Get/{id}"), Authorize]
+        [HttpGet, Route("Get/{id}"), Authorize, Produces(typeof(Response<Invoice>))]
         public async Task<IActionResult> Get(int id, CancellationToken cancellationToken = default)
         {
             var response = await _mediator.Send(new GetInvoiceRequest { CurrentUserId = GetLoggedUserId(), Id = id }, cancellationToken);

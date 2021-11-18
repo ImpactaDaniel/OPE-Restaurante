@@ -2,10 +2,13 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
+using Restaurante.Application.Common;
+using Restaurante.Application.Common.Models;
 using Restaurante.Application.Products.Requests.Create;
 using Restaurante.Application.Products.Requests.Delete;
 using Restaurante.Application.Products.Requests.Get;
 using Restaurante.Application.Products.Requests.Update;
+using Restaurante.Domain.Common.Data.Models;
 using Restaurante.Domain.Common.Services.Interfaces;
 using System;
 using System.Threading;
@@ -37,7 +40,7 @@ namespace Restaurante.Web.Controllers
             return GetResponse(response);
         }
 
-        [HttpGet, Route("GetAll")]
+        [HttpGet, Route("GetAll"), Produces(typeof(Response<PaginationInfo<ProductResponseDTO>>))]
         public async Task<IActionResult> GetAllProducts(int page, int limit, CancellationToken cancellationToken = default)
         {
             var response = await _mediator.Send(new GetAllProductsRequest() { Page = page, Limit = limit } , cancellationToken);
@@ -51,14 +54,14 @@ namespace Restaurante.Web.Controllers
             return GetResponse(response);
         }
 
-        [HttpGet, Route("Get/{id}")]
+        [HttpGet, Route("Get/{id}"), Produces(typeof(Response<ProductResponseDTO>))]
         public async Task<IActionResult> GetProduct(int id, CancellationToken cancellationToken = default)
         {
             var response = await _mediator.Send(new GetProductRequest() { Id = id }, cancellationToken);
             return GetResponse(response);
         }
 
-        [HttpGet, Route("Search")]
+        [HttpGet, Route("Search"), Produces(typeof(Response<PaginationInfo<ProductResponseDTO>>))]
         public async Task<IActionResult> SearchByName(string field, string value, int page, int limit, CancellationToken cancellationToken = default)
         {
             var response = await _mediator.Send(new SearchProductsRequest() { Field = field, Value = value, Page = page, Limit = limit }, cancellationToken);
