@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Restaurante.Domain.BasicEntities.Exception;
 using Restaurante.Domain.Encrypt.Intefaces;
 using Restaurante.Domain.Users.Customers.Models;
 using Restaurante.Domain.Users.Customers.Repositories.Interfaces;
@@ -20,6 +21,14 @@ namespace Restaurante.Infra.Users.Customers
 
         public async Task<Customer> CreateCustomer(Customer customer, CancellationToken cancellationToken = default)
         {
+            var exists = await 
+                Data
+                .Customers
+                .AnyAsync(c => c.Email == customer.Email || c.Document == customer.Document, cancellationToken);
+
+            if (exists)
+                throw new BasicTableException("Cliente já existe!", Domain.Common.Enums.NotificationKeys.Error);
+
             customer.UpdatePassword(customer.Password, _passwordEncrypt.Encrypt(customer.Password));
             await Data.Customers.AddAsync(customer, cancellationToken);
             await Data.SaveChangesAsync(cancellationToken);
