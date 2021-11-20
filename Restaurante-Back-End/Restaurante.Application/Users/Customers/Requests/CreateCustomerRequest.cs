@@ -14,9 +14,9 @@ using System.Threading.Tasks;
 
 namespace Restaurante.Application.Users.Customers.Requests
 {
-    public class CreateCustomerRequest : CustomerRequest<CreateCustomerRequest>, IRequest<Response<bool>>
+    public class CreateCustomerRequest : CustomerRequest<CreateCustomerRequest>, IRequest<Response<string>>
     {
-        internal class CreateCustomerRequestHandler : IRequestHandler<CreateCustomerRequest, Response<bool>>
+        internal class CreateCustomerRequestHandler : IRequestHandler<CreateCustomerRequest, Response<string>>
         {
             private readonly ICustomersDomainRepository _customersRepository;
             private readonly ILogger<CreateCustomerRequestHandler> _logger;
@@ -29,11 +29,11 @@ namespace Restaurante.Application.Users.Customers.Requests
                 _notifier = notifier;
             }
 
-            public async Task<Response<bool>> Handle(CreateCustomerRequest request, CancellationToken cancellationToken)
+            public async Task<Response<string>> Handle(CreateCustomerRequest request, CancellationToken cancellationToken)
             {
                 try
                 {
-                    var customer = new Customer(request.Name, request.Email, request.Password)
+                    var customer = new Customer(request.Name, request.Email, request.Password, request.Document)
                     {
                         Addresses = new List<CustomerAddress> { new CustomerAddress(request.Address.Street, request.Address.Number, request.Address.District, request.Address.CEP, request.Address.State, request.Address.City) },
                         FirstAccess = false,
@@ -42,12 +42,11 @@ namespace Restaurante.Application.Users.Customers.Requests
 
                     await _customersRepository.CreateCustomer(customer, cancellationToken);
 
-                    return new Response<bool>(true, true);
+                    return new Response<string>(true, "Cliente criado com sucesso!");
                 }
                 catch (RestauranteException e)
                 {
-                    _notifier.AddNotification(NotificationHelper.FromException(e));
-                    return new Response<bool>(false, false);
+                    return new Response<string>(false, e.Message);
                 }
                 catch (Exception e)
                 {

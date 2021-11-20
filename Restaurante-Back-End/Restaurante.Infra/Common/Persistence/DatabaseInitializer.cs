@@ -3,6 +3,7 @@ using Restaurante.Domain.Users.Employees.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Restaurante.Infra.Common.Persistence
 {
@@ -19,7 +20,7 @@ namespace Restaurante.Infra.Common.Persistence
 
         public void Initialize()
         {
-            _db.Database.EnsureCreated();
+            _db.Database.Migrate();
 
             if(!_db.Employees.Any())
                 _repository.CreateEmployee(new Employee("Admin", "admin@admin.com", "Restaurante@1234", Domain.Users.Enums.EmployeesType.Manager, new Account(new Bank("Teste"), "teste", "teste", 1),

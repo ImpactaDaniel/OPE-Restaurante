@@ -17,10 +17,10 @@ namespace Restaurante.Web.Controllers
         }
 
 
-        [HttpPost("CreateCustomer"), AllowAnonymous, Produces(typeof(Response<bool>))]
+        [HttpPost("CreateCustomer"), AllowAnonymous, Produces(typeof(Response<string>))]
         public async Task<IActionResult> CreateCustomer([FromBody] CreateCustomerRequest request, CancellationToken cancellationToken = default)
         {
-            return GetResponse( await _mediator.Send(request, cancellationToken));
+            return Ok( await _mediator.Send(request, cancellationToken));
         }
     }
 }
