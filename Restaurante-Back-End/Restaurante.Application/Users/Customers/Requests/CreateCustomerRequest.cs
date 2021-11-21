@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using Restaurante.Application.Common;
-using Restaurante.Application.Common.Helper;
 using Restaurante.Application.Users.Common.Models;
 using Restaurante.Domain.Common.Exceptions;
 using Restaurante.Domain.Common.Services.Interfaces;
@@ -37,7 +36,13 @@ namespace Restaurante.Application.Users.Customers.Requests
                     {
                         Addresses = new List<CustomerAddress> { new CustomerAddress(request.Address.Street, request.Address.Number, request.Address.District, request.Address.CEP, request.Address.State, request.Address.City) },
                         FirstAccess = false,
-                        CreatedDate = DateTime.Now
+                        CreatedDate = DateTime.Now,
+                        BirthDate = request.BirthDate,
+                        Phone = new CustomerPhone
+                        {
+                            DDD = request.Phone.DDD,
+                            PhoneNumber = request.Phone.PhoneNumber
+                        }
                     };
 
                     await _customersRepository.CreateCustomer(customer, cancellationToken);

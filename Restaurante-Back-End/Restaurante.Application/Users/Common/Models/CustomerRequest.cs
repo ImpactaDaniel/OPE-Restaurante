@@ -13,6 +13,6 @@ namespace Restaurante.Application.Users.Common.Models
         public string Document { get; set; }
         public DateTime BirthDate { get; set; }
         public AddressRequest Address { get; set; }
-        public IEnumerable<PhoneRequest> Phones { get; set; }        
+        public PhoneRequest Phone { get; set; }        
     }
 }
