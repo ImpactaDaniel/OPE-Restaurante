@@ -50,9 +50,20 @@ namespace Restaurante.Infra.Users.Customers
             throw new System.NotImplementedException();
         }
 
-        public Task<Customer> Login(string email, string password, CancellationToken cancellationToken = default)
+        public async Task<Customer> Login(string email, string password, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            var user = await All()
+                .Include(c => c.Phone)
+                .Include(c => c.Addresses)
+                .FirstAsync(c => c.Email == email, cancellationToken);
+
+            if (user is null)
+                return null;
+
+            if(_passwordEncrypt.Compare(user.Password, password))            
+                return user;
+
+            return null;
         }
     }
 }
