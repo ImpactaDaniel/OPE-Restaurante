@@ -5,6 +5,7 @@ using Restaurante.Domain.Users.Customers.Models;
 using Restaurante.Domain.Users.Employees.Models;
 using Restaurante.Infra.Common.Persistence.Interfaces;
 using Restaurante.Infra.Mappings;
+using Restaurante.Infra.Seeds;
 
 namespace Restaurante.Infra.Common.Persistence
 {
@@ -41,6 +42,7 @@ namespace Restaurante.Infra.Common.Persistence
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(EmployeeMapping).Assembly);
+            modelBuilder.ProductCategoriesSeed();
         }
     }
 }

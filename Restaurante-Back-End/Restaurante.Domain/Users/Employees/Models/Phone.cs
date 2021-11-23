@@ -23,6 +23,16 @@ namespace Restaurante.Domain.Users.Employees.Models
             DDD = ddd;
             PhoneNumber = phoneNumber;
         }
+        public Phone(int id, string ddd, string phoneNumber)
+            : base(id)
+        {
+            ValidateNullString(ddd, "DDD");
+            ValidateNullString(phoneNumber, "Número de telefone");
+            ValidatePhoneNumber(phoneNumber);
+            ValidateDDD(ddd);
+            DDD = ddd;
+            PhoneNumber = phoneNumber;
+        }
 
         public Phone UpdateDDD(string ddd)
         {

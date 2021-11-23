@@ -31,6 +31,18 @@ namespace Restaurante.Domain.Users.Common.Models
             Type = type;
         }
 
+        public User(int id, string name, string email, string password, EmployeesType type)
+            : base(id)
+        {
+            ValidateNullString(name, "Nome");
+            ValidateEmail(email);
+            ValidatePassword(password);
+            Name = name;
+            Email = email;
+            Password = password;
+            Type = type;
+        }
+
         public virtual User UpdateName(string name)
         {
             ValidateNullString(name, "Nome");
