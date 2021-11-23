@@ -209,5 +209,8 @@ namespace Restaurante.Application.Products.Services
             if (!photoDeleted)
                 throw new BasicTableException("Houve um erro ao tentar atualizar o produto!", Domain.Common.Enums.NotificationKeys.Error);
         }
+
+        public async Task<IEnumerable<ProductCategory>> GetProductsGroupByCategories(CancellationToken cancellationToken = default) =>
+            await _productDomainRepository.GetProductsGroupByCategories(cancellationToken);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Restaurante.Application.Common.Models
 {
@@ -28,5 +29,6 @@ namespace Restaurante.Application.Common.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public IEnumerable<ProductResponseDTO> Products { get; set; }
     }
 }

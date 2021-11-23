@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Restaurante.Domain.Common.Data.Models;
+using System.Collections.Generic;
 
 namespace Restaurante.Infra.Products
 {
@@ -89,5 +90,11 @@ namespace Restaurante.Infra.Products
 
             await Data.SaveChangesAsync(cancellationToken);
         }
+
+        public async Task<IEnumerable<ProductCategory>> GetProductsGroupByCategories(CancellationToken cancellationToken = default) => await
+            Data
+            .ProductCategories
+            .Include(pc => pc.Products)
+            .ToListAsync(cancellationToken);
     }
 }

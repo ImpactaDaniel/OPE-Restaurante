@@ -1,11 +1,13 @@
 ﻿using Restaurante.Domain.BasicEntities.Common.Interfaces;
 using Restaurante.Domain.Common.Models;
+using System.Collections.Generic;
 
 namespace Restaurante.Domain.Products.Models
 {
     public class ProductCategory : Entity<int>, IBasicEntity
     {
         public string Name { get; private set; }
+        public IEnumerable<Product> Products { get; set; }
 
         private ProductCategory()
         {

@@ -11,6 +11,7 @@ using Restaurante.Application.Products.Requests.Update;
 using Restaurante.Domain.Common.Data.Models;
 using Restaurante.Domain.Common.Services.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -66,6 +67,12 @@ namespace Restaurante.Web.Controllers
         {
             var response = await _mediator.Send(new SearchProductsRequest() { Field = field, Value = value, Page = page, Limit = limit }, cancellationToken);
             return Ok(response);
+        }
+
+        [HttpGet("GetGroupByCategories"), Produces(typeof(Response<IEnumerable<ProductCategoryResponseDTO>>))]
+        public async Task<IActionResult> GetGroupByCategories(CancellationToken cancellationToken = default)
+        {
+            return Ok(await _mediator.Send(new GetProductGroupByCategories(), cancellationToken));
         }
 
         [HttpGet, Route("{fileName}")]

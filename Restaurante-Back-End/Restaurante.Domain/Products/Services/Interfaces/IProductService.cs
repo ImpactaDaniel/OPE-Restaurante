@@ -16,5 +16,6 @@ namespace Restaurante.Domain.Products.Services.Interfaces
         Task<bool> UpdateProduct(int id, Product product, int currentUserId, CancellationToken cancellationToken = default);
         Task<PaginationInfo<Product>> SearchProducts(Expression<Func<Product, bool>> condition, int page, int limit, CancellationToken cancellationToken = default);
         Task<bool> DeleteProduct(int id, int currentUserId, CancellationToken cancellationToken = default);
+        Task<IEnumerable<ProductCategory>> GetProductsGroupByCategories(CancellationToken cancellationToken = default);
     }
 }
