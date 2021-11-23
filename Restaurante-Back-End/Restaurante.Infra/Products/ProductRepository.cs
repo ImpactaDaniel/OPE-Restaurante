@@ -95,6 +95,7 @@ namespace Restaurante.Infra.Products
             Data
             .ProductCategories
             .Include(pc => pc.Products)
+                .ThenInclude(p => p.Photo)
             .ToListAsync(cancellationToken);
     }
 }
