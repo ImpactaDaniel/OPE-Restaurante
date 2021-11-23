@@ -33,6 +33,22 @@ namespace Restaurante.Domain.Users.Employees.Models
             CEP = cep;
         }
 
+        public Address(int id, string street, string number, string district, string cep, string state, string city)
+            : base(id)
+        {
+            ValidateNullString(street, "Rua");
+            ValidateNullString(number, "Número");
+            ValidateNullString(district, "Bairro");
+            ValidateNullString(cep, "CEP");
+            ValidateNullString(state, "Estado");
+            ValidateNullString(city, "Cidade");
+            ValidateCEP(cep);
+            Street = street;
+            Number = number;
+            District = district;
+            CEP = cep;
+        }
+
         public Address UpdateStreet(string street)
         {
             ValidateNullString(street, "Rua");

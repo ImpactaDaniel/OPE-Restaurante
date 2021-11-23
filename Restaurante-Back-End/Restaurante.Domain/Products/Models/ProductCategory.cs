@@ -11,8 +11,19 @@ namespace Restaurante.Domain.Products.Models
         {
         }
 
+        public ProductCategory(int id)
+            : base(id)
+        {
+        }
+
         public ProductCategory(string name)
-            : this()
+        {
+            ValidateNullString(name, "Nome da Categoria");
+            Name = name;
+        }
+
+        public ProductCategory(int id, string name) :
+            this(id)
         {
             ValidateNullString(name, "Nome da Categoria");
             Name = name;

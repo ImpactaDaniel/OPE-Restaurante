@@ -29,6 +29,17 @@ namespace Restaurante.Domain.Users.Employees.Models
             Document = document;
         }
 
+        public Employee(int id, string name, string email, string password, EmployeesType type, Account account, IList<Phone> phones, Address address, string document, DateTime birthDate) :
+            base(id, name, email, password, type)
+        {
+            ValidateDocument(document);
+            Account = account ?? throw new UserException("Conta não pode ser nula!", NotificationKeys.InvalidEntity);
+            Phones = (phones is null || phones.Count <= 0) ? throw new UserException("Telefones não podem ser nulos!", NotificationKeys.InvalidEntity) : phones;
+            Address = address ?? throw new UserException("Endereço não pode ser nulo!", NotificationKeys.InvalidEntity);
+            BirthDate = birthDate;
+            Document = document;
+        }
+
         public Employee UpdateType(EmployeesType type)
         {
             if (type == EmployeesType.Deliver)
