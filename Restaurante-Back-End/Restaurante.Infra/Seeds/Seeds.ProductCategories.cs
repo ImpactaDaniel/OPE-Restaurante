@@ -11,8 +11,9 @@ namespace Restaurante.Infra.Seeds
             var productCategories = new List<ProductCategory>
             {
                 new ProductCategory(1, "Sobremensa"),
-                new ProductCategory(2, "Acompanhamentos"),
-                new ProductCategory(3, "Pratos Principais")
+                new ProductCategory(2, "Acompanhamento"),
+                new ProductCategory(3, "Prato Principal"),
+                new ProductCategory(4, "Bebidas")
             };
 
             builder.Entity<ProductCategory>().HasData(productCategories);
