@@ -1,0 +1,24 @@
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
+WORKDIR /app
+
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+WORKDIR /src
+COPY ["Restaurante.Web/Restaurante.Web.csproj", "Restaurante.Web/"]
+COPY ["Restaurante.Infra/Restaurante.Infra.csproj", "Restaurante.Infra/"]
+COPY ["Restaurante.Application/Restaurante.Application.csproj", "Restaurante.Application/"]
+COPY ["Restaurante.Domain/Restaurante.Domain.csproj", "Restaurante.Domain/"]
+RUN dotnet restore "Restaurante.Web/Restaurante.Web.csproj"
+COPY . .
+WORKDIR "/src/Restaurante.Web"
+RUN dotnet build "Restaurante.Web.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "Restaurante.Web.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "Restaurante.Web.dll"]
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet Restaurante.Web.dll

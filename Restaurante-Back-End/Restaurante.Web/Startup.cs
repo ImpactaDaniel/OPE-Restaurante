@@ -68,8 +68,9 @@ namespace Restaurante.Web
                 .AddControllers()
                 .AddNewtonsoftJson(o => o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
                 .Services
-                .AddSignalR(o => { 
-                    o.EnableDetailedErrors = true;                    
+                .AddSignalR(o =>
+                {
+                    o.EnableDetailedErrors = true;
                 })
                 .AddJsonProtocol(p =>
                 {

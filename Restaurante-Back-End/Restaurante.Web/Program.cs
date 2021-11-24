@@ -17,7 +17,9 @@ namespace Restaurante.Web
                 .ConfigureAppConfiguration(AppConfiguration)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    var port = Environment.GetEnvironmentVariable("PORT");
+                    webBuilder.UseStartup<Startup>()
+                    .UseUrls("http://*:" + port);
                 });
 
         private static void AppConfiguration(HostBuilderContext hostContext, IConfigurationBuilder builder) =>
