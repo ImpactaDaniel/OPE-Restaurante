@@ -45,7 +45,7 @@ namespace Restaurante.Web.Controllers
         public async Task<IActionResult> GetAllProducts(int page, int limit, CancellationToken cancellationToken = default)
         {
             var response = await _mediator.Send(new GetAllProductsRequest() { Page = page, Limit = limit } , cancellationToken);
-            return Ok(response);
+            return GetResponse(response);
         }
 
         [HttpDelete, Route("Delete/{id}"), Authorize]
