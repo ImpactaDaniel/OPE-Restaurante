@@ -13,7 +13,7 @@ namespace Restaurante.Domain.Users.Entregadores.Models
         {
         }
         public DeliveryPerson(string name, string email, string password, Vehicle moto, Account account, IList<Phone> phones, Address address, string document, DateTime birthDate)
-            : base(name, email, password, EmployeesType.Deliver, account, phones, address, document, birthDate)
+            : base(name, email, password, UsersType.Deliver, account, phones, address, document, birthDate)
         {
             MotoCycle = moto;
         }

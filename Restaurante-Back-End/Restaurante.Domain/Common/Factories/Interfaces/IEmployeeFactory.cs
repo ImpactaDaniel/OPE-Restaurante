@@ -7,7 +7,7 @@ namespace Restaurante.Domain.Common.Factories.Interfaces
 {
     public interface IEmployeeFactory : IFactory<Employee>, IUserFactory<Employee>
     {
-        IEmployeeFactory WithType(EmployeesType type);
+        IEmployeeFactory WithType(UsersType type);
         IEmployeeFactory WithPhone(Phone phone);
         IEmployeeFactory WithPhones(IEnumerable<Phone> phones);
         IEmployeeFactory WithAddress(Address address);

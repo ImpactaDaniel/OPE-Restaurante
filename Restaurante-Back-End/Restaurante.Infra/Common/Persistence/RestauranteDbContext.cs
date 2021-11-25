@@ -43,6 +43,7 @@ namespace Restaurante.Infra.Common.Persistence
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(EmployeeMapping).Assembly);
             modelBuilder.ProductCategoriesSeed();
+            modelBuilder.CustomersSeeds();
         }
     }
 }

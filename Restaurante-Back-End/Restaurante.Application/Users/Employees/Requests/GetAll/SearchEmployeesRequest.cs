@@ -49,7 +49,7 @@ namespace Restaurante.Application.Users.Employees.Requests.GetAll
                 {
                     "email" => e => e.Email.Contains(value),
                     "name" => e => e.Name.Contains(value),
-                    "type" => e => e.Type == (EmployeesType)int.Parse(value),
+                    "type" => e => e.Type == (UsersType)int.Parse(value),
                     _ => throw new BasicTableException("Filtro não implementado!", Domain.Common.Enums.NotificationKeys.Error),
                 };
             }

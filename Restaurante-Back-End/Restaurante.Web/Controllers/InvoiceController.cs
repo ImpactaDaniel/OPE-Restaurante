@@ -51,7 +51,7 @@ namespace Restaurante.Web.Controllers
             return GetResponse(response);
         }
 
-        [HttpPatch, Route("UpdateStatus/{id}"), Authorize]
+        [HttpGet, Route("UpdateStatus/{id}"), Authorize]
         public async Task<IActionResult> UpdateInvoiceStatus(int id, InvoiceStatus status, CancellationToken cancellationToken = default)
         {
             var response = await _mediator.Send(new UpdateInvoiceStatusRequest { Id = id, Status = status }, cancellationToken);

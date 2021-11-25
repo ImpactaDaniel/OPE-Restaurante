@@ -53,7 +53,7 @@ namespace Restaurante.Application.Users.Deliveries.Services
                     return false;
                 }
 
-                if (user.Type != EmployeesType.Manager)
+                if (user.Type != UsersType.Manager)
                 {
                     _notifier.AddNotification(NotificationHelper.DoesntHavePermission(nameof(Employee), "criar novo Entregador!"));
                     return false;

@@ -23,7 +23,7 @@ namespace Restaurante.Test.Usuarios
         {
             //Arrange
             _factory
-                .WithType(Restaurante.Domain.Users.Enums.EmployeesType.Manager)
+                .WithType(Restaurante.Domain.Users.Enums.UsersType.Manager)
                 .WithDocument(DataTest.CPF)
                 .WithBirthDate(DateTime.Now)
                 .WithAccount(AccountMock.GetDefault())
@@ -50,7 +50,7 @@ namespace Restaurante.Test.Usuarios
                 .WithAccount(AccountMock.GetDefault())
                 .WithDocument(DataTest.CPF)
                 .WithBirthDate(DateTime.Now)
-                .WithType(Restaurante.Domain.Users.Enums.EmployeesType.Employee)
+                .WithType(Restaurante.Domain.Users.Enums.UsersType.Employee)
                 .WithAddress(AddressMock.GetDefault())
                 .WithPhones(new List<Phone> { PhoneMock.GetDefault() })
                 .WithName("Daniel")
@@ -75,7 +75,7 @@ namespace Restaurante.Test.Usuarios
                     .WithAccount(AccountMock.GetDefault())
                     .WithDocument(DataTest.CPF)
                     .WithBirthDate(DateTime.Now)
-                    .WithType(Restaurante.Domain.Users.Enums.EmployeesType.Deliver)
+                    .WithType(Restaurante.Domain.Users.Enums.UsersType.Deliver)
                     .WithAddress(AddressMock.GetDefault())
                     .WithPhones(new List<Phone> { PhoneMock.GetDefault() })
                     .WithName("Daniel")

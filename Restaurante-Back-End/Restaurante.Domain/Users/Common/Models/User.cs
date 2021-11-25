@@ -15,11 +15,11 @@ namespace Restaurante.Domain.Users.Common.Models
         public bool FirstAccess { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; protected set; }
-        public EmployeesType Type { get; protected set; }
+        public UsersType Type { get; protected set; }
         protected User()
         {
         }
-        public User(string name, string email, string password, EmployeesType type)
+        public User(string name, string email, string password, UsersType type)
             : this()
         {
             ValidateNullString(name, "Nome");
@@ -31,7 +31,7 @@ namespace Restaurante.Domain.Users.Common.Models
             Type = type;
         }
 
-        public User(int id, string name, string email, string password, EmployeesType type)
+        public User(int id, string name, string email, string password, UsersType type)
             : base(id)
         {
             ValidateNullString(name, "Nome");

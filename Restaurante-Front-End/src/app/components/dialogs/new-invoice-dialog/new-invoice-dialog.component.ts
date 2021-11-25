@@ -1,7 +1,9 @@
 import { MatTableDataSource } from '@angular/material/table';
 import { Component, ElementRef, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { InvoiceService } from 'src/app/pages/invoice/services/invoice.service';
+import { InvoiceStatus } from 'src/app/models/common/invoiceStatus';
 
 @Component({
   templateUrl: './new-invoice-dialog.component.html',
@@ -24,11 +26,20 @@ export class NewInvoiceDialogComponent implements OnInit {
 
   public invoiceLines = new MatTableDataSource<any>();
 
-  constructor(@Inject(MAT_DIALOG_DATA) private data: any, @Inject('BASE_URL') public url: string) { }
+  constructor(@Inject(MAT_DIALOG_DATA) private data: any,
+              @Inject('BASE_URL') public url: string,
+              private invoiceService: InvoiceService,
+              private dialogRef: MatDialogRef<NewInvoiceDialogComponent>) { }
 
   ngOnInit(): void {
     this.invoice = this.data?.invoice;
     this.invoiceLines.data = this.data?.invoice?.Products.$values;
+  }
+
+  public updateInvoiceStatus(accepted: boolean) {
+    this.invoiceService.updateStatus(this.invoice.Id, accepted ? InvoiceStatus.Accepted : InvoiceStatus.Rejected).subscribe((r) => {
+      this.dialogRef.close();
+    })
   }
 
 }

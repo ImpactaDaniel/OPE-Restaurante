@@ -11,6 +11,7 @@ namespace Restaurante.Domain.Users.Customers.Models
         }
         public string Street { get; private set; }
         public string Number { get; private set; }
+        public int CustomerId { get; set; }
         public string District { get; private set; }
         public string CEP { get; private set; }
         public string State { get; private set; }
@@ -30,6 +31,26 @@ namespace Restaurante.Domain.Users.Customers.Models
             Number = number;
             District = district;
             CEP = cep;
+            City = city;
+            State = state;
+        }
+
+        public CustomerAddress(int id, string street, string number, string district, string cep, string state, string city)
+            : base(id)
+        {
+            ValidateNullString(street, "Rua");
+            ValidateNullString(number, "Número");
+            ValidateNullString(district, "Bairro");
+            ValidateNullString(cep, "CEP");
+            ValidateNullString(state, "Estado");
+            ValidateNullString(city, "Cidade");
+            ValidateCEP(cep);
+            Street = street;
+            Number = number;
+            District = district;
+            CEP = cep;
+            City = city;
+            State = state;
         }
 
         public CustomerAddress UpdateStreet(string street)

@@ -19,13 +19,11 @@ namespace Restaurante.Application.Users.Customers.Requests
         {
             private readonly ICustomersDomainRepository _customersRepository;
             private readonly ILogger<CreateCustomerRequestHandler> _logger;
-            private readonly INotifier _notifier;
 
-            public CreateCustomerRequestHandler(ICustomersDomainRepository customersRepository, ILogger<CreateCustomerRequestHandler> logger, INotifier notifier)
+            public CreateCustomerRequestHandler(ICustomersDomainRepository customersRepository, ILogger<CreateCustomerRequestHandler> logger)
             {
                 _customersRepository = customersRepository;
                 _logger = logger;
-                _notifier = notifier;
             }
 
             public async Task<Response<string>> Handle(CreateCustomerRequest request, CancellationToken cancellationToken)

@@ -18,7 +18,7 @@ namespace Restaurante.Domain.Users.Employees.Models
         protected Employee()
         {
         }
-        public Employee(string name, string email, string password, EmployeesType type, Account account, IList<Phone> phones, Address address, string document, DateTime birthDate) :
+        public Employee(string name, string email, string password, UsersType type, Account account, IList<Phone> phones, Address address, string document, DateTime birthDate) :
             base(name, email, password, type)
         {
             ValidateDocument(document);
@@ -29,7 +29,7 @@ namespace Restaurante.Domain.Users.Employees.Models
             Document = document;
         }
 
-        public Employee(int id, string name, string email, string password, EmployeesType type, Account account, IList<Phone> phones, Address address, string document, DateTime birthDate) :
+        public Employee(int id, string name, string email, string password, UsersType type, Account account, IList<Phone> phones, Address address, string document, DateTime birthDate) :
             base(id, name, email, password, type)
         {
             ValidateDocument(document);
@@ -40,9 +40,9 @@ namespace Restaurante.Domain.Users.Employees.Models
             Document = document;
         }
 
-        public Employee UpdateType(EmployeesType type)
+        public Employee UpdateType(UsersType type)
         {
-            if (type == EmployeesType.Deliver)
+            if (type == UsersType.Deliver)
                 throw new UserException("Esse funcionário não pode ser entregador!", NotificationKeys.InvalidEntity);
             Type = type;
             return this;

@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restaurante.Infra.Common.Persistence;
 
 namespace Restaurante.Infra.Migrations
 {
     [DbContext(typeof(RestauranteDbContext))]
-    partial class RestauranteDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211124233320_seeds-customer-2")]
+    partial class seedscustomer2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,7 +27,7 @@ namespace Restaurante.Infra.Migrations
                     b.Property<int?>("AddressId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int?>("CustomerId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("PaymentId")
@@ -308,10 +310,10 @@ namespace Restaurante.Infra.Migrations
                             BirthDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Document = "10845441051",
-                            Email = "teste@gmail.com",
+                            Email = "daniel@gmail.com",
                             FirstAccess = false,
                             Name = "Daniel",
-                            Password = "$2b$10$JslArELBa5XKc8b8crVZ9.GN1bY90Cf7c5ibgoTj.vO3fL7pt863q",
+                            Password = "$2b$10$9QsGNTO4SNA6QqsrQRq/AutnF9I3XQLQYKv6ofHvwpuyb0.w97bZa",
                             PhoneId = 1,
                             Type = 3
                         });
@@ -541,9 +543,7 @@ namespace Restaurante.Infra.Migrations
 
                     b.HasOne("Restaurante.Domain.Users.Customers.Models.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustomerId");
 
                     b.HasOne("Restaurante.Domain.Invoices.Models.Payment", "Payment")
                         .WithMany()

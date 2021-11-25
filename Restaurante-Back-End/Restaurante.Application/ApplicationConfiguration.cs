@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Restaurante.Application.BasicEntities.Services;
+using Restaurante.Application.Common.Integration;
 using Restaurante.Application.Common.Services;
 using Restaurante.Application.Users.Common.Services;
 using Restaurante.Application.Users.Deliveries.Services;
@@ -12,6 +13,8 @@ using Restaurante.Domain.Common.Data.Mappers.Interfaces;
 using Restaurante.Domain.Common.Factories.Interfaces;
 using Restaurante.Domain.Common.Models.Integration;
 using Restaurante.Domain.Common.Services.Interfaces;
+using Restaurante.Domain.Integrations.Implementations;
+using Restaurante.Domain.Integrations.Interface;
 using Restaurante.Domain.Users.Common.Models;
 using Restaurante.Domain.Users.Common.Services.Interfaces;
 using System;
@@ -32,6 +35,7 @@ namespace Restaurante.Application
                 .AddServices()
                 .AddMappers()
                 .AddFactories()
+                .AddEventBus(configuration)
                 .AddIntegrationServices(configuration)
                 .AddTokenService(configuration);
 
@@ -48,6 +52,11 @@ namespace Restaurante.Application
 
         internal static IServiceCollection AddNotifier(this IServiceCollection services) =>
             services.AddScoped<INotifier, Notifier>();
+
+        internal static IServiceCollection AddEventBus(this IServiceCollection services, IConfiguration configuration) =>
+            services
+                .AddSingleton(configuration.GetSection(nameof(IntegrationSettings)).Get<IntegrationSettings>())
+                .AddScoped<IEventBus, AzureServiceBus>();
 
         internal static IServiceCollection AddIntegrationServices(this IServiceCollection services, IConfiguration configuration) =>
             services
