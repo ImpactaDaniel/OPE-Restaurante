@@ -11,7 +11,7 @@ namespace Restaurante.Domain.Common.Factories
 {
     internal class EmployeeFactory : UserFactory<Employee>, IEmployeeFactory
     {
-        protected EmployeesType _type;
+        protected UsersType _type;
         protected Account _account;
         protected Address _address;
         protected IList<Phone> _phones = new List<Phone>();
@@ -64,9 +64,9 @@ namespace Restaurante.Domain.Common.Factories
             return this;
         }
 
-        public virtual IEmployeeFactory WithType(EmployeesType type)
+        public virtual IEmployeeFactory WithType(UsersType type)
         {
-            _type = type == EmployeesType.Deliver ? throw new UserException("Esse funcionário não pode ser do tipo entregador!", NotificationKeys.InvalidEntity) : type;
+            _type = type == UsersType.Deliver ? throw new UserException("Esse funcionário não pode ser do tipo entregador!", NotificationKeys.InvalidEntity) : type;
             return this;
         }
     }

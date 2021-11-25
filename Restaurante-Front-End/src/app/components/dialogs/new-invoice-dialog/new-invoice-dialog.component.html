@@ -50,8 +50,8 @@
 
     <div class="row">
       <div class="ml-auto">
-        <button class="btn btn-outline-success mr-2">Aceitar</button>
-        <button class="btn btn-outline-danger">Rejeitar</button>
+        <button (click)="updateInvoiceStatus(true)" class="btn btn-outline-success mr-2">Aceitar</button>
+        <button (click)="updateInvoiceStatus(false)" class="btn btn-outline-danger">Rejeitar</button>
       </div>
     </div>
   </mat-card-content>

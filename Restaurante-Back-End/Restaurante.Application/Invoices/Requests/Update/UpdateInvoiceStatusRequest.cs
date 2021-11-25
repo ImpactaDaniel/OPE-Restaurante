@@ -60,7 +60,7 @@ namespace Restaurante.Application.Invoices.Requests.Update
                             Type = InvoiceLogType.Updated
                         }, cancellationToken);
 
-                        await _mediator.Publish(new InvoiceNotification
+                        await _mediator.Publish(new InvoiceUpdatedNotification
                         {
                             Invoice = invoice,
                             NotificationType = Common.Models.Enums.InvoiceNotificationType.Updated

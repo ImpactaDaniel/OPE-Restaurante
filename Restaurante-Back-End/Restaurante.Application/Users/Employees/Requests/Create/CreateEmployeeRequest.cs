@@ -66,7 +66,7 @@ namespace Restaurante.Application.Users.Employees.Requests.Create
                         .WithPhones(phones)
                         .WithDocument(request.Document)
                         .WithBirthDate(request.BirthDate)
-                        .WithType(Domain.Users.Enums.EmployeesType.Employee)
+                        .WithType(Domain.Users.Enums.UsersType.Employee)
                         .WithName(request.Name)
                         .WithEmail(request.Email)
                         .WithPassword(request.Password);

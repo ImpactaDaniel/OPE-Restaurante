@@ -16,7 +16,7 @@ namespace Restaurante.Application.Users.Common.Models
         public AccountRequest Account { get; set; }
         public AddressRequest Address { get; set; }
         public List<PhoneRequest> Phones { get; set; }
-        public EmployeesType Type { get; set; }
+        public UsersType Type { get; set; }
     }
     public class BankRequest
     {

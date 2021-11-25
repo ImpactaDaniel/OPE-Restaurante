@@ -54,7 +54,7 @@ namespace Restaurante.Application.Users.Funcionarios.Services
                     return false;
                 }
 
-                if (user.Type != EmployeesType.Manager)
+                if (user.Type != UsersType.Manager)
                 {
                     _notifier.AddNotification(NotificationHelper.DoesntHavePermission(nameof(Employee), "criar novo funcionário!"));
                     return false;
@@ -90,7 +90,7 @@ namespace Restaurante.Application.Users.Funcionarios.Services
                     return false;
                 }
 
-                if (user.Type != EmployeesType.Manager)
+                if (user.Type != UsersType.Manager)
                 {
                     _notifier.AddNotification(NotificationHelper.DoesntHavePermission(nameof(Employee), "deletar funcionário!"));
                     return false;

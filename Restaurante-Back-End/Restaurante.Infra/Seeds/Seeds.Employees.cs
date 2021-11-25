@@ -28,7 +28,7 @@ namespace Restaurante.Infra.Seeds
             var employee = new Employee(1, "Admin",
                 "admin@admin.com",
                 "Restaurante@1234",
-                Domain.Users.Enums.EmployeesType.Manager,
+                Domain.Users.Enums.UsersType.Manager,
                 account,
                 new List<Phone> { phone },
                 address,

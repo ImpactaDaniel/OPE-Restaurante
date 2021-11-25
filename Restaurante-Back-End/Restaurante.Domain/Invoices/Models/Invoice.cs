@@ -12,6 +12,7 @@ namespace Restaurante.Domain.Invoices.Models
         public InvoiceAddress Address { get; set; }
         public InvoiceStatus Status { get; set; }
         public Payment Payment { get; set; }
+        public int CustomerId { get; set; }
         public IList<InvoiceLog> Logs { get; set; }
     }
 }

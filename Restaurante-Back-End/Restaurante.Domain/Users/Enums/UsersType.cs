@@ -1,9 +1,10 @@
 ﻿namespace Restaurante.Domain.Users.Enums
 {
-    public enum EmployeesType
+    public enum UsersType
     {
         Manager,
         Employee,
-        Deliver
+        Deliver,
+        Customer
     }
 }

@@ -11,13 +11,13 @@ namespace Restaurante.Test.Usuarios.Mocks
         public static Employee GetDefaultManager() =>
             Builder<Employee>
             .CreateNew()
-            .WithFactory(() => new Employee("Carlos", "carlos@gmail.com", DataTest.PASSWORD, EmployeesType.Manager, AccountMock.GetDefault(), new List<Phone>() { PhoneMock.GetDefault() }, AddressMock.GetDefault(), DataTest.CPF, DateTime.Now))
+            .WithFactory(() => new Employee("Carlos", "carlos@gmail.com", DataTest.PASSWORD, UsersType.Manager, AccountMock.GetDefault(), new List<Phone>() { PhoneMock.GetDefault() }, AddressMock.GetDefault(), DataTest.CPF, DateTime.Now))
             .Build();
 
         public static Employee GetDefault() =>
             Builder<Employee>
             .CreateNew()
-            .WithFactory(() => new Employee("Carlos", "carlos@gmail.com", DataTest.PASSWORD, EmployeesType.Employee, AccountMock.GetDefault(), new List<Phone>() { PhoneMock.GetDefault() }, AddressMock.GetDefault(), DataTest.CPF, DateTime.Now))
+            .WithFactory(() => new Employee("Carlos", "carlos@gmail.com", DataTest.PASSWORD, UsersType.Employee, AccountMock.GetDefault(), new List<Phone>() { PhoneMock.GetDefault() }, AddressMock.GetDefault(), DataTest.CPF, DateTime.Now))
             .Build();
     }
 

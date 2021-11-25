@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restaurante.Infra.Common.Persistence;
 
 namespace Restaurante.Infra.Migrations
 {
     [DbContext(typeof(RestauranteDbContext))]
-    partial class RestauranteDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211124232002_seeds-customer")]
+    partial class seedscustomer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -355,11 +357,9 @@ namespace Restaurante.Infra.Migrations
                         {
                             Id = 1,
                             CEP = "02998190",
-                            City = "São Paulo",
                             CustomerId = 1,
                             District = "City Jaraguá",
                             Number = "180",
-                            State = "SP",
                             Street = "Rua Ângelo Benincori"
                         });
                 });

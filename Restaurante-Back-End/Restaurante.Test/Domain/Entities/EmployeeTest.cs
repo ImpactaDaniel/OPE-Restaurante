@@ -17,7 +17,7 @@ namespace Restaurante.Test.Domain.Entities
             //assert
             var ex = Assert.Throws<UserException>(() =>
             //act
-                new Employee("teste", DataTest.EMAIL, DataTest.PASSWORD, EmployeesType.Deliver,
+                new Employee("teste", DataTest.EMAIL, DataTest.PASSWORD, UsersType.Deliver,
                                 null, new List<Phone>() { PhoneMock.GetDefault() }, AddressMock.GetDefault(), DataTest.CPF, DateTime.Now)
             );
 
@@ -31,7 +31,7 @@ namespace Restaurante.Test.Domain.Entities
             //assert
             var ex = Assert.Throws<UserException>(() =>
             //act
-                new Employee("teste", DataTest.EMAIL, DataTest.PASSWORD, EmployeesType.Deliver,
+                new Employee("teste", DataTest.EMAIL, DataTest.PASSWORD, UsersType.Deliver,
                                 AccountMock.GetDefault(), null, AddressMock.GetDefault(), DataTest.CPF, DateTime.Now)
             );
 
@@ -45,7 +45,7 @@ namespace Restaurante.Test.Domain.Entities
             //assert
             var ex = Assert.Throws<UserException>(() =>
             //act
-                new Employee("teste", DataTest.EMAIL, DataTest.PASSWORD, EmployeesType.Deliver,
+                new Employee("teste", DataTest.EMAIL, DataTest.PASSWORD, UsersType.Deliver,
                                 AccountMock.GetDefault(), new List<Phone>(), AddressMock.GetDefault(), DataTest.CPF, DateTime.Now)
             );
 
@@ -59,7 +59,7 @@ namespace Restaurante.Test.Domain.Entities
             //assert
             var ex = Assert.Throws<UserException>(() =>
             //act
-                new Employee("teste", DataTest.EMAIL, DataTest.PASSWORD, EmployeesType.Deliver,
+                new Employee("teste", DataTest.EMAIL, DataTest.PASSWORD, UsersType.Deliver,
                                 AccountMock.GetDefault(), new List<Phone> { PhoneMock.GetDefault() }, null, DataTest.CPF, DateTime.Now)
             );
 
@@ -72,7 +72,7 @@ namespace Restaurante.Test.Domain.Entities
         {
             //arrange
             var employee = EmployeeMock.GetDefault();
-            var expectedType = EmployeesType.Manager;
+            var expectedType = UsersType.Manager;
 
             //act
             employee.UpdateType(expectedType);
@@ -91,7 +91,7 @@ namespace Restaurante.Test.Domain.Entities
 
             var ex = Assert.Throws<UserException>(() =>
                 //act
-                employee.UpdateType(EmployeesType.Deliver)
+                employee.UpdateType(UsersType.Deliver)
             );
 
             Assert.Equal("Esse funcionário não pode ser entregador!", ex.Message);
