@@ -30,7 +30,7 @@ export class InvoiceService {
 
   public updateStatus(invoiceId: number, invoiceStatus: InvoiceStatus) {
     return this.httpClient.get<any>(this.url + this.urlInvoices +
-      "/UpdateStatus/" + invoiceId + "?invoiceStatus=" + invoiceStatus);
+      "/UpdateStatus/" + invoiceId + "?status=" + invoiceStatus);
   }
 
   public getAllInvoices(page: number, limit: number): any {

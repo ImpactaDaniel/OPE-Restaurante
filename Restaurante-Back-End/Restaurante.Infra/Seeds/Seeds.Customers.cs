@@ -17,7 +17,7 @@ namespace Restaurante.Infra.Seeds
             builder.Entity<CustomerPhone>().HasData(phone);
 
 
-            var customer = new Customer(1, "Daniel", "daniel@gmail.com", "$2b$10$9QsGNTO4SNA6QqsrQRq/AutnF9I3XQLQYKv6ofHvwpuyb0.w97bZa", "10845441051");
+            var customer = new Customer(1, "Daniel", "teste@gmail.com", "$2b$10$JslArELBa5XKc8b8crVZ9.GN1bY90Cf7c5ibgoTj.vO3fL7pt863q", "10845441051");
 
             customer.PhoneId = 1;
 
