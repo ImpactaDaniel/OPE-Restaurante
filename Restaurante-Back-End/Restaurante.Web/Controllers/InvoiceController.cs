@@ -8,6 +8,7 @@ using Restaurante.Application.Invoices.Requests.Update;
 using Restaurante.Domain.Common.Services.Interfaces;
 using Restaurante.Domain.Invoices.Models;
 using Restaurante.Domain.Invoices.Models.Enum;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -43,10 +44,26 @@ namespace Restaurante.Web.Controllers
             return GetResponse(response);
         }
 
-        [HttpGet, Route("Get/{id}"), Authorize, Produces(typeof(Response<Invoice>))]
+        [HttpGet, Route("GetByCystomer"), Produces(typeof(Response<IList<Invoice>>))]
+        public async Task<IActionResult> GetInvoicesByCustomer(int customerId, CancellationToken cancellationToken = default)
+        {
+            var response = await _mediator.Send(new GetInvoicesByCustomerRequest { CustomerId = customerId }, cancellationToken);
+
+            return Ok(response);
+        }
+
+        [HttpGet, Route("GetById/{id}"), Produces(typeof(Response<Invoice>))]
+        public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken = default)
+        {
+            var response = await _mediator.Send(new GetInvoiceRequest { Id = id }, cancellationToken);
+
+            return Ok(response);
+        }
+
+        [HttpGet, Route("Get/{id}"), Produces(typeof(Response<Invoice>))]
         public async Task<IActionResult> Get(int id, CancellationToken cancellationToken = default)
         {
-            var response = await _mediator.Send(new GetInvoiceRequest { CurrentUserId = GetLoggedUserId(), Id = id }, cancellationToken);
+            var response = await _mediator.Send(new GetInvoiceRequest { Id = id }, cancellationToken);
 
             return GetResponse(response);
         }
