@@ -17,7 +17,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class InvoiceDetailsDialogComponent implements OnInit {
 
   public invoice: any;
-  public invoiceTotalPrice: number[];
+  public invoiceTotalPrice: number;
 
   public columnsToDisplay = ['productId', 'productName', 'quantity', 'accompaniments', 'price', 'obs']
   public columnsToDisplayLogs = ['logId', 'date', 'type', 'message']
@@ -42,5 +42,6 @@ export class InvoiceDetailsDialogComponent implements OnInit {
     this.invoiceLines.data = this.data?.invoice?.products;
     this.invoiceLogs.data = this.data?.invoice?.logs;
     this.invoiceTotalPrice = this.invoiceLines.data.map(x => x.product.price * x.quantity)
+                                                    .reduce((a, b) => a+b, 0)
   }
 }
