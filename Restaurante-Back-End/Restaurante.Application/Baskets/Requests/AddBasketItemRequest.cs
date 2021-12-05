@@ -54,7 +54,8 @@ namespace Restaurante.Application.Baskets.Requests
                     {
                         Obs = request.Obs,
                         Product = product,
-                        Quantity = request.Quantity
+                        Quantity = request.Quantity,
+                        ProductId = request.ProductId
                     }, cancellationToken);
 
                     return new Response<string>(true, "Atualizado com sucesso!");

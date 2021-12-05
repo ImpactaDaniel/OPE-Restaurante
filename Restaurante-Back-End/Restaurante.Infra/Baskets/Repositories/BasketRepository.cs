@@ -3,6 +3,7 @@ using Restaurante.Domain.Baskets.Models;
 using Restaurante.Domain.Baskets.Repositories.Interfaces;
 using Restaurante.Infra.Common.Persistence;
 using Restaurante.Infra.Common.Persistence.Interfaces;
+using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
@@ -21,6 +22,8 @@ namespace Restaurante.Infra.Baskets.Repositories
             var basket = await GetOrCreateBasket(customerId, cancellationToken);
 
             basket = AddOrUpdateBasketItem(basket, item);
+
+            Data.Products.Attach(item.Product);
 
             Data.Baskets.Attach(basket);
 
@@ -51,7 +54,12 @@ namespace Restaurante.Infra.Baskets.Repositories
             await All()
                 .AsNoTracking()
                 .Include(b => b.Items)
-                .FirstOrDefaultAsync(b => 
+                    .ThenInclude(i => i.Product)
+                        .ThenInclude(p => p.Category)
+                 .Include(b => b.Items)
+                    .ThenInclude(i => i.Product)
+                        .ThenInclude(p => p.Photo)
+                .FirstOrDefaultAsync(b =>
                                 b.Active &&
                                 b.CustomerId == customerId, cancellationToken);
 
@@ -60,7 +68,12 @@ namespace Restaurante.Infra.Baskets.Repositories
             var currentBasket = await GetActiveBasket(customerId, cancellationToken);
 
             if (currentBasket == null)
-                currentBasket = new Basket();
+                currentBasket = new Basket
+                {
+                    Active = true,
+                    CreatedDate = DateTime.Now,
+                    CustomerId = customerId                    
+                };
 
             return currentBasket;
         }
@@ -71,7 +84,7 @@ namespace Restaurante.Infra.Baskets.Repositories
 
             var item = basket.Items.First(bi => bi.ProductId == productId);
 
-            if(item != null)
+            if (item != null)
                 basket.Items.Remove(item);
 
             Data.Baskets.Attach(basket);
