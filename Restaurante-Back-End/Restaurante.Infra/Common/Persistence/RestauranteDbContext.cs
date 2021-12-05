@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Restaurante.Domain.Baskets.Models;
 using Restaurante.Domain.Invoices.Models;
 using Restaurante.Domain.Products.Models;
 using Restaurante.Domain.Users.Customers.Models;
@@ -37,6 +38,8 @@ namespace Restaurante.Infra.Common.Persistence
         public DbSet<Customer> Customers { get; set; }
 
         public DbSet<Payment> Payments { get; set; }
+
+        public DbSet<Basket> Baskets { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
