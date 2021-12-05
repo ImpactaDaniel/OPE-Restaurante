@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Restaurante.Domain.Baskets.Models;
 using Restaurante.Domain.Invoices.Models;
 using Restaurante.Domain.Products.Models;
 using Restaurante.Domain.Users.Customers.Models;
@@ -20,5 +21,6 @@ namespace Restaurante.Infra.Common.Persistence.Interfaces
         DbSet<InvoiceLine> InvoiceLines { get; }
         DbSet<Customer> Customers { get; }
         DbSet<Payment> Payments { get; }
+        DbSet<Basket> Baskets { get; }
     }
 }

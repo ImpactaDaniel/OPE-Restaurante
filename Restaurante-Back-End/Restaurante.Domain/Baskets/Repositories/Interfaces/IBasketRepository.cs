@@ -10,5 +10,6 @@ namespace Restaurante.Domain.Baskets.Repositories.Interfaces
         Task<Basket> GetActiveBasket(int customerId, CancellationToken cancellationToken = default);
         Task<Basket> GetOrCreateBasket(int customerId, CancellationToken cancellationToken = default);
         Task AddOrUpdateItem(int customerId, BasketItem item, CancellationToken cancellationToken = default);
+        Task RemoveItem(int customerId, int productId, CancellationToken cancellationToken = default);
     }
 }
