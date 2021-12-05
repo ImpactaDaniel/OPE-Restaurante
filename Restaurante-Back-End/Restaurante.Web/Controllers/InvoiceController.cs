@@ -25,7 +25,7 @@ namespace Restaurante.Web.Controllers
         public async Task<IActionResult> CreateNewInvoice([FromBody] CreateInvoiceRequest request, CancellationToken cancellationToken = default)
         {
             var response = await _mediator.Send(request, cancellationToken);
-            return GetResponse(response);
+            return Ok(response);
         }
 
         [HttpGet, Route("GetAll"), Authorize]
