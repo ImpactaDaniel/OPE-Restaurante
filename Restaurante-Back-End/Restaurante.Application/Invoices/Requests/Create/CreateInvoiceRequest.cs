@@ -5,6 +5,8 @@ using Restaurante.Application.Common.Helper;
 using Restaurante.Application.Invoices.Common.Models;
 using Restaurante.Application.Invoices.Notifications;
 using Restaurante.Domain.BasicEntities.Exception;
+using Restaurante.Domain.Baskets.Models;
+using Restaurante.Domain.Baskets.Repositories.Interfaces;
 using Restaurante.Domain.Common.Enums;
 using Restaurante.Domain.Common.Exceptions;
 using Restaurante.Domain.Common.Services.Interfaces;
@@ -31,8 +33,17 @@ namespace Restaurante.Application.Invoices.Requests.Create
             private readonly ILogger<CreateInvoiceRequestHandler> _logger;
             private readonly IMediator _mediator;
             private readonly IInvoiceLogDomainRepository _logRepository;
+            private readonly IBasketRepository _basketRepository;
 
-            public CreateInvoiceRequestHandler(INotifier notifier, IInvoiceDomainRepository invoiceRespository, ICustomersDomainRepository customersDomainRepository, IProductService productService, ILogger<CreateInvoiceRequestHandler> logger, IMediator mediator, IInvoiceLogDomainRepository logRepository)
+            public CreateInvoiceRequestHandler(
+                INotifier notifier,
+                IInvoiceDomainRepository invoiceRespository,
+                ICustomersDomainRepository customersDomainRepository,
+                IProductService productService,
+                ILogger<CreateInvoiceRequestHandler> logger,
+                IMediator mediator,
+                IInvoiceLogDomainRepository logRepository,
+                IBasketRepository basketRepository)
             {
                 _notifier = notifier;
                 _invoiceRespository = invoiceRespository;
@@ -41,13 +52,19 @@ namespace Restaurante.Application.Invoices.Requests.Create
                 _logger = logger;
                 _logRepository = logRepository;
                 _mediator = mediator;
+                _basketRepository = basketRepository;
             }
 
             public async Task<Response<Invoice>> Handle(CreateInvoiceRequest request, CancellationToken cancellationToken)
             {
                 try
                 {
-                    var lines = await GetInvoiceLines(request.Products, cancellationToken);
+                    var basket = await _basketRepository.Get(b => b.Id == request.BasketId, cancellationToken);
+
+                    if (basket == null)
+                        throw new Exception("Cesta não existe!");
+
+                    var lines = await GetInvoiceLines(basket.Items, cancellationToken);
 
                     var customer = await _customersDomainRepository.Get(request.CustomerId, cancellationToken);
 
@@ -64,6 +81,13 @@ namespace Restaurante.Application.Invoices.Requests.Create
                         Address = new InvoiceAddress(address.Street, address.Number, address.District, address.CEP, address.State, address.City),
                         Customer = customer,
                         Products = lines.ToList(),
+                        Payment = new Payment
+                        {
+                            Amount = lines.Sum(l => l.Product.Price),
+                            Customer = customer,
+                            PaymentTime = DateTime.Now,
+                            PaymentType = request.PaymentType
+                        },
                         Status = Domain.Invoices.Models.Enum.InvoiceStatus.Created
                     };
 
@@ -98,13 +122,13 @@ namespace Restaurante.Application.Invoices.Requests.Create
                 }
             }
 
-            private async Task<IEnumerable<InvoiceLine>> GetInvoiceLines(IEnumerable<ProductInvoiceRequest> productsRequest, CancellationToken cancellationToken = default)
+            private async Task<IEnumerable<InvoiceLine>> GetInvoiceLines(IEnumerable<BasketItem> productsRequest, CancellationToken cancellationToken = default)
             {
                 var lines = new List<InvoiceLine>(productsRequest.Count());
 
                 foreach (var productRequest in productsRequest)
                 {
-                    var product = await _productService.Get(productRequest.Id, cancellationToken);
+                    var product = await _productService.Get(productRequest.ProductId, cancellationToken);
                     if (product is null)
                         throw new BasicTableException($"Produto {productRequest.Id} não existe!", NotificationKeys.EntityNotFound);
 
