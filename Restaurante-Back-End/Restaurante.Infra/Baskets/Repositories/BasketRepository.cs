@@ -56,10 +56,6 @@ namespace Restaurante.Infra.Baskets.Repositories
                 .Include(b => b.Items)
                     .ThenInclude(i => i.Product)
                         .ThenInclude(p => p.Category)
-                .Include(b => b.Customer)
-                    .ThenInclude(c => c.Addresses)
-                .Include(b => b.Customer)
-                    .ThenInclude(c => c.Phone)
                 .Include(b => b.Items)
                     .ThenInclude(i => i.Product)
                         .ThenInclude(p => p.Photo)
@@ -92,6 +88,18 @@ namespace Restaurante.Infra.Baskets.Repositories
                 basket.Items.Remove(item);
 
             Data.Baskets.Attach(basket);
+
+            await Data.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task InactiveBasket(int id, CancellationToken cancellationToken = default)
+        {
+            var basket = await All()
+                .FirstAsync(b => b.Id == id, cancellationToken);
+
+            basket.Active = false;
+
+            Data.Baskets.Update(basket);
 
             await Data.SaveChangesAsync(cancellationToken);
         }

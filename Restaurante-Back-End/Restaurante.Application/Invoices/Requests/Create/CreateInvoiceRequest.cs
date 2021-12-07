@@ -66,6 +66,8 @@ namespace Restaurante.Application.Invoices.Requests.Create
 
                     var lines = await GetInvoiceLines(basket.Items, cancellationToken);
 
+                    await _basketRepository.InactiveBasket(basket.Id, cancellationToken);
+
                     var customer = await _customersDomainRepository.Get(request.CustomerId, cancellationToken);
 
                     if (customer is null)
