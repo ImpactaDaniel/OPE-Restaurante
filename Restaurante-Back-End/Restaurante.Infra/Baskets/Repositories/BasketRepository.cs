@@ -56,7 +56,11 @@ namespace Restaurante.Infra.Baskets.Repositories
                 .Include(b => b.Items)
                     .ThenInclude(i => i.Product)
                         .ThenInclude(p => p.Category)
-                 .Include(b => b.Items)
+                .Include(b => b.Customer)
+                    .ThenInclude(c => c.Addresses)
+                .Include(b => b.Customer)
+                    .ThenInclude(c => c.Phone)
+                .Include(b => b.Items)
                     .ThenInclude(i => i.Product)
                         .ThenInclude(p => p.Photo)
                 .FirstOrDefaultAsync(b =>
@@ -72,7 +76,7 @@ namespace Restaurante.Infra.Baskets.Repositories
                 {
                     Active = true,
                     CreatedDate = DateTime.Now,
-                    CustomerId = customerId                    
+                    CustomerId = customerId
                 };
 
             return currentBasket;
