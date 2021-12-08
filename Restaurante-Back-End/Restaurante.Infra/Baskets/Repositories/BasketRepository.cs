@@ -23,9 +23,7 @@ namespace Restaurante.Infra.Baskets.Repositories
 
             basket = AddOrUpdateBasketItem(basket, item);
 
-            Data.Products.Attach(item.Product);
-
-            Data.Baskets.Attach(basket);
+            Data.Baskets.Update(basket);
 
             await Data.SaveChangesAsync(cancellationToken);
         }
@@ -38,11 +36,11 @@ namespace Restaurante.Infra.Baskets.Repositories
         }
         private static Basket AddOrUpdateBasketItem(Basket basket, BasketItem item)
         {
-            var exists = basket.Items.Any(bi => bi.Product.Id == item.Product.Id);
+            var exists = basket.Items.Any(bi => bi.ProductId == item.ProductId);
 
             if (exists)
             {
-                basket.Items.First(bi => bi.Id == item.Id).Quantity = item.Quantity;
+                basket.Items.First(bi => bi.ProductId == item.ProductId).Quantity = item.Quantity;
                 return basket;
             }
 
@@ -50,12 +48,18 @@ namespace Restaurante.Infra.Baskets.Repositories
             return basket;
         }
 
+        private async Task<Basket> GetActiveBasketByCustomer(int customerId, CancellationToken cancellationToken = default) =>
+            await All()
+                    .Include(b => b.Items)
+                    .FirstOrDefaultAsync(b => b.Active && b.CustomerId == customerId, cancellationToken);
+
         public async Task<Basket> GetActiveBasket(int customerId, CancellationToken cancellationToken = default) =>
             await All()
                 .AsNoTracking()
                 .Include(b => b.Items)
                     .ThenInclude(i => i.Product)
                         .ThenInclude(p => p.Category)
+                        .AsNoTracking()
                 .Include(b => b.Items)
                     .ThenInclude(i => i.Product)
                         .ThenInclude(p => p.Photo)
@@ -65,15 +69,17 @@ namespace Restaurante.Infra.Baskets.Repositories
 
         public async Task<Basket> GetOrCreateBasket(int customerId, CancellationToken cancellationToken = default)
         {
-            var currentBasket = await GetActiveBasket(customerId, cancellationToken);
+            var currentBasket = await GetActiveBasketByCustomer(customerId, cancellationToken);
 
             if (currentBasket == null)
+            {
                 currentBasket = new Basket
                 {
                     Active = true,
                     CreatedDate = DateTime.Now,
                     CustomerId = customerId
                 };
+            }
 
             return currentBasket;
         }

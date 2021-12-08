@@ -29,5 +29,11 @@ namespace Restaurante.Web.Controllers
         {
             return Ok(await _mediator.Send(request, cancellationToken));
         }
+
+        [HttpGet("GetCustomerById/{customerId}"), Produces(typeof(Response<Customer>))]
+        public async Task<IActionResult> GetCustomerById(int customerId, CancellationToken cancellationToken = default)
+        {
+            return Ok(await _mediator.Send(new GetCustomerByIdRequest { Id = customerId }, cancellationToken));
+        }
     }
 }

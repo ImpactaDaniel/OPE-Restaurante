@@ -43,6 +43,7 @@ namespace Restaurante.Infra.Users.Customers
         public async Task<Customer> Get(int id, CancellationToken cancellationToken = default) =>
             await All()
                     .Include(c => c.Addresses)
+                    .Include(c => c.Phone)
                     .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);                    
 
         public Task<IList<Customer>> GetAll(CancellationToken cancellationToken = default)
