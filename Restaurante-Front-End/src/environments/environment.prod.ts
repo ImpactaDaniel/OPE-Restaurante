@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  urlService: 'https://localhost:44334/'
+  urlService: 'https://restaurante-service.herokuapp.com/'
 };

@@ -27,8 +27,8 @@ export class ListEmployeeComponent implements OnInit {
   public employeesType = [
     {id: 0, name: 'Gerente'}, {id: 1, name: 'Funcionário Padrão'}, {id: 2, name: 'Entregador'}
   ]
-  
-  public displayedColumns = ['employeeId', 'employeeName', 'employeeEmail', 'employeeType', 'employeeCreateDate', 'employeeBirthDate', 'remove', 'edit', 'details']
+
+  public displayedColumns = ['employeeId', 'employeeName', 'employeeEmail', 'employeeType', 'employeeCreateDate', 'employeeBirthDate', 'details']
 
   constructor(
     private employeeService: EmployeeService,
@@ -73,6 +73,10 @@ export class ListEmployeeComponent implements OnInit {
 
   public getStatusChoice(status: any) {
     this.statusChoice = status
+  }
+
+  public toCreateEmployee(){
+    this.router.navigate(['/employee/create']);
   }
 
   public async details(id: number) {

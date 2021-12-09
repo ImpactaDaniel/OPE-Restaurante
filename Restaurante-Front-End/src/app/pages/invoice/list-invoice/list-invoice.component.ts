@@ -68,6 +68,11 @@ export class ListInvoiceComponent implements OnInit {
   public search(event: any){
     this.searchValue = !isNaN(event.value) ? event.value : event.target.value;
 
+    const regex = new RegExp('^[0-9]*$');
+
+    if(this.searchField !== 'customerName' && !regex.test(this.searchValue) || this.searchValue === '')
+      return;
+
     this.isSearching = true;
     this.page = 0;
     this.limit = 5;

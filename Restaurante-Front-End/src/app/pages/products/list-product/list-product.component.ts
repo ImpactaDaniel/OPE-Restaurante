@@ -52,8 +52,9 @@ export class ListProductComponent implements OnInit {
 
     if (this.isSearching) {
       this.productsService.searchProducts(this.searchField, this.searchValue, this.page, this.limit).subscribe(res => {
-        this.products = res.response.result?.entities;
-        this.listSize = res.response.result?.size;
+        console.log(res);
+        this.products = res.result?.entities;
+        this.listSize = res.result?.size;
       });
       return;
     }

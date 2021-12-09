@@ -18,7 +18,7 @@ export class ListBankComponent implements OnInit {
   private isSearching = false;
   public name: string;
 
-  public displayedColumns = ['id', 'name', 'edit', 'remove']
+  public displayedColumns = ['id', 'name']
 
   constructor(
     private basicEntitiesService: BasicentitiesService,
